@@ -1,0 +1,28 @@
+public class Solution {
+    public IList<string> StringSequence(string target) {
+         List<string> ans = new List<string>();
+ int i = 0;
+ string p = "";
+ string s = "";
+ int k = 0;
+ string t = "abcdefghijklmnopqrstuvwxyz";
+ while (k < target.Length && i < t.Length)
+ {
+     p = s + t[i];
+     string u = target.Substring(0, k+1);
+     if (u == p)
+     {
+         s += t[i];
+         k++;
+         i = 0;
+     }
+     else
+     {
+
+         i++;
+     }
+     ans.Add(p);
+ }
+ return ans;
+    }
+}
