@@ -18,6 +18,7 @@ Let’s level up your problem-solving flow, one challenge at a time. 🔥
 ---
 
 ## 🎉 Philosophy & Vibe
+
 The idea is simple:
 
 **Write code that feels smooth to read and easy to reason about.**
@@ -30,33 +31,30 @@ Think of it as solving puzzles — with style and clarity. 🧠✨
 
 ---
 
-🚀 Why This Repo Exists
+## 🚀 Why This Repo Exists
 
 Because practicing LeetCode in C# doesn’t have to be dry or boring.
 
-This repo helps you enhance:
+This repo helps you enhance:  
+- Pattern recognition 🔄  
+- Logical thinking 🧠  
+- Interview readiness 🎯  
+- Clean coding habits 💎  
 
-Pattern recognition 🔄
+---
 
-Logical thinking 🧠
+## 🤝 Contributions
 
-Interview readiness 🎯
-
-Clean coding habits 💎
-
-🤝 Contributions
-
-If you have a better solution, new problem, or cleaner approach —
+If you have a better solution, new problem, or cleaner approach —  
 PRs are always welcome. 🙌✨
 
-⭐ Show Some Love
+---
 
-If this repo helps you:
-🌟 Star it
-🔖 Save it
+## ⭐ Show Some Love
+
+If this repo helps you:  
+🌟 Star it  
+🔖 Save it  
 ⚡ Use it as your daily practice companion
-
-
-
 
 
