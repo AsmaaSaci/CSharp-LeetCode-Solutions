@@ -1,0 +1,99 @@
+public class Solution {
+    Dictionary<string, Dictionary<string, double>> dict1 = new();
+    Dictionary<string, Dictionary<string, double>> dict2 = new();
+    private void FillDict(IList<IList<string>> pairs, double[] rates, Dictionary<string, Dictionary<string, double>> dict)
+    {
+        int len = rates.Length;
+        for(int i = 0; i < len; i++)
+        {
+            string s1 = pairs[i][0], s2 = pairs[i][1];
+            double val = rates[i];
+
+            if(!dict.ContainsKey(s1))
+                dict.Add(s1, new Dictionary<string, double>());
+
+            if(!dict.ContainsKey(s2))
+                dict.Add(s2, new Dictionary<string, double>());
+
+            dict[s1].Add(s2, val);
+            dict[s2].Add(s1, 1/val);
+        }
+
+    }
+
+    private void  BFS(string from, string target, double val, HashSet<string> visited)
+    {
+        if(from == target)
+        {
+            res = Math.Max(res, val);
+            return;
+        }
+
+        if(dict2.ContainsKey(from))
+        {
+            visited.Add(from);
+            foreach(var kvp in dict2[from])
+            {
+                string to = kvp.Key;
+                double nextVal = kvp.Value;
+                if(visited.Contains(to))
+                    continue;
+
+                if(to == target)
+                {
+                    res = Math.Max(res, val*nextVal);
+                    continue;
+                }
+
+                BFS(to, target, val*nextVal, visited);
+            }
+
+            visited.Remove(from);
+        }
+    }
+    private double res;
+    public double MaxAmount(string initialCurrency, IList<IList<string>> pairs1, double[] rates1, IList<IList<string>> pairs2, double[] rates2) {
+       // init pairs1/pairs2
+       int len1 = rates1.Length, len2 = rates2.Length;
+       res = 1.0;
+       if(len1 != pairs1.Count || len2 != pairs2.Count)
+            return 0.0;
+        if(len1 == 0 && len2 == 0)
+            return 1.0;
+
+        FillDict(pairs1, rates1, dict1);
+        FillDict(pairs2, rates2, dict2);
+
+        if(!dict1.ContainsKey(initialCurrency) && !dict2.ContainsKey(initialCurrency))
+            return res;
+
+        Queue<(string, double)> que = new();
+        que.Enqueue((initialCurrency, 1.0));
+        HashSet<string> visited = new();
+        while(que.TryDequeue(out var cur))
+        {
+            string from = cur.Item1;
+            double val = cur.Item2;
+            if(!visited.Add(from))
+                continue;
+
+            if(from != initialCurrency &&dict2.ContainsKey(from))
+                BFS(from, initialCurrency, val, new HashSet<string>());
+
+            if(dict1.ContainsKey(from))
+            {
+                foreach(var kvp in dict1[from])
+                {
+                    string to = kvp.Key;
+                    double nextVal = kvp.Value;
+                    if(visited.Contains(to))
+                        continue;
+
+                    que.Enqueue((to, val * nextVal));
+                }
+            }
+        }
+
+        return res;
+    }
+}
