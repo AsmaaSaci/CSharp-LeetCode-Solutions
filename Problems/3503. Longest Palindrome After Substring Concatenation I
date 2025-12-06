@@ -1,0 +1,85 @@
+public class Solution {
+    private bool[,,] palins;
+    private int CheckPalin(string s, int idx)
+    {
+        int maxPalin = 1;
+        int len = s.Length;
+        for(int i = len-1; i >= 0; i--)
+        {
+            for(int j = i; j < len; j++)
+            {
+                if(j == i || s[i] == s[j] && (j-i == 1 || j -i > 1 && palins[i+1, j-1, idx]))
+                {
+                    palins[i,j,idx] = true;
+                    maxPalin = Math.Max(maxPalin, j-i+1);
+                }
+            }
+        }
+
+        return maxPalin;
+    }
+    public int LongestPalindrome(string s, string t) {
+        int lenS = s.Length, lenT = t.Length, maxPalinLen = 1;
+        int len = Math.Max(lenS, lenT);
+        palins = new bool[len, len, 2];
+
+        maxPalinLen = Math.Max(maxPalinLen, CheckPalin(s, 0));
+        string reversT = new string(t.Reverse().ToArray());
+        maxPalinLen = Math.Max(maxPalinLen,CheckPalin(reversT, 1));
+        Dictionary<char, HashSet<int>> ids = new();
+        for(int i = 0; i < reversT.Length; i++)
+        {
+            char c = reversT[i];
+            if(!ids.ContainsKey(c))
+                ids.Add(c, new HashSet<int>());
+
+            ids[c].Add(i);
+        }
+
+        for(int i = 0; i < lenS; i++)
+        {
+            char sC = s[i];
+            if(!ids.ContainsKey(sC))
+                continue;
+
+            foreach(int idT in ids[sC])
+            {
+                int comLen = Math.Min(lenS-i, lenT-idT);
+
+                for(int l = comLen; l > 0; l--)
+                {
+                    if(s.Substring(i, l) == reversT.Substring(idT, l))
+                    {
+                        maxPalinLen = Math.Max(maxPalinLen, l*2);
+                        for(int end = lenS-1; end >= i+l; end--)
+                        {
+                            if(end-i+l+1 < maxPalinLen)
+                                break;
+
+                            if(palins[i+l, end, 0])
+                            {
+                                maxPalinLen = Math.Max(maxPalinLen, end-i+l+1);
+                                break;
+                            }
+                        }
+
+                        for(int end = lenT-1; end >= idT+l; end--)
+                        {
+                            if(end-idT+l+1 < maxPalinLen)
+                                break;
+
+                            if(palins[idT+l, end, 1])
+                            {
+                                maxPalinLen = Math.Max(maxPalinLen, end-idT+l+1);
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+
+        return maxPalinLen;
+    }
+}
