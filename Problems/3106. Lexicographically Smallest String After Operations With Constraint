@@ -1,0 +1,33 @@
+public class Solution {
+    public string GetSmallestString(string s, int k) {
+        int len = s.Length;
+        StringBuilder sb = new StringBuilder(s);
+        int start = 0;
+        while(start < len && k > 0)
+        {
+            char c = s[start];
+           // Console.WriteLine($"before cal k is {k}");
+            if(c != 'a')
+            {
+                int idx = c - 'a';
+                int minDiff = Math.Min(idx, 26-idx);
+              //  Console.WriteLine($"k: {k}, minDiff: {minDiff}");
+                if(k >= minDiff)
+                {
+                    sb[start] = 'a';
+                    k -= minDiff;
+                }
+                else
+                {
+                    sb[start] = ((char)((idx-k) + 'a'));
+                    k = 0;
+                }
+            }
+
+            start++;
+           //  Console.WriteLine($"after cal k is {k}");
+        }
+
+        return sb.ToString();
+    }
+}
