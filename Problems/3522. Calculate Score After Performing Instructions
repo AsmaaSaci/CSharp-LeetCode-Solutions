@@ -1,0 +1,28 @@
+public class Solution {
+    public long CalculateScore(string[] instructions, int[] values) {
+        
+        long score =0;
+        int i=0,n=values.Length-1;
+        HashSet<int>  visitedIndexes =new HashSet<int>();
+        while(i>=0 && i<=n)
+        {
+            if(visitedIndexes.Contains(i))
+            {
+                break;
+            }
+            visitedIndexes.Add(i);
+            if(instructions[i]=="add")
+            {
+                score+=values[i];
+                i+=1;
+            }
+            else{
+                
+                i+=values[i];
+            }
+            
+        }
+
+        return score;
+    }
+}
