@@ -1,0 +1,31 @@
+public class Solution {
+    public long NumOfSubsequences(string s) {
+        int n = s.Length;
+        int[] T = new int[n], L = new int[n];
+        T[n-1] = s[n-1] == 'T' ? 1 : 0;
+        for (int i = n-2; i >= 0; i--) {
+            T[i] = T[i+1] + (s[i] == 'T' ? 1 : 0);
+        }
+        L[0] = (s[0] == 'L' ? 1 : 0);
+        for (int i = 1; i < n; i++) {
+            L[i] = L[i-1] + (s[i] == 'L' ? 1 : 0);
+        }
+        long res = 0, addC = 0;
+        for (int i = 0; i < n;i++) {
+            addC = Math.Max(addC, T[i] * (long)L[i]);
+            if(s[i] != 'C') 
+                continue;
+            res += (T[i] * L[i]);
+        }
+        long addT = 0, addL = 0;
+        for (int i = 0; i < n; i++) {
+            if (s[i] != 'C') continue;
+            addT += L[i];
+        }
+        for (int i = n-1; i >= 0; i--) {
+            if (s[i] != 'C') continue;
+            addL += T[i];
+        }
+        return res + Math.Max(addL, Math.Max(addC, addT));
+    }
+}
