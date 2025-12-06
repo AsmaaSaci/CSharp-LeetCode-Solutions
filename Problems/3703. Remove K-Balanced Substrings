@@ -1,0 +1,29 @@
+
+public class Solution{
+    public string RemoveSubstring(string s,int k){
+        int n=s.Length;
+        var st=new List<char>();
+        var cnt=new List<int>();
+        for(int i=0;i<n;i++){
+            char c=s[i];
+            if(st.Count==0||st[st.Count-1]!=c){st.Add(c);cnt.Add(1);}else cnt[cnt.Count-1]++;
+            while(st.Count>=2&&st[st.Count-1]==')'&&st[st.Count-2]=='('){
+                int m=cnt.Count;
+                int a=cnt[m-2]/k;
+                int b=cnt[m-1]/k;
+                int t=Math.Min(a,b);
+                if(t==0) break;
+                cnt[m-2]-=t*k;
+                cnt[m-1]-=t*k;
+                m=cnt.Count;
+                if(m>=2&&cnt[m-2]==0&&cnt[m-1]==0){st.RemoveAt(m-1);cnt.RemoveAt(m-1);st.RemoveAt(m-2);cnt.RemoveAt(m-2);}
+                else if(m>=1&&cnt[m-2]==0){st.RemoveAt(m-2);cnt.RemoveAt(m-2);}
+                else if(m>=1&&cnt[m-1]==0){st.RemoveAt(m-1);cnt.RemoveAt(m-1);}
+                if(st.Count>=2&&st[st.Count-1]==st[st.Count-2]){cnt[cnt.Count-2]+=cnt[cnt.Count-1];st.RemoveAt(st.Count-1);cnt.RemoveAt(cnt.Count-1);}
+                }
+            }
+        var sb=new StringBuilder();
+        for(int i=0;i<st.Count;i++) sb.Append(new string(st[i],cnt[i]));
+        return sb.ToString();
+        }
+    }
