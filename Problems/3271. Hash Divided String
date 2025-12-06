@@ -1,0 +1,15 @@
+public class Solution {
+    public string StringHash(string s, int k) {
+        var n=s.Length;
+        var satr=new StringBuilder();
+        for(int i=0;i<n;i+=k)
+        {
+            var summa=0;
+            var str=s.Substring(i,k);
+            for(int j=0;j<str.Length;j++)
+                summa+=(str[j]-'a');
+            satr.Append((char)(summa%26+'a'));
+        }
+        return satr.ToString();
+    }
+}
