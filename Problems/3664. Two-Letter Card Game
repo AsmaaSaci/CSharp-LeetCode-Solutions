@@ -1,0 +1,42 @@
+public class Solution {
+    public int Score(string[] cards, char x) {
+        int[,] freq = new int[2, 10];
+        int same = 0, res = 0;
+        
+        foreach(string s in cards) // fill valid card frequency
+        {
+            char c1 = s[0], c2 = s[1];
+            if(c1 == x || c2 == x)
+            {
+                if(c1 == c2)
+                    same++;
+                else if(c1 == x)
+                    freq[0, s[1]-'a']++;
+                else
+                    freq[1, s[0]-'a']++;
+            }
+        }
+
+        int all = 0, maxCnt = 0;
+        for(int i = 0; i < 2; i++)
+        {
+            int maxV = 0 , total = 0 ;
+            for(int j = 0; j < 10; j++)
+            {
+                int f = freq[i,j];
+                total += f;
+                maxV = Math.Max(maxV, f); 
+            }
+
+            all += total;                             
+            maxCnt += Math.Min(total / 2, total - maxV); 
+        }  
+
+        for (int i = 0 ; i <= maxCnt ; ++i) 
+        {
+            res = Math.Max(res, i + Math.Min(same, Math.Max(0, all - 2*i))) ; // Consider card with same valid char;
+        }
+
+        return res; 
+    }
+}
