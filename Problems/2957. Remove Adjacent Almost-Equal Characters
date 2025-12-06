@@ -1,0 +1,20 @@
+public class Solution {
+    public int RemoveAlmostEqualCharacters(string word) {
+        int idx = 1, len = word.Length, res = 0;
+        if(len <= 1)
+            return 0;
+
+        while(idx < len)
+        {
+            if(Math.Abs(word[idx] - word[idx-1]) <= 1)
+            {
+                res++;
+                idx++;
+            }
+
+            idx++;
+        }
+
+        return res;
+    }
+}
