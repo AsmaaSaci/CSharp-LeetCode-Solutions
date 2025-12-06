@@ -1,0 +1,26 @@
+public class Solution {
+    public int MinimumSubstringsInPartition(string s) {
+        int len = s.Length;
+        int[] dp = Enumerable.Repeat(len, len+1).ToArray();
+        dp[len] = 0;
+
+        for(int i = len-1; i >= 0; i--)
+        {
+            int[] freq = new int[26];
+            int unique = 0, maxCnt = 0;
+            for(int size = 1; i+size <= len; size++)
+            {
+                int id = s[i+size-1]-'a';
+                if(++freq[id] == 1)
+                    unique++;
+
+                maxCnt = Math.Max(maxCnt, freq[id]);
+
+                if(size == maxCnt*unique)
+                    dp[i] = Math.Min(dp[i], 1+dp[i+size]);
+            }
+        }
+
+        return dp[0];
+    }
+}
