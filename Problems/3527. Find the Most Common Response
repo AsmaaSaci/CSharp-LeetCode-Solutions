@@ -1,0 +1,34 @@
+public class Solution {
+     
+    public string FindCommonResponse(IList<IList<string>> responses) {
+        Dictionary<string, int[]> dict = new();
+        string res = "";
+        int maxFreq = 0, len = responses.Count;
+        for(int i = 0; i < len; i++)
+        {
+            foreach(string s in responses[i])
+            {
+                if(!dict.ContainsKey(s))
+                    dict.Add(s, [i, 1]);
+                else if(dict[s][0] == i)
+                    continue;
+                else
+                {
+                    dict[s][0] = i;
+                    dict[s][1]++;
+                }
+
+                
+                if(dict[s][1] > maxFreq)
+                {
+                    res = s;
+                    maxFreq = dict[s][1];
+                }
+                else if(dict[s][1] == maxFreq && res.CompareTo(s) > 0)
+                    res = s;
+            }
+        }
+
+        return res;
+    }
+}
