@@ -1,0 +1,65 @@
+public class Solution
+{
+       public IList<string> FindHighAccessEmployees(IList<IList<string>> access_times)
+       {
+           var employeeAccess = new Dictionary<string, List<string>>();
+
+           var toReturn = new List<string>();
+
+           foreach (var access in access_times)
+           {
+               var employee = access[0];
+               var time = access[1];
+
+               if (employeeAccess.ContainsKey(employee))
+               {
+                   employeeAccess[employee].Add(time);
+               }
+               else
+               {
+                   employeeAccess.Add(employee, new List<string> { time });
+               }
+           }
+
+           foreach (var employee in employeeAccess)
+           {
+               var queue = new Queue<string>();
+               var accessList = employee.Value;
+               accessList.Sort();
+               foreach (var access in accessList)
+               {
+                   if (queue.Count < 3)
+                   {
+                       queue.Enqueue(access);
+                   }
+
+                   if (queue.Count == 3)
+                   {
+                       var first = queue.First();
+                       var last = queue.Last();
+                       var matched = CheckWithinHour(first, last);
+                       if (matched)
+                       {
+                           toReturn.Add(employee.Key);
+                           break;
+                       }
+                       else
+                       {
+                           queue.Dequeue();
+                       }
+                   }
+               } 
+           }
+
+
+           return toReturn;
+       }
+
+    private bool CheckWithinHour(string start, string end)
+    {
+        var startTime = TimeSpan.ParseExact(start, "hhmm", null);
+        var endTime = TimeSpan.ParseExact(end, "hhmm", null);
+
+        return (endTime - startTime).TotalMinutes < 60;
+    }
+}
