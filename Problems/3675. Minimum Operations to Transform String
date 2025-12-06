@@ -1,0 +1,16 @@
+public class Solution {
+    public int MinOperations(string s) {
+        var freq = new bool[26];
+
+        foreach (var ch in s) freq[ch - 'a'] = true;
+
+        var ops = 0;
+        for (var i = 1; i < 25; i++) {
+            if (!freq[i]) continue;
+            freq[i + 1] = freq[i];
+            ops++;
+        }
+
+        return ops + (freq[25] ? 1 : 0);
+    }
+}
