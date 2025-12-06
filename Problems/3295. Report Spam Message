@@ -1,0 +1,14 @@
+public class Solution {
+    public bool ReportSpam(string[] message, string[] bannedWords) {
+        // thuần check, ko có gì đặc biệt 
+        int count = 0;
+        HashSet<string> words = new HashSet<string>(bannedWords);
+        foreach (var word in message) {
+            if (words.Contains(word)) {
+                count++;
+                if (count == 2) return true;
+            }
+        }
+        return false;
+    }
+}
