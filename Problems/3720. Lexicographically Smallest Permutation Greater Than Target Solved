@@ -1,0 +1,28 @@
+public class Solution {
+    public string LexGreaterPermutation(string s, string target) {
+        int n = s.Length;
+        int[] cnt = new int[26];
+        for(int i=0;i<n;i++) cnt[s[i]-'a']++;
+        for(int i=n-1;i>=0;i--){
+            int[] c2 = (int[])cnt.Clone();
+            bool f = true;
+            for(int j=0;j<i;j++){
+                int x = target[j]-'a';
+                if(c2[x]==0){f=false;break;}
+                c2[x]--;
+                }
+            if(!f) continue;
+            int ti = target[i]-'a';
+            int ch = -1;
+            for(int k=ti+1;k<26;k++) if(c2[k]>0){ch=k;break;}
+            if(ch==-1) continue;
+            c2[ch]--;
+            var sb = new System.Text.StringBuilder();
+            for(int j=0;j<i;j++) sb.Append(target[j]);
+            sb.Append((char)('a'+ch));
+            for(int k=0;k<26;k++) for(int t=0;t<c2[k];t++) sb.Append((char)('a'+k));
+            return sb.ToString();
+            }
+        return "";
+        }
+    }
