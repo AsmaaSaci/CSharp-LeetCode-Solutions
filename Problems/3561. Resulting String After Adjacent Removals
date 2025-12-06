@@ -1,0 +1,13 @@
+public class Solution {
+    public string ResultingString(string s) {
+        Stack<char> a = new Stack<char>();
+        foreach (var c in s)
+        {
+            if (a.Count > 0 && (Math.Abs(c - a.Peek()) == 1 || Math.Abs(c - a.Peek()) == 25))
+                a.Pop();
+            else
+                a.Push(c);
+        }
+        return new String(a.Reverse().ToArray());
+    }
+}
