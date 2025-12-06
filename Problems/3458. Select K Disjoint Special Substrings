@@ -1,0 +1,56 @@
+public class Solution {
+
+    Dictionary<char, int> firstIndexes;
+    Dictionary<char, int> lastIndexes;
+    HashSet<char> allowedChars;
+
+    //returns end of group which is started  with char c
+    //if group is not valid - returns MaxValue
+    public int EndOfGroupStartedWith(char c, string s)
+    {
+        int i = firstIndexes[c];
+        int last = lastIndexes[c]; 
+       
+        while (++i < last)
+        {
+            //no char s[i] should appear before first c
+            if ((firstIndexes[s[i]] < firstIndexes[c]))
+                return Int32.MaxValue;
+            
+            //expand group size to cover s[i]
+            if (s[i] != s[i - 1])
+                last = Math.Max(last, lastIndexes[s[i]]);       
+        }
+        
+        return last;       
+    }
+
+    public bool MaxSubstringLength(string s, int k) 
+    {                            
+        int kk = k;
+        allowedChars = s.Distinct().ToHashSet();
+        firstIndexes = allowedChars.ToDictionary(x => x, x => s.IndexOf(x)); 
+        lastIndexes = allowedChars.ToDictionary(x => x, x => s.LastIndexOf(x));      
+        while (k-- > 0)
+        {
+            //find which char to start to minimize group's last position
+            //take only chars which were not used yet
+            int min = Int32.MaxValue;
+            foreach (char c in allowedChars)            
+                min = Math.Min(min, EndOfGroupStartedWith(c, s));
+
+            //group of size s.Length are not allowed
+            if (kk == 1 && min == s.Length - 1)
+                return false;
+
+            //no valid groups exist
+            if (min == Int32.MaxValue)
+                return false;
+
+            //remove already used chars from allowed list
+            allowedChars.ExceptWith(s.Take(min + 1).Distinct());
+        }
+  
+        return true;    
+    }
+}
