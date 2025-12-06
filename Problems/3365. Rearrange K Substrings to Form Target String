@@ -1,0 +1,28 @@
+public class Solution {
+    public bool IsPossibleToRearrange(string s, string t, int k) {
+        var n = s.Length; 
+        var div = n/k;
+        var map = new Dictionary<string, int>();
+
+        for (int i = 0; i < n; i += div)
+        {
+            var subString = s.Substring(i, div);
+            map[subString] = map.GetValueOrDefault(subString, 0) + 1;
+        }
+
+        for (int i = 0; i < n; i += div)
+        {
+            var subString  = t.Substring(i, div);
+            
+            if (map.GetValueOrDefault(subString, 0) > 0)
+            {
+                map[subString]--;
+            }
+            else
+
+            return false;
+        }
+        return true;
+
+    }
+}
