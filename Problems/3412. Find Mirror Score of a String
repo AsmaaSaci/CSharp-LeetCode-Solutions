@@ -1,0 +1,35 @@
+public class Solution {
+    public long CalculateScore(string s) {
+        long res = 0;
+        int n = s.Length;
+        bool[] marked = new bool[s.Length]; 
+        Dictionary<char, Stack<int>> mirrorIndices = new Dictionary<char, Stack<int>>(); 
+        Dictionary<char, char> mirrors = new Dictionary<char, char>();
+        string letters = "abcdefghijklmnopqrstuvwxyz";
+        for(int i = 0; i < letters.Length; i++) 
+        {
+            mirrors[letters[i]] = letters[letters.Length - 1 - i];
+        }
+        for(int i = 0; i < n; i++) 
+        {
+            char currentChar = s[i];
+            char mirrorChar = mirrors[currentChar];
+            if (mirrorIndices.ContainsKey(mirrorChar) && mirrorIndices[mirrorChar].Count > 0) 
+            {
+                int j = mirrorIndices[mirrorChar].Pop(); 
+                marked[i] = true;
+                marked[j] = true;
+                res += i - j;
+            } 
+            else 
+            {
+                if (!mirrorIndices.ContainsKey(currentChar)) 
+                {
+                    mirrorIndices[currentChar] = new Stack<int>();
+                }
+                mirrorIndices[currentChar].Push(i);
+            }
+        }
+        return res;
+    }
+}
