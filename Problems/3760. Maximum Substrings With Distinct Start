@@ -1,0 +1,11 @@
+public class Solution {
+    public int MaxDistinct(string s) {
+        HashSet<char> hset = new();
+
+        foreach(var c in s){
+            hset.Add(c);
+        }
+
+        return hset.Count;
+    }
+}
