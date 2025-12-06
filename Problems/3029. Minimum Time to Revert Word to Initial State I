@@ -1,0 +1,7 @@
+public class Solution {
+    public int MinimumTimeToInitialState(string word, int k) {
+        var res = 1;
+        while (k * res <= word.Length && !word.StartsWith(word.Substring(k * res))) res++;
+        return res;
+    }
+}
