@@ -1,0 +1,34 @@
+public class Solution {
+    public int MinimumSum(int[] nums) {
+        int n = nums.Length;
+        int res = int.MaxValue;
+        int[] leftMax = new int[n];
+        leftMax[leftMax.Length - 1] = nums[nums.Length - 1]; 
+
+        int[] rightMin = new int[n];
+        rightMin[0] = nums[0];
+        
+        for(int i = 1; i < nums.Length; i++)
+        {
+            rightMin[i] = Math.Min(nums[i], rightMin[i - 1]);
+        }
+
+        for(int i = nums.Length - 2; i >= 0; i--)
+        {
+            leftMax[i] = Math.Min(nums[i], leftMax[i + 1]);
+        }
+
+        for(int i = 1; i < nums.Length - 1; i++)
+        {
+            if(rightMin[i - 1] < nums[i] && nums[i] > leftMax[i + 1])
+            {
+                res = Math.Min(res, rightMin[i - 1] + nums[i] + leftMax[i + 1]);
+            }
+        }
+        if(res == int.MaxValue)
+        {
+            res = -1;
+        }
+        return res;
+    }
+}
