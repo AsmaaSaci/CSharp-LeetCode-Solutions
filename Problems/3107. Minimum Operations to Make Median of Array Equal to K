@@ -1,0 +1,27 @@
+public class Solution {
+    public long MinOperationsToMakeMedianK(int[] nums, int k) {
+        int len = nums.Length;
+        int midIdx = len/2;
+        long res = 0;
+
+        Array.Sort(nums);
+        if(nums[midIdx] == k)
+            return 0;
+        else if(nums[midIdx] > k)
+        {
+            while(midIdx >= 0 && nums[midIdx] >= k)
+            {
+                res += (nums[midIdx--]-k);
+            }
+        }
+        else
+        {
+            while(midIdx < len && nums[midIdx] <k)
+            {
+                res += (k - nums[midIdx++]);
+            }
+        }
+
+        return res;
+    }
+}
