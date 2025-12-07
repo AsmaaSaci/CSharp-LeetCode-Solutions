@@ -1,0 +1,33 @@
+public class Solution {
+    public int MaxOperations(int[] nums) {
+        var dic = new Dictionary<(int index0, int index1), int>();
+        var sum = nums[0] + nums[1];
+        var rs0 = 1 + MaxOperations((2, nums.Length - 1), dic, sum, nums);
+        sum = nums[0] + nums[nums.Length - 1];
+        var rs1 = 1 + MaxOperations((1, nums.Length - 2), dic, sum, nums);
+        sum = nums[nums.Length - 2] + nums[nums.Length - 1];
+        var rs2 = 1 + MaxOperations((0, nums.Length - 3), dic, sum, nums);
+        var rs = Math.Max(Math.Max(rs0, rs1), rs2);
+        return rs;
+    }
+    private int MaxOperations((int index0, int index1) key, Dictionary<(int index0, int index1), int>  dic, int sum, int[] nums)
+    {
+        if (key.index1 <= key.index0) return 0;
+        if (dic.ContainsKey(key)) return dic[key];
+        var rs = 0;
+        if (nums[key.index0] + nums[key.index0 + 1] == sum)
+        {
+            rs = Math.Max(rs, 1 + MaxOperations((key.index0 + 2, key.index1), dic, sum, nums));
+        }
+        if (nums[key.index0] + nums[key.index1] == sum)
+        {
+            rs = Math.Max(rs, 1 + MaxOperations((key.index0 + 1, key.index1 - 1), dic, sum, nums));
+        }
+        if (nums[key.index1 - 1] + nums[key.index1] == sum)
+        {
+            rs = Math.Max(rs, 1 + MaxOperations((key.index0, key.index1 - 2), dic, sum, nums));
+        }
+        if (!dic.ContainsKey(key)) dic.Add(key, rs);
+        return rs;
+    }
+}
