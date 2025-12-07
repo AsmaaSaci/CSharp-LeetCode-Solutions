@@ -1,0 +1,19 @@
+public class Solution {
+    public int FindWinningPlayer(int[] skills, int k) {
+        int winner = 0;
+        int win_count = 0 ;
+        for(int i = 1; i < skills.Length ; i++){
+            if(skills[winner]>skills[i]){
+                win_count++;
+            }
+            else{
+                winner=i;
+                win_count=1;
+            }
+            if(win_count==k){
+                return winner;
+            }
+        }
+        return winner;
+    }
+}
