@@ -1,0 +1,19 @@
+public class Solution {
+    public long MaxScore(int[] a, int[] b) {
+        long[] dp = new long[5];
+        dp[0] = 0; // no chosen elements result is 0
+        for (int j = 1; j <= 4; j++) 
+            dp[j] = long.MinValue;
+        long result = long.MinValue;
+        for (int i = 0; i < b.Length; i++) {
+            for (int j = 4; j >= 1; j--) {
+                if (j > (i + 1)) continue;
+                dp[j] = Math.Max(dp[j-1] + b[i] * (long)a[j-1], dp[j]);     
+                if (j == 4) {
+                    result = Math.Max(result, dp[j]);
+                }
+            }
+        }
+        return result;
+    }
+}
