@@ -1,0 +1,54 @@
+public class Solution {
+    public int FindChampion(int n, int[][] edges) {
+        var graph = new List<int>[n];
+        int[] inDegree = new int[n];
+        for (int i = 0; i < n; i++) {
+            graph[i] = new List<int>();
+        }
+        
+        foreach (var edge in edges) {
+            int u = edge[0], v = edge[1];
+            graph[u].Add(v);
+            inDegree[v]++;
+        }
+        var candidates = new List<int>();
+        foreach (int i in Enumerable.Range(0, n)) {
+            if (inDegree[i] == 0) {
+                candidates.Add(i);
+            }
+        }
+        if (candidates.Count != 1) {
+            return -1;
+        }
+        
+        int candidate = candidates[0];
+        if (!CanReachAllNodes(candidate, graph, n)) {
+            return -1;
+        }
+        
+        return candidate;
+    }
+    private bool CanReachAllNodes(int start, List<int>[] graph, int n) {
+        var visited = new bool[n];
+        var stack = new Stack<int>();
+        stack.Push(start);
+        int visitedCount = 0;
+        
+        while (stack.Count > 0) {
+            int node = stack.Pop();
+            if (visited[node]) {
+                continue;
+            }
+            visited[node] = true;
+            visitedCount++;
+            
+            foreach (var neighbor in graph[node]) {
+                if (!visited[neighbor]) {
+                    stack.Push(neighbor);
+                }
+            }
+        }
+        
+        return visitedCount == n;
+    }
+}
