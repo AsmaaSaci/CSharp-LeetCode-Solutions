@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public int CountDays(int days, int[][] meetings) {
+        Array.Sort(meetings, (a, b) => a[0] - b[0]);
+        List<int[]> merged = new List<int[]>();
+
+        foreach (var meet in meetings) {
+            if (merged.Count == 0 || meet[0] > merged[^1][1]) {
+                merged.Add(meet);
+            } else {
+                merged[^1][1] = Math.Max(merged[^1][1], meet[1]);
+            }
+        }
+
+        int count = merged[0][0] - 1;
+        for (int i = 1; i < merged.Count; i++) {
+            count += merged[i][0] - merged[i - 1][1] - 1;
+        }
+
+        count += days - merged[^1][1];
+        return count;
+    }
+}
