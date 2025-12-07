@@ -1,0 +1,20 @@
+public class Solution {
+    public long DistributeCandies(int n, int limit)
+    {
+        long ways = 0;
+
+        for (int i = 0; i <= Math.Min(n, limit); i++)
+        {
+            int left = n - i;
+
+            int end = Math.Min(limit, left);
+            int start = Math.Max(0, left - end);
+
+            if (start > limit) continue;
+
+            ways += (long)(end - start) + 1;
+        }
+
+        return Math.Max(0L, ways);
+    }
+}
