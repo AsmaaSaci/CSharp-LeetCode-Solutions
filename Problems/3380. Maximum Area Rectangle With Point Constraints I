@@ -1,0 +1,35 @@
+public class Solution {
+    public int MaxRectangleArea(int[][] points) {
+        int rs = -1;
+        var dict = new Dictionary<(int, int), int>();
+        for(int i = 0; i < points.Length; i++)
+            dict.Add((points[i][0], points[i][1]), i);
+        for(int i = 0; i < points.Length; i++){
+            for(int j = i + 1; j < points.Length; j++){
+                if(points[i][0] != points[j][0] && points[i][1] != points[j][1]){
+                    var temp1 = (points[i][0], points[j][1]);
+                    var temp2 = (points[j][0], points[i][1]);
+                    if(dict.ContainsKey(temp1) && dict.ContainsKey(temp2)){
+                        var idx1 = dict[temp1]; var idx2 = dict[temp2];
+                        int k = 0;
+                        for(k = 0; k < points.Length; k++){
+                            if(k != i && k != j && k != idx1 && k != idx2){
+                                if(points[k][0] >= Math.Min(points[i][0], points[j][0])
+                                    && points[k][0] <= Math.Max(points[i][0], points[j][0]) 
+                                    && points[k][1] >= Math.Min(points[i][1], points[j][1])
+                                    && points[k][1] <= Math.Max(points[i][1], points[j][1]))
+                                    break;
+                            }
+                        }
+                        if(k == points.Length){
+                            var a = Math.Pow(points[i][0] - temp1.Item1, 2) + Math.Pow(points[i][1] - temp1.Item2, 2);
+                            var b = Math.Pow(points[i][0] - temp2.Item1, 2) + Math.Pow(points[i][1] - temp2.Item2, 2);
+                            rs = Math.Max(rs, (int)(Math.Sqrt(a) * Math.Sqrt(b)));
+                        }
+                    }
+                }
+            }
+        }
+        return rs;
+    }
+}
