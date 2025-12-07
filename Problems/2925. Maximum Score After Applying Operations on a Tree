@@ -1,0 +1,48 @@
+public class Solution
+{
+    public long MaximumScoreAfterOperations(int[][] edges, int[] values)
+    {
+        var directedEdges = new Dictionary<int, List<int>>();
+
+        foreach (var e in edges)
+        {
+            if (!directedEdges.ContainsKey(e[0]))
+                directedEdges[e[0]] = new List<int>();
+            directedEdges[e[0]].Add(e[1]);
+
+            if (!directedEdges.ContainsKey(e[1]))
+                directedEdges[e[1]] = new List<int>();
+            directedEdges[e[1]].Add(e[0]);
+        }
+
+        return Score(directedEdges, values, 0, new bool[values.Length], out long sum);
+    }
+
+    public long Score(Dictionary<int, List<int>> edges, int[] values, int root, bool[] path, out long sumValues)
+    {
+        var rootValue = values[root];
+        long sumScores = 0;
+        sumValues = rootValue;
+        long solution = 0;
+
+        path[root] = true;
+        var children = edges[root].Where(ch => !path[ch]);
+
+        if (children.Any())
+        {
+            long sumChildValues = 0;
+
+            foreach (var child in children)
+            {
+                sumScores += Score(edges, values, child, path, out long subSum);
+                sumChildValues += subSum;
+            }
+
+            sumValues += sumChildValues;
+            solution = Math.Max(rootValue + sumScores, sumChildValues);
+        }
+
+        path[root] = false;
+        return solution;
+    }
+}
