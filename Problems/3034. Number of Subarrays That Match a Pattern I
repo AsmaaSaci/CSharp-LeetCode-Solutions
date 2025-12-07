@@ -1,0 +1,7 @@
+public class Solution {
+    public int CountMatchingSubarrays(int[] nums, int[] pattern) {
+       	int n = nums.Length, m = pattern.Length;
+		return Enumerable.Range(0, n - m).Where(i => nums.Skip(1).Select((x, i) => x == nums[i] ? 0 : x > nums[i] ? 1 : -1)
+			.Skip(i).Take(m).SequenceEqual(pattern.Select(x => x == -1 ? -1 : x))).Count(); 
+    }
+}
