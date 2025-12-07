@@ -1,0 +1,25 @@
+public class Solution {
+    public long MaxEnergyBoost(int[] energyDrinkA, int[] energyDrinkB)
+    {
+        long prev2hrA = energyDrinkA[0];
+        long prev1hrA = prev2hrA + energyDrinkA[1];
+        long prev2hrB = energyDrinkB[0];
+        long prev1hrB = prev2hrB + energyDrinkB[1];
+        long nowA, nowB;
+
+        for (int i = 2; i < energyDrinkA.Length; i++)
+        {
+            nowA = long.Max(prev1hrA, prev2hrB) + energyDrinkA[i];
+            nowB = long.Max(prev1hrB, prev2hrA) + energyDrinkB[i];
+
+            // Move
+            prev2hrA = prev1hrA;
+            prev2hrB = prev1hrB;
+            prev1hrA = nowA;
+            prev1hrB = nowB;
+        }
+
+        return long.Max(prev1hrA, prev1hrB);
+
+    }
+}
