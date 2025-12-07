@@ -1,0 +1,24 @@
+public class Solution {
+    public bool FindSafeWalk(IList<IList<int>> grid, int health) {
+        int m = grid.Count, n = grid[0].Count;
+        int[] dir = {1, 0, -1, 0, 1};
+        var arr = new int[m, n];
+        arr[0, 0] = health - grid[0][0];
+        Queue<(int x, int y, int h)> q = new();
+        q.Enqueue((0,0,health - grid[0][0]));
+        while(q.Count>0) {
+            var p = q.Dequeue();
+            for(int i=0;i<4;i++) {
+                int x = p.x+dir[i], y = p.y+dir[i+1];
+                if (x>=0 && x<m && y>=0 && y<n) {
+                    int h = p.h - grid[x][y];
+                    if (h>arr[x, y]) {
+                        arr[x, y]=h;
+                        q.Enqueue((x, y, h));
+                    }
+                }
+            }
+        }
+        return arr[m-1, n-1]>0;
+    }
+}
