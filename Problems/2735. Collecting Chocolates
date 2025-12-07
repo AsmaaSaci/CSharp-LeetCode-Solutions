@@ -1,0 +1,20 @@
+public class Solution {
+
+    public long MinCost(int[] nums, int x) {
+        int N = nums.Length;
+        var res = new long[N];
+
+        for (int i = 0; i < N; i++) {
+            res[i] += i * (long)x;
+            int cur = nums[i];
+
+            for (int k = 0; k < N; k++) {
+                cur = Math.Min(cur, nums[(i - k + N) % N]);
+                res[k] += cur;
+            }
+        }
+
+        return res.Min();
+    }
+
+}
