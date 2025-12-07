@@ -1,0 +1,6 @@
+public class Solution {
+    public int MinOperations(int[] nums) => nums
+        .GroupBy(n => n)
+        .Select(grp => grp.Count())
+        .Aggregate(0, (sum, cnt) => cnt == 1 || sum == -1 ? -1 : sum + (cnt + 2) / 3);
+}
