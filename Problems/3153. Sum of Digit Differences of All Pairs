@@ -1,0 +1,37 @@
+public class Solution {
+    public long SumDigitDifferences(int[] nums) {
+        List<int[]> matrix = new List<int[]>();
+
+        int n = nums[0];
+        
+        // Process the first number to initialize the matrix.
+        while (n != 0) {
+            // Add a new array for each digit position.
+            matrix.Add(new int[10]);
+            // Set the corresponding digit in the array.
+            matrix[matrix.Count - 1][n % 10] = 1;
+            // Move to the next digit.
+            n = n / 10;
+        }
+
+        long sum = 0;
+
+        // Iterate through the rest of the numbers in the array.
+        for (int i = 1; i < nums.Length; i++) {
+            n = nums[i];
+            int j = 0;
+            // Process each digit of the current number.
+            while (n != 0) {
+                // Calculate the sum of differences based on previous occurrences of the digit.
+                sum += (i - matrix[j][n % 10]);
+                // Increment the count of the digit at the current position.
+                matrix[j][n % 10] += 1;
+                // Move to the next digit.
+                n = n / 10;
+                j++;
+            }
+        }
+        
+        return sum;
+    }
+}
