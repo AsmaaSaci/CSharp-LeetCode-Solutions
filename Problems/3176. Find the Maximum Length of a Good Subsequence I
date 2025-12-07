@@ -1,0 +1,44 @@
+public class Solution {
+    public int MaximumLength(int[] nums, int k) {
+        int len = nums.Length;
+        if (len == 0 || k > len) 
+            return 0;
+
+        int[][] dp = new int[len][];
+        for (int i = 0; i < len; ++i)
+        {
+            dp[i] = new int[k + 1];
+        }
+
+        for (int i = 0; i < len; ++i) 
+            dp[i][0] = 1;
+
+        int res = 1;
+        Dictionary<int, int> dict = new();
+        for (int j = 0; j <= k; ++j)
+        {
+            int curMax = 1;
+            dict.Clear();
+            dict[nums[0]] = 0;
+
+            for (int i = 1; i < len; ++i)
+            {
+                dp[i][j] = 1;
+                if (i > 0 && j > 0) 
+                    curMax = Math.Max(curMax, dp[i - 1][j - 1] + 1); // can add one more item in case j < k
+
+                dp[i][j] = Math.Max(dp[i][j], curMax);
+
+                if (dict.ContainsKey(nums[i]))
+                {
+                    dp[i][j] = Math.Max(dp[i][j], dp[dict[nums[i]]][j] + 1); // dup with pre item
+                }
+
+                dict[nums[i]] = i; // update nums[i]<->i pair
+                res = Math.Max(res, dp[i][j]);
+            }
+        }
+
+        return res;
+    }
+}
