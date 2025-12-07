@@ -1,0 +1,41 @@
+public class Solution {
+    private long[,] dp2930;
+    private int mod = 1000000007;
+    private long BackTracking2930(int i, int mask, int n)
+    {
+        if (i == n)
+            return mask == 15 ? 1 : 0;
+
+        if (dp2930[i, mask] != -1)
+            return dp2930[i, mask];
+
+        // pick L/T:
+        long ways = BackTracking2930(i+1, mask |8, n) + BackTracking2930(i+1, mask | 1, n);
+
+        if ((mask & 4) != 0)
+            ways += BackTracking2930(i + 1, mask | 2, n);
+        else
+            ways += BackTracking2930(i+1, mask |4, n);
+
+       // ways %= mod;
+        // Choose other 23 chars:
+        ways += (23 * BackTracking2930(i + 1, mask, n)%mod) % mod;
+        ways %= mod;
+        dp2930[i, mask] = (int)ways;
+        return dp2930[i, mask];
+    }
+
+    public int StringCount(int n) {
+       dp2930 = new long[n, 16];
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < 16; j++)
+            {
+                dp2930[i, j] = -1;
+            }
+        }
+
+        int res = (int)BackTracking2930(0, 0, n);
+        return res; 
+    }
+}
