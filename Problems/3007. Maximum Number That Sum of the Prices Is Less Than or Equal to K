@@ -1,0 +1,24 @@
+public class Solution {
+    public long FindMaximumNumber(long k, int x) {
+        long res = 0;
+        int count = 0;
+        for (int i = 59; i >= 1; i--)
+        {
+            long c = Contribute(x, i) + count * (long)Math.Pow(2, i - 1);
+            if (c <= k) {
+                res += ((long)1 << (i - 1));
+                k -= c;
+                if (i % x == 0) count++;
+            }
+        }
+        return res;  
+    }
+    
+    private long Contribute(int x, int b) {
+        int p = (b - 1) / x;
+        long c = 0;
+        if (b >= 2) c += p * (long) Math.Pow(2, b - 2);
+        if (b % x == 0) c += 1;
+        return c;
+    }
+}
