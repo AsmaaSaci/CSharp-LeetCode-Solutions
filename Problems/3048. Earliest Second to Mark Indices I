@@ -1,0 +1,57 @@
+public class Solution {
+        public int EarliestSecondToMarkIndices(int[] nums, int[] changeIndices)
+        {
+            if (nums.Length > changeIndices.Length)
+                return -1;
+
+            var left = nums.Length - 1;
+            var right = changeIndices.Length;
+
+            while (left < right)
+            {
+                var mid = left + (right - left) / 2;
+
+                if (Check(nums, changeIndices, mid))
+                    right = mid;
+                else
+                    left = mid + 1;
+            }
+
+            return left == changeIndices.Length ? -1 : left + 1;//index to seconds
+        }
+
+        private bool Check(int[] nums, int[] changeIndices, int time)
+        {
+            var mark = Enumerable.Repeat(-1, nums.Length).ToArray();
+            var available = 0;
+
+            for (int i = 0; i <= time; i++)
+            {
+                mark[changeIndices[i] - 1] = i;
+            }
+
+            foreach (var m in mark)
+            {
+                if (m < 0)
+                    return false;
+            }
+
+            for (int i = 0; i <= time; i++)
+            {
+                var idx = changeIndices[i] - 1;
+
+                if (i == mark[idx])
+                {
+                    if (nums[idx] > available)
+                        return false;
+                    available -= nums[idx];
+                }
+                else
+                {
+                    available++;
+                }
+            }
+
+            return true;
+        }
+}
