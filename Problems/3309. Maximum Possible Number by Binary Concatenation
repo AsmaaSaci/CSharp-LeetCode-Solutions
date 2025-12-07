@@ -1,0 +1,7 @@
+public class Solution {
+    public int MaxGoodNumber(int[] nums) {
+        var bits = nums.Select(x => Convert.ToString(x, 2)).ToArray();
+        Array.Sort(bits, (a,b)=> -(a+b).CompareTo(b+a));
+        return Convert.ToInt32(string.Concat(bits), 2);
+    }
+}
