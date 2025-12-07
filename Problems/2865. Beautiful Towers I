@@ -1,0 +1,36 @@
+public class Solution {
+    public long MaximumSumOfHeights(int[] heights) {
+        Dictionary<int, int[]> indexOfHieghts = new Dictionary<int, int[]>();
+
+        for (int peakIndex = 0; peakIndex < heights.Length; peakIndex++)
+        {
+            int[] heightsCopy = new int[heights.Length];
+            Array.Copy(heights, heightsCopy, heights.Length);
+
+            //left of peak
+            for (int i = peakIndex - 1; i >= 0; i--)
+            {
+                if (heightsCopy[i] > heightsCopy[i + 1])
+                    heightsCopy[i] = heightsCopy[i + 1];
+            }
+
+            //right of peak
+            for (int i = peakIndex + 1; i < heightsCopy.Length; i++)
+            {
+                if (heightsCopy[i] > heightsCopy[i - 1])
+                    heightsCopy[i] = heightsCopy[i - 1];
+            }
+
+            indexOfHieghts.Add(peakIndex, heightsCopy);
+        }
+
+        //find the largest sum
+        List<long> sums = new List<long>();
+        foreach (KeyValuePair<int, int[]> indexOfHieght in indexOfHieghts) 
+        {
+            sums.Add(indexOfHieght.Value.Select(i => (long)i).Aggregate((a, b) => a + b));
+        }
+
+        return sums.Max();
+    }
+}
