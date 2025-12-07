@@ -1,0 +1,38 @@
+public class Solution {
+    public int CountPairs(int[] nums) {
+        var counter = 0;
+
+        Dictionary<int,List<int>> dict = new ();
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (!dict.ContainsKey(nums[i])) dict[nums[i]] = CalcVariants(nums[i]);
+        }
+
+        for (int i = 0; i < nums.Length-1; i++)
+        {
+            for (int j = i+1; j < nums.Length; j++)
+            {
+                if (dict[nums[i]].Contains(nums[j]) || dict[nums[j]].Contains(nums[i])) counter++;
+            }
+        }
+
+        return counter;
+    }
+
+    private List<int> CalcVariants(int n)
+    {
+        var m = n.ToString().ToCharArray();
+
+        List<int> result = [n];
+        for (int i = 0; i < m.Length-1; i++)
+        {
+            for (int j = i+1; j < m.Length; j++)
+            {
+                (m[i],m[j]) = (m[j],m[i]);
+                result.Add(int.Parse(m));
+                (m[j],m[i]) = (m[i],m[j]);
+            }
+        }
+        return result;
+    }
+}
