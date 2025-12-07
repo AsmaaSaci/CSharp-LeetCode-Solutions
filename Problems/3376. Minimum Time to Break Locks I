@@ -1,0 +1,42 @@
+public class Solution {
+    public int FindMinimumTime(IList<int> strength, int K) {
+        var rs = int.MaxValue;
+        var combinations = GetAllombinations(strength.Count);
+        for (int i = 0; i < combinations.Count; i++)
+        {
+            var rs0 = FindMinimumTime(combinations[i], strength, K);
+            rs = Math.Min(rs, rs0);
+        }
+        return rs;
+    }
+    private int FindMinimumTime(List<int> combination, IList<int> strength, int K)
+    {
+        var rs = 0;
+        var X = 1;
+        for (int i = 0; i < combination.Count; i++)
+        {
+            var rs0 = strength[combination[i]] / X;
+            if (strength[combination[i]] % X > 0) rs0++;
+            rs += rs0;
+            X += K;
+        }
+        return rs;
+    }
+    private List<List<int>> GetAllombinations(int len)
+    {
+        if (len == 1) return new List<List<int>> { new List<int> { 0} };
+        var val = len - 1;
+        var prev = GetAllombinations(len - 1);
+        var rs = new List<List<int>>();
+        for (int i = 0; i < prev.Count; i++)
+        {
+            for (int j = 0; j <= prev[i].Count; j++)
+            {
+                var item = new List<int> (prev[i]);
+                item.Insert(j, val);
+                rs.Add(item);
+            }
+        }
+        return rs;
+    }
+}
