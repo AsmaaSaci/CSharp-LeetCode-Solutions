@@ -1,0 +1,41 @@
+public class Solution
+{
+    public bool CanSortArray(int[] nums)
+    {
+        int currMax = 0;  // Max item from the current group
+        int currBits = 0; // The number of bits of the current group
+        int prevMax = 0;  // Previous max item from the previous group
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int bitCount = CountSetBits(nums[i]);
+            if (bitCount != currBits)
+            {
+                // Switching to a new group
+                currBits = bitCount;
+                prevMax = currMax;
+            }
+
+            // Verify that the current item is bigger than
+            // the maximal item from the previous group
+            if (nums[i] < prevMax)
+                return false;
+
+            currMax = Math.Max(currMax, nums[i]);
+        }
+
+        return true;
+    }
+
+    // Helper function to count the number of set bits in an integer
+    private int CountSetBits(int num)
+    {
+        int count = 0;
+        while (num > 0)
+        {
+            count += (num & 1);
+            num >>= 1;
+        }
+        return count;
+    }
+}
