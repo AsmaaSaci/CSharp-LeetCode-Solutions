@@ -1,0 +1,16 @@
+public class Solution {
+    public long MinIncrementOperations(int[] nums, int k) {
+        long res = 0;
+        int len = nums.Length;
+        long[] dp = new long[3];
+        foreach(int cur in nums)
+        {
+            long curDP = Math.Min(dp[0], Math.Min(dp[1], dp[2])) + (cur < k ? k-cur : 0);
+            dp[0] = dp[1];
+            dp[1] = dp[2];
+            dp[2] = curDP;
+        }
+
+        return Math.Min(dp[0], Math.Min(dp[1], dp[2]));
+    }
+}
