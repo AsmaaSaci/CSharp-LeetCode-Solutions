@@ -1,0 +1,35 @@
+public class Solution {
+    public long[] CountStableSubarrays(int[] nums, int[][] queries) {
+        int n = nums.Length;
+
+        var pref = new long[n];
+        long streak = 1;
+        pref[0] = 1;
+
+        for (int i = 1; i < n; i++) {
+            streak = nums[i] >= nums[i - 1] ? streak + 1 : 1;
+            pref[i] = pref[i - 1] + streak;
+        }
+
+        var inv = new int[n];
+        inv[n - 1] = n;
+        for (int i = n - 2; i >= 0; i--)
+            inv[i] = nums[i] > nums[i + 1] ? i + 1 : inv[i + 1];
+
+        var result = new long[queries.Length];
+
+        for (int i = 0; i < queries.Length; i++) {
+            int l = queries[i][0];
+            int r = queries[i][1];
+            int b = inv[l];
+
+            result[i] = b > r
+                ? Tri(r - l + 1)
+                : Tri(b - l) + (pref[r] - pref[b - 1]);
+        }
+
+        return result;
+    }
+
+    private long Tri(int x) => (long)x * (x + 1) / 2;
+}
