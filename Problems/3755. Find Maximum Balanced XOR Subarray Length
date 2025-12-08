@@ -1,0 +1,25 @@
+public class Solution {
+    public int MaxBalancedSubarray(int[] nums) {
+        var rs = 0;
+        var dic = new Dictionary<(int xor, int evenOddDiff), int>();
+        dic.Add((0, 0), -1 );
+        var xor = nums[0];
+        var evenOddDiff = nums[0] % 2 == 0 ? 1 : -1;
+        dic.Add((xor, evenOddDiff), 0);
+        for (int i = 1; i < nums.Length; i++)
+        {
+            xor ^= nums[i];
+            evenOddDiff += nums[i] % 2 == 0 ? 1 : -1;
+            var key = (xor, evenOddDiff);
+            if (dic.ContainsKey(key))
+            {
+                rs = Math.Max(rs, i - dic[key]);
+            }
+            else
+            {
+                dic.Add(key, i);
+            }
+        }
+        return rs;
+    }
+}
