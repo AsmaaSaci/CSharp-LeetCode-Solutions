@@ -1,0 +1,52 @@
+public class Solution {
+    public bool CompletePrime(int num) {
+        var list = GetAllDigits2(num);
+        if (!CheckPrefix(list)) return false;
+        var rs = CheckSuffix(list);
+        return rs;
+    }
+    private bool CheckSuffix(List<int> list)
+    {
+        var suffix = 0;
+        var mult = 1;
+        for (int i = list.Count - 1; i >= 0; i--)
+        {
+            suffix = list[i] * mult + suffix;
+            if (!IsPrime3(suffix)) return false;
+            mult *= 10;
+        }
+        return true;
+    }
+    private bool CheckPrefix(List<int> list)
+    {
+        var prefix = 0;
+        for (int i = 0; i < list.Count; i++)
+        {
+            prefix = prefix * 10 + list[i];
+            if (!IsPrime3(prefix)) return false;
+        }
+        return true;
+    }
+    private List<int> GetAllDigits2(int n)
+    {
+        var rs = new List<int>();
+        while (n > 0)
+        {
+            var digit = n % 10;
+            rs.Insert(0, digit);
+            n /= 10;
+        }
+        return rs;
+    }
+    private bool IsPrime3(int n)
+    {
+        if (n <= 1) return false;
+        if (n == 2) return true;
+        if (n % 2 == 0) return false;
+        for (int i = 3; i * i <= n; i += 2)
+        {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+}
