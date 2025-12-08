@@ -1,0 +1,29 @@
+public class Solution {
+    public long MaximumProduct(int[] nums, int m) {
+        int len = nums.Length;
+        long res = long.MinValue;
+        int[] rightMax = new int[len], rightMin = new int[len];
+
+        for(int i = len-1; i >= 0; i--)
+        {
+            int cur = nums[i];
+            rightMax[i] = Math.Max(cur, i == len-1 ? int.MinValue : rightMax[i+1]);
+            rightMin[i] = Math.Min(cur, i == len-1 ? int.MaxValue : rightMin[i+1]);
+        }
+
+        for(int i = 0; i < len; i++)
+        {
+            int nextId = i+ m-1;
+            if(nextId >= len)
+                break;
+
+            long cur = nums[i];
+            if(cur >= 0)
+                res = Math.Max(res, cur*rightMax[nextId]);
+            else
+                res = Math.Max(res, cur*rightMin[nextId]);
+        }
+
+        return res;
+    }
+}
