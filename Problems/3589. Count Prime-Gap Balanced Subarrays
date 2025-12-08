@@ -1,0 +1,64 @@
+public record struct ValPos(int Val, int Pos) :IComparable<ValPos> {
+    public int CompareTo(ValPos other) {
+        if (Val == other.Val) {
+            return Pos.CompareTo(other.Pos);
+        }
+        return Val.CompareTo(other.Val);
+    }
+}
+public class Solution {
+    public int PrimeSubarray(int[] nums, int k) {
+        int mx = nums[0];
+        foreach(int n in nums) {
+            mx = Math.Max(n, mx);
+        }
+        int[] sieve = new int[mx + 1];
+        EratostheneSieve(sieve, mx);
+        SortedSet<ValPos> ms = new();
+        SortedSet<int> positions = new();
+        int lst = 0, result = 0;
+        for(int i = 0; i < nums.Length; i++) {
+            if (sieve[nums[i]] == 0) {
+                if (ms.Count >= 2) {
+                    int maxabs = positions.Max;
+                    positions.Remove(positions.Max);
+                    result += (positions.Max - lst) + 1;
+                    positions.Add(maxabs);
+                }
+                continue;
+            }
+            
+            ms.Add(new ValPos(nums[i], i));
+            while (lst < i && ms.Max.Val - ms.Min.Val > k) {
+                if (sieve[nums[lst]] == 0) {
+                    lst++;
+                    continue;
+                }
+                
+                ms.Remove(new ValPos(nums[lst], lst));
+                positions.Remove(lst);
+                
+                lst++;
+            }
+            if (ms.Count >= 2) {
+                result += (positions.Max - lst) + 1;
+            }
+            positions.Add(i);
+        }
+
+        return result;
+    }
+    public void EratostheneSieve(int[] sieve, int n) {
+        for (int i = 0; i <= n; i++) {
+            sieve[i] = i % 2 == 0 ? 0 : 1;
+        }
+        sieve[1] = 0;
+        sieve[2] = 1;
+        for (int i = 3; i < n; i += 2) {
+            if (sieve[i] == 0) continue;
+            for (int j = 2; j * i <= n; j++) {
+                sieve[i * j] = 0;
+            }
+        }
+    }
+}
