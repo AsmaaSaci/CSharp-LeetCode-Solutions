@@ -1,0 +1,23 @@
+public class Solution {
+    public int MaxBalancedShipments(int[] weight) {
+        int first = 0;
+        int last = 1;
+        int maxShipmentsPossible = 0;
+        int maxShipment = Math.Max(weight[first], weight[last]);
+        while(last < weight.Length) {
+            if(weight[last] < maxShipment) {
+                first = last +1;
+                last = first +1;
+                maxShipmentsPossible++;
+                if(last < weight.Length)
+                    maxShipment = Math.Max(weight[first], weight[last]);
+            }
+            else {
+                last++;
+                if(last < weight.Length)
+                    maxShipment = Math.Max(maxShipment, weight[last]);
+            }
+        }
+        return maxShipmentsPossible;
+    }
+}
