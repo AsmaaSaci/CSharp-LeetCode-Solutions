@@ -1,0 +1,43 @@
+public class Solution {
+    private int mod = 1000000007;
+    Dictionary<int, int[]> dict = new();
+    private int[] res;
+    private int DFS(int node)
+    {
+       
+        if(!dict.ContainsKey(node))
+            return 1;
+
+        if(res[node] > 0)
+            return res[node];
+        int nextNode = dict[node][0], conv = dict[node][1];
+        long val = (long)conv * DFS(nextNode);
+        val %= mod;
+        res[node] = (int)val;
+        return res[node];
+    }
+
+    private void BuildConv(int[][] conv)
+    {
+        foreach(int[] cur in conv)
+        {
+            int from = cur[0], to = cur[1], times = cur[2];
+            dict.Add(to, [from, times]);
+        }
+    }
+    public int[] BaseUnitConversions(int[][] conversions) {
+        int n = conversions.Length+1;
+        res = Enumerable.Repeat(-1, n).ToArray();
+
+        // Build conversions:
+        BuildConv(conversions);
+
+        for(int i = 0; i < n; i++)
+        {
+            if(res[i] < 0)
+                res[i] = DFS(i);
+        }
+
+        return res;
+    }
+}
