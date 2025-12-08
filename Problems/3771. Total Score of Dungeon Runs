@@ -1,0 +1,49 @@
+public class Solution {
+    public long TotalScore(int hp, int[] damage, int[] requirement)
+    {
+        var dungeonsQueue = new PriorityQueue<(int Index, long Value), long>();
+
+        var totalDamage = 0L;
+
+        for (int i = 0; i < damage.Length; i++)
+        {
+            totalDamage += damage[i];
+
+            var computed = 0L + requirement[i] + totalDamage;
+
+            dungeonsQueue.Enqueue((i, computed), computed);
+        }
+
+        var matchingDungeons = new PriorityQueue<int, int>();
+
+        long currentHp = hp;
+        var totalScore = 0L;
+
+        for (int i = 0; i < damage.Length; i++)
+        {
+            if (i > 0)
+            {
+                currentHp += damage[i - 1];
+            }
+
+            while (matchingDungeons.Count > 0 && matchingDungeons.Peek() < i)
+            {
+                matchingDungeons.Dequeue();
+            }
+
+            while (dungeonsQueue.Count > 0 && dungeonsQueue.Peek().Value <= currentHp)
+            {
+                var (index, value) = dungeonsQueue.Dequeue();
+
+                if (index >= i)
+                {
+                    matchingDungeons.Enqueue(index, index);
+                }
+            }
+
+            totalScore += matchingDungeons.Count;
+        }
+
+        return totalScore;
+    }
+}
