@@ -1,0 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Solution {
+    private Dictionary<string, int> memo = new(); // state -> best diff
+
+    public int[] MinDifference(int n, int k) {
+        int[] divs = new int[k];
+        divs[0] = Int32.MaxValue;
+
+        // find all divisors
+        List<int> dd = new();
+        for (int i = 2; i <= n; i++) {
+            while (n % i == 0) {
+                dd.Add(i);
+                n /= i;
+            }
+        }
+
+        int[] c = new int[k];
+        Array.Fill(c, 1);
+        FindMD(ref divs, c, dd, 0);
+
+        return divs;
+    }
+
+    private void FindMD(ref int[] best, int[] curr, List<int> dd, int idx) {
+        if (idx == dd.Count) {
+            if (MDiff(best) > MDiff(curr))
+                Array.Copy(curr, best, curr.Length);
+            return;
+        }
+
+        string key = MakeKey(curr, idx);
+        if (memo.ContainsKey(key)) return;
+
+        int z = dd[idx];
+        for (int i=0; i<curr.Length; i++) {
+            curr[i] *= z;
+            FindMD(ref best, curr, dd, idx + 1);
+            curr[i] /= z;
+        }
+
+        memo[key] = MDiff(curr);
+    }
+
+    private int MDiff(int[] x) {
+        int max = x.Max();
+        int min = x.Min();
+        return max - min;
+    }
+
+    private string MakeKey(int[] arr, int pos) {
+        // sort to normalize permutation states
+        int[] tmp = (int[])arr.Clone();
+        Array.Sort(tmp);
+        return pos + "|" + string.Join(",", tmp);
+    }
+}
