@@ -1,0 +1,53 @@
+public class Solution {
+    private List<int[]>[] BuildGraph(int[][] edges, int n)
+    {
+        List<int[]>[] graph = new List<int[]>[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            graph[i] = new List<int[]>();
+        }
+
+        foreach (int[] edge in edges)
+        {
+            int u = edge[0], v = edge[1], start = edge[2], end = edge[3];
+
+            graph[u].Add([v, start, end]);
+        }
+
+        return graph;
+    }
+
+    public int MinTime(int n, int[][] edges) {
+			List<int[]>[] graph = BuildGraph(edges, n);
+
+			int[] dp = Enumerable.Repeat(int.MaxValue, n).ToArray();
+
+			Queue<(int, int)> que = new();
+			que.Enqueue((0, 0));
+			dp[0] = 0;
+
+			while (que.Count != 0)
+			{
+				(int u, int time) = que.Dequeue();
+				foreach (int[] cur in graph[u])
+				{
+					int v = cur[0], start = cur[1], end = cur[2];
+					int newTime = time;
+					if (newTime > end)
+						continue;
+
+					newTime = Math.Max(newTime, start)+1;
+                    
+					if (newTime < dp[v])
+					{
+						dp[v] = newTime;
+						que.Enqueue((v, newTime));
+					}
+				}
+			}
+
+			return dp[n-1] == int.MaxValue ? -1 : dp[n-1];
+
+    }
+}
