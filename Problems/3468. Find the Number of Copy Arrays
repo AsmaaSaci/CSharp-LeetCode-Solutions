@@ -1,0 +1,14 @@
+public class Solution {
+    public int CountArrays(int[] o, int[][] b) {
+    int d=b[0][0], u=b[0][1];
+    for (int i=1; i< b.Length;i++){
+        int dif= o[i]-o[i-1];
+        d=d+dif;
+        u=u+dif;
+        d=Math.Max(d,b[i][0]);
+         u=Math.Min(u,b[i][1]);
+         if(d>u)return 0;        
+    }
+     return u-d+1;   
+    }
+}
