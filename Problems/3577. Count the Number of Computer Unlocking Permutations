@@ -1,0 +1,25 @@
+public class Solution {
+    private int CalFactorial2(int num)
+    {
+        int mod = (int)Math.Pow(10, 9)+7;
+        long res = 1;
+        for (int i = 2; i <= num; i++)
+        {
+            res = (res * i) % mod;
+        }
+
+        return (int)res;
+    }
+
+    public int CountPermutations(int[] complexity) {
+            int n = complexity.Length;
+			int seen = complexity[0];
+			for (int i = 1; i < n; i++)
+			{
+				if (complexity[i] <= seen)
+					return 0;
+			}
+
+			return CalFactorial2(n - 1);
+    }
+}
