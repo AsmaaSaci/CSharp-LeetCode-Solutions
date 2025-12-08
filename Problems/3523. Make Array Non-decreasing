@@ -1,0 +1,15 @@
+public class Solution {
+    public int MaximumPossibleSize(int[] nums) {
+        int len = nums.Length, pre = 0, res = 0;
+        foreach(int n in nums)
+        {
+            if(pre <= n)
+            {
+                res++;
+                pre = n;
+            }
+        }
+
+        return res;
+    }
+}
