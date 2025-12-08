@@ -1,0 +1,41 @@
+public class Solution {
+    public bool CanMakeEqual(int[] nums, int k) {
+        int len = nums.Length, cnt = k;
+         
+        // pos:
+        int tar = 1, nextV = nums[0];
+        for(int i = 0; i < len-1; i++)
+        {
+            if(nextV != tar)
+            {
+                if(--cnt < 0)
+                    break;
+
+                nextV = nums[i+1] * (-1);
+            }
+            else
+                nextV = nums[i+1];
+        }
+
+        if(nextV == tar && cnt >= 0)
+            return true;
+
+        cnt = k;
+        tar = -1;
+        nextV = nums[0];
+        for(int i = 0; i < len-1; i++)
+        {
+            if(nextV != tar)
+            {
+                if(--cnt < 0)
+                    break;
+
+                nextV = nums[i+1]*(-1);
+            }
+            else
+                nextV = nums[i+1];
+        }
+
+        return nextV == tar && cnt >= 0;
+    }
+}
