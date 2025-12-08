@@ -1,0 +1,8 @@
+public class Solution {
+    public long MaxProduct(int[] nums) => nums.
+        Select(m => Math.Abs(m)).
+        OrderByDescending(m => m).
+        Take(2).
+        Aggregate(1L, (x , y) => x * y)
+         * 100000L;
+}
