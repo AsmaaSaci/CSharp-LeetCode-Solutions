@@ -1,0 +1,12 @@
+for (int i = 0; i < nums.Length; i++)
+{
+    var index = CalculateIndexToInsert(nums[i], bpn);
+    if (nums[i] == bpn[index])
+    {
+        rs[i] = 0;
+    }
+    else
+    {
+        rs[i] = Math.Min(Math.Abs(nums[i] - bpn[index]), Math.Abs(nums[i] - bpn[index + 1]));
+    }
+}
