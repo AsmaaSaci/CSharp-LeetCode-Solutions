@@ -1,0 +1,80 @@
+public class Solution {
+    public bool[] SubsequenceSumAfterCapping(int[] nums, int k) {
+        int n = nums.Length;
+        bool[] res = new bool[n];
+
+        HashSet<int> visited = new();
+        Dictionary<int, int> freq = new();
+        foreach(int cur in nums)
+        {
+            freq.TryAdd(cur, 0);
+            freq[cur]++;
+        }
+
+        List<int> keys = freq.Keys.ToList();
+        keys.Sort();
+        int restLen = n, idx = 0;
+        int findValid = -1;
+        
+        HashSet<int> tmp = new();
+        
+        for(int x = 1; x <= n; x++)
+        {
+            if(findValid >= 0)
+            {
+                res[x-1] = true;
+                continue;
+            }
+            
+           if(idx < keys.Count && keys[idx] == x)
+           {
+                int cnt = freq[x];
+                for(int m = 1; m <= cnt; m++)
+                {
+                    int start = x*m;
+                    if(start > k)
+                        break;
+
+                    tmp.Add(start);
+
+                    foreach(int pre in visited)
+                    {
+                        if(pre+start <= k)
+                            tmp.Add(pre+start);
+                    }
+                }
+
+                if(tmp.Contains(k))
+                    findValid = x-1;
+                else
+                {
+                    restLen -= cnt;
+                    idx++;
+                    visited.UnionWith(tmp);
+                    tmp.Clear();
+                }
+           }
+
+           if(restLen > 0)
+           {
+                for(int i = 1; i <= restLen; i++)
+                {
+                    int start = x*i;
+                    if(start > k)
+                        break;
+
+                    if(start == k || visited.Contains(k-start))
+                    {  
+                        res[x-1] = true;
+                        break;
+                    }
+                }
+           }
+
+           if(findValid >= 0)
+                res[x-1] = true;
+        }
+
+        return res;
+    }
+}
