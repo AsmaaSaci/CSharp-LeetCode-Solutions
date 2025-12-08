@@ -1,0 +1,47 @@
+public class ExamTracker {
+
+    List<(int timeSlot, long examScore)> records = new List<(int, long)>();
+    public ExamTracker()
+    {
+        records.Add((0, 0));
+    }
+    
+    public void Record(int time, int score) {
+        long prevScore = records[^1].examScore;
+        records.Add((time, prevScore + score));
+    }
+
+    public long TotalScore(int startTime, int endTime)
+    {
+        long scoreToRemove = GetNearestScore(startTime - 1);
+        long totalScore = GetNearestScore(endTime);
+        return totalScore - scoreToRemove;
+    }
+    private long GetNearestScore(int time)
+    {
+        int low = 0;
+        int high = records.Count - 1;
+        long closestScore = 0;
+
+        while (low <= high)
+        {
+            int mid = low + (high - low) / 2;
+            var (timeSlot, examScore) = records[mid];
+            if (timeSlot == time)
+            {
+                return examScore;
+            }
+            if (timeSlot > time)
+            {
+                high = mid - 1;
+            }
+            else
+            {
+                closestScore = examScore;
+                low = mid + 1;
+            }
+        }
+
+        return closestScore;
+    }
+}
