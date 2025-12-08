@@ -1,0 +1,31 @@
+public class Solution {
+    public int[] LexSmallestNegatedPerm(int n, long target) {
+        var totalSum = (n + 1) * (long)n / 2;
+        var sum = totalSum - target;
+        if (totalSum < target) return new int[0];
+        if (sum % 2 == 1) return new int[0];
+        sum /= 2;
+        var negSet = new HashSet<int>();
+        var list = new List<int>();
+        for (int i = n; i >= 1; i--)
+        {
+            if (sum - i >= 0)
+            {
+                negSet.Add(i);
+                list.Add(-i);
+                sum -= i;
+            }
+            if (sum == 0) break;
+        }
+        if (sum != 0) return new int[0];
+        for (int i = 1; i <= n; i++)
+        {
+            if (!negSet.Contains(i))
+            {
+                list.Add(i);
+            }
+        }
+        var rs = list.ToArray();
+        return rs;
+    }
+}
