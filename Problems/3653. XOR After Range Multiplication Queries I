@@ -1,0 +1,21 @@
+public class Solution {
+    public int XorAfterQueries(int[] nums, int[][] queries) {
+            foreach (var query in queries)
+            {
+                var idx = query[0];
+                while (idx < nums.Length && idx <= query[1])
+                {
+                    nums[idx] = (int)((1L * nums[idx] * query[3]) % 1000000007);
+                    idx += query[2];
+                }
+            }
+
+            var result = nums[0];
+            for (var i = 1; i < nums.Length; i++)
+            {
+                result ^= nums[i];
+            }
+
+            return result;
+    }
+}
