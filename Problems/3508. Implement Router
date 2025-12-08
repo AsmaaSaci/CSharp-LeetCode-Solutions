@@ -1,0 +1,115 @@
+public class Router
+{
+    private readonly int memoryLimit;
+
+    private readonly LinkedList<(int Source, int Destination, int Timestamp)> routes =[];
+
+    private readonly Dictionary<int, LinkedList<int>> destinationRoutes = [];
+
+    public Router(int memoryLimit)
+    {
+        this.memoryLimit = memoryLimit;
+    }
+
+    public bool AddPacket(int source, int destination, int timestamp)
+    {
+        var route = (source, destination, timestamp);
+        var last = routes.Last;
+
+        while (last != null && last.Value.Timestamp == timestamp)
+        {
+            if (last.Value.Source == source && last.Value.Destination == destination)
+            {
+                return false;
+            }
+            last = last.Previous;
+        }
+
+        routes.AddLast(route);
+        if (!destinationRoutes.ContainsKey(destination))
+        {
+            var list = new LinkedList<int>();
+            list.AddFirst(timestamp);
+            destinationRoutes[destination] = list;
+        }
+        else
+        {
+            destinationRoutes[destination].AddLast(timestamp);
+        }
+        if (routes.Count > memoryLimit)
+        {
+            var rmvRoute = routes.First.Value;
+            RemoveRoute(rmvRoute);
+        }
+        return true;
+    }
+
+    public int[] ForwardPacket()
+    {
+        if (routes.First != null)
+        {
+            var route = routes.First.Value;                    
+            RemoveRoute(route);
+            return [route.Source, route.Destination, route.Timestamp];
+        }
+        return [];
+    }
+
+    public int GetCount(int destination, int startTime, int endTime)
+    {
+        if (destinationRoutes.TryGetValue(destination, out var times))
+        {
+            var start = 0;
+            var end = times.Count - 1;
+            var first = times.First;
+            var last = times.Last;
+            var findStart = false;
+            var findEnd = false;
+
+            while (start <= end && (!findStart || !findEnd))
+            {
+                if (!findStart)
+                {
+                    if (first.Value >= startTime)
+                    {
+                        findStart = true;
+                    }
+                    else
+                    {
+                        first = first.Next;
+                        start++;
+                    }
+                }
+                if (!findEnd)
+                {
+                    if (last.Value <= endTime)
+                    {
+                        findEnd = true;
+                    }
+                    else
+                    {
+                        last = last.Previous;
+                        end--;
+                    }
+                }
+            }
+
+            return end - start + 1;
+        }
+        return 0;
+    }
+
+    private void RemoveRoute((int Source, int Destination, int Timestamp) route)
+    {
+        routes.RemoveFirst();
+        var destRoutes = destinationRoutes[route.Destination];
+        if (destRoutes.Count == 1)
+        {
+            destinationRoutes.Remove(route.Destination);
+        }
+        else
+        {
+            destRoutes.RemoveFirst();
+        }
+    }
+}
