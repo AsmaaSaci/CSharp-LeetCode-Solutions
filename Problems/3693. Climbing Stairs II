@@ -1,0 +1,25 @@
+public class Solution {
+    public int ClimbStairs(int n, int[] costs) {
+        int[] dp = new int[n + 1];
+        Array.Fill(dp, int.MaxValue);
+        dp[0] = 0;
+
+        for (int step = 1; step <= n; step++)
+        {
+            int currentCost = int.MaxValue;
+            for (int i = 1; i <= 3; i++)
+            {
+                int prevStep = step - i;
+                if (prevStep >= 0)
+                {
+                    int currentStepCost = costs[step - 1];
+                    var costToJump = Convert.ToInt32(currentStepCost + Math.Pow(step - prevStep, 2));
+                    currentCost = Math.Min(currentCost, costToJump + dp[prevStep]);
+                }
+            }
+            dp[step] = currentCost;
+        }
+
+        return dp[n];
+    }
+}
