@@ -1,0 +1,55 @@
+public class Solution {
+    public int LongestSubarray(int[] nums)
+    {
+        var replacedUsedFor = -1; //the index where replace was used
+        var stack = new Stack<int>();
+        var largestSubArray = 0;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (!stack.Any() || stack.Peek() <= nums[i])
+            {
+                stack.Push(nums[i]);
+            }
+            else if (replacedUsedFor == -1)
+            {
+                stack.Push(stack.Peek());
+                replacedUsedFor = i;
+            }
+            else
+            {
+                stack = new Stack<int>();
+                i = replacedUsedFor - 1;
+                replacedUsedFor = -1;
+            }
+
+            largestSubArray = Math.Max(largestSubArray, stack.Count);
+        }
+
+
+        replacedUsedFor = -1; //the index where replace was used
+        stack = new Stack<int>();
+        for (int i = nums.Length - 1; i >= 0; i--)
+        {
+            if (!stack.Any() || stack.Peek() >= nums[i])
+            {
+                stack.Push(nums[i]);
+            }
+            else if (replacedUsedFor == -1)
+            {
+                stack.Push(stack.Peek());
+                replacedUsedFor = i;
+            }
+            else
+            {
+                stack = new Stack<int>();
+                i = replacedUsedFor + 1;
+                replacedUsedFor = -1;
+            }
+
+            largestSubArray = Math.Max(largestSubArray, stack.Count);
+        }
+
+        return largestSubArray;
+    }
+}
