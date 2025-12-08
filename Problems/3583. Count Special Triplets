@@ -1,0 +1,36 @@
+public class Solution {
+    public int SpecialTriplets(int[] nums) {
+        var prefixDoublePairMap = new Dictionary<int,int>();
+        var freqMap = new Dictionary<int,int>();
+        var mod= 1000000007;
+        var count=0;
+
+        for(var i =0 ;i <nums.Length;i++){
+
+
+            // Scenario 1: looking an element as third element that completes the triplet
+            // we dont want odd numbers as our third element as it wont make a triplet
+            if(nums[i]%2 == 0){
+                // we check for the current element is there is element/2 exists in our doublePair prefix map
+                count = (count + prefixDoublePairMap.GetValueOrDefault(nums[i]/2)) % mod;
+            }
+
+            if(!prefixDoublePairMap.ContainsKey(nums[i])){
+                prefixDoublePairMap.Add(nums[i], 0);
+            }
+
+            // Scenario 2: looking element as potential pair that might help make a triplet in future
+            // for current element if there is a element * 2, then increment the count in double pair prefix for element which indicates this as potential pair for making a triplets
+            prefixDoublePairMap[nums[i]] = (prefixDoublePairMap[nums[i]] + freqMap.GetValueOrDefault(2*nums[i])) % mod;
+            
+            if(!freqMap.ContainsKey(nums[i])){
+                freqMap.Add(nums[i], 0);
+            }
+
+            // keep on adding new frequencies
+            freqMap[nums[i]]++;
+        }
+
+        return count % mod;
+    }
+}
