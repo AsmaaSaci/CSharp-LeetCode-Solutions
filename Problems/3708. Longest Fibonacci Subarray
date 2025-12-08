@@ -1,0 +1,13 @@
+public class Solution {
+    public int LongestSubarray(int[] nums) {
+        int result = 2;
+
+        for (int i = 2, current = 2; i < nums.Length; ++i) 
+            if (nums[i] == nums[i - 1] + nums[i - 2]) 
+                result = Math.Max(result, ++current);
+            else 
+                current = 2; 
+
+        return result;    
+    }
+}
