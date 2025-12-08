@@ -1,0 +1,19 @@
+public class Solution {
+    public int CountElements(int[] nums, int k) {
+        int len = nums.Length, kthId = len-k, idx = kthId -1;
+        if(k == 0)
+            return len;
+
+        Array.Sort(nums);
+
+        if(kthId < 0)
+            return 0;
+
+        while(idx >= 0 && nums[idx] == nums[kthId])
+        {
+            idx--;
+        }
+
+        return idx+1;
+    }
+}
