@@ -1,0 +1,38 @@
+public class Solution {
+    public IList<int> FindCoins(int[] numWays) {
+        List<int> res = new();
+        int amount = numWays.Length;
+        int[] dp = new int[amount + 1];
+
+        for (int i = 0; i < amount; i++)
+        {
+            int cur = numWays[i];
+            if (cur == dp[i + 1])
+                continue;
+
+            int[] tmp = new int[amount + 1];
+            int val = i + 1;
+            res.Add(val);
+
+            for (int j = val; j <= amount; j += val)
+            {
+                tmp[j] += 1;
+                for (int k = 0; k + j <= amount; k++)
+                {
+                    if (dp[k] > 0)
+                        tmp[k + j] += dp[k];
+                }
+            }
+
+            for (int p = 0; p <= amount; p++)
+            {
+                dp[p] += tmp[p];
+            }
+
+            if(cur != dp[i + 1])
+				return new List<int>();
+        }
+
+        return res;
+    }
+}
