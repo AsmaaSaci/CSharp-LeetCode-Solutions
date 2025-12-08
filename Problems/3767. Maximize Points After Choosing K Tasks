@@ -1,0 +1,7 @@
+public class Solution {
+    public long MaxPoints(int[] technique1, int[] technique2, int k) => technique1
+        .Zip(technique2, (a, b) => (a: (long)a, b: (long)b))
+        .OrderByDescending(p => p.a - p.b)
+        .Select((p, i) => i < k ? p.a : Math.Max(p.a, p.b)) 
+        .Sum(x => (long) x);   
+}
