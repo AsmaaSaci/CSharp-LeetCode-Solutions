@@ -1,0 +1,22 @@
+public class Solution {
+    public string MaxSumOfSquares(int num, int sum) {
+        int nines = sum/9;
+        
+        int rest = sum - nines*9;
+        if(nines > num || nines == num && rest > 0)
+            return "";
+        
+        string s = "";
+        if(nines > 0)
+            s += new string('9', nines);
+
+        if(rest > 0)
+            s += rest;
+
+        int zeros = num - s.Length;
+        if(zeros > 0)
+            s += new string('0', zeros);
+        
+        return s;        
+    }
+}
