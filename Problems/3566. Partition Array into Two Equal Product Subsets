@@ -1,0 +1,34 @@
+public class Solution {
+    public bool CheckEqualPartitions(int[] nums, long target) {
+        return GetPartition(target, target, 0, nums);
+    }
+
+    public bool GetPartition(long prod1, long prod2, int i, int [] nums)
+    {
+        
+        if(i == nums.Length)
+        {
+            return true;
+        }
+        if(prod1 == 0 || prod2 == 0)
+        {
+            return false;
+        }
+        bool left = false;
+        bool right = false;
+        if(prod1 % nums[i] == 0)
+        {
+            left = GetPartition(prod1/nums[i], prod2, i+1, nums);
+            if(left)
+                return left;
+        }
+        if(prod2% nums[i] == 0)
+        {
+            right = GetPartition(prod1, prod2/nums[i], i+1, nums);
+            if(right)
+                return right;
+        }
+
+        return false;
+    }
+}
