@@ -1,0 +1,42 @@
+public class Solution {
+    public int mx_val = 1000;
+
+    public int MinZeroArray(int[] nums, int[][] queries) {
+        // Brute Force (?)
+        Dictionary<int /*index*/, SortedSet<int> /*values*/> vals = new();
+        for(int i=0; i<nums.Length; i++)
+            vals[i] = new SortedSet<int> {nums[i]};
+        
+        int ind = 0;
+        do{
+            // check zero elements
+            bool allzero = true;
+            foreach(var kvp in vals)
+                if(kvp.Value.Min != 0)
+                    {allzero = false; break;}
+            if(allzero) break;
+
+            // proceed with a query
+            for(int i=queries[ind][0]; i<=queries[ind][1]; i++){
+                if(vals[i].Min==0) continue; // skip if zero reached
+                HashSet<int> hsAdd = new();
+                foreach(int v in vals[i])
+                    if(v - queries[ind][2] >= 0) hsAdd.Add(v - queries[ind][2]);
+                vals[i].UnionWith(hsAdd);
+            }
+
+            // update index
+            ind++;
+        }
+        while(ind < queries.Length);
+
+        // CHECK AGAIN
+        if(ind==queries.Length){
+            foreach(var kvp in vals)
+                if(kvp.Value.Min != 0)
+                    return -1;
+        }
+
+        return ind;        
+    }
+}
