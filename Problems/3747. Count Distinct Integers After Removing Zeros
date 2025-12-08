@@ -1,0 +1,38 @@
+public class Solution
+{
+    public long CountDistinct(long n)
+    {
+        string s = n.ToString();
+        int L = s.Length;
+
+        // 1. Count all valid numbers with fewer digits
+        long result = 0;
+        long p9 = 9;
+        for (int i = 1; i < L; i++) {
+            result += p9;
+            p9 *= 9;
+        }
+
+        // 2. Precompute powers of 9
+        long[] pow9 = new long[L];
+        pow9[0] = 1;
+        for (int i = 1; i < L; i++)
+            pow9[i] = pow9[i - 1] * 9;
+
+        // 3. Process each digit of n
+        for (int i = 0; i < L; i++) {
+            int digit = s[i] - '0';
+
+            if (digit > 1)
+                result += (digit - 1) * pow9[L - i - 1];
+
+            if (digit == 0)
+                return result;
+
+            if (i == L - 1)
+                result += 1;
+        }
+
+        return result;
+    }
+}
