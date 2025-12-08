@@ -1,0 +1,54 @@
+public class Solution
+{
+    public int MinCost(int n, int[][] edges)
+    {
+        var graph = new Dictionary<int, List<(int, int)>>();
+        BuildGraph(edges, graph);
+
+        //Find shortest path
+        var priorityQueue = new PriorityQueue<int, int>();
+        var vertices = new int[n + 1];
+        Array.Fill(vertices, int.MaxValue);
+        priorityQueue.Enqueue(0, 0);
+        vertices[0] = 0;
+
+        while (priorityQueue.Count > 0)
+        {
+            priorityQueue.TryDequeue(out var currentPos, out var currentCost);
+
+            if (vertices[currentPos] != currentCost || !graph.ContainsKey(currentPos))
+                continue; //skipping as it is not valid
+
+            var neighbours = graph[currentPos];
+            foreach ((var neighbourPos, var neighbourWeight) in neighbours)
+            {
+                if (currentCost + neighbourWeight < vertices[neighbourPos])
+                {
+                    vertices[neighbourPos] = currentCost + neighbourWeight;
+                    priorityQueue.Enqueue(neighbourPos, currentCost + neighbourWeight);
+                }
+            }
+        }
+
+        return vertices[n-1] == int.MaxValue ? -1: vertices[n-1];
+    }
+    private void BuildGraph(int[][] edges, Dictionary<int, List<(int, int)>> graph)
+    {
+        foreach (var edge in edges)
+        {
+            int a = edge[0];
+            int b = edge[1];
+            int w = edge[2];
+
+            if (!graph.ContainsKey(a))
+                graph.Add(a, new List<(int, int)>());
+            if (!graph.ContainsKey(b))
+                graph.Add(b, new List<(int, int)>());
+
+            graph[a].Add((b, w));
+            graph[b].Add((a, w * 2));
+        }
+
+        return;
+    }
+}
