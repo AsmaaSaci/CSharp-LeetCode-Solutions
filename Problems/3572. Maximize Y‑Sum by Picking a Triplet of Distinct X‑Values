@@ -1,0 +1,38 @@
+public class Solution {
+    public int MaxSumDistinctTriplet(int[] x, int[] y) {
+        var map = new Dictionary<int, int>();
+        for (int index = 0; index < x.Length; index++)
+        {
+            if (map.ContainsKey(x[index]))
+                map[x[index]] = Math.Max(map[x[index]], y[index]);
+            else map.Add(x[index], y[index]);
+        }
+
+        if (map.Count < 3) return -1;
+
+        int i = int.MinValue;
+        int j = int.MinValue;
+        int k = int.MinValue;
+
+        foreach (var num in map)
+        {
+            if (num.Value > i)
+            {
+                k = j;
+                j = i;
+                i = num.Value;
+            }
+            else if (num.Value > j)
+            {
+                k = j;
+                j = num.Value;
+            }
+            else if (num.Value > k)
+            {
+                k = num.Value;
+            }
+        }
+
+        return i + j + k;
+    }
+}
