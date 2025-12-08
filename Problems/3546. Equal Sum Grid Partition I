@@ -1,0 +1,45 @@
+public class Solution {
+    public bool CanPartitionGrid(int[][] grid) {
+        int m = grid.Length, n = grid[0].Length;
+
+        long[] rowSum = new long[m], colSum = new long[n];
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                int val = grid[i][j];
+                rowSum[i] += val;
+                colSum[j] += val;
+            }
+        }
+
+        for(int i = 1; i < m; i++)
+        {
+            rowSum[i] += rowSum[i-1];
+        }
+        if(rowSum[m-1]%2 == 0)
+        {
+            long target = rowSum[m-1]/2;
+            int idx = Array.BinarySearch(rowSum, target);
+        //    Console.WriteLine($"idx in row is {idx}");
+            if(idx >= 0)
+                return true;
+        }
+
+        for(int j = 1; j < n; j++)
+        {
+            colSum[j] += colSum[j-1];
+        }
+
+        if(colSum[n-1]%2 == 0)
+        {
+            long target = colSum[n-1]/2;
+            int idx = Array.BinarySearch(colSum, target);
+           //  Console.WriteLine($"idx in col is {idx}");
+            if(idx >= 0)
+                return true;
+        }
+
+        return false;
+    }
+}
