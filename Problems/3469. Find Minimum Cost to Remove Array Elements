@@ -1,0 +1,43 @@
+public class Solution {
+    private int[,] dp;
+    private int BackTrack(int preIdx, int start, int[] nums)
+    {
+        int len = nums.Length;
+        if (start >= len)
+            return nums[preIdx];
+
+        if (start == len-1)
+            return Math.Max(nums[preIdx], nums[start]);
+
+        if (dp[preIdx, start] != -1)
+            return dp[preIdx, start];
+
+        int cur = BackTrack(preIdx, start+2, nums) + Math.Max(nums[start], nums[start+1]); // Select start & start+1
+        int next = BackTrack(start, start+2, nums) + Math.Max(nums[preIdx], nums[start+1]); // Select preIdx & start+1;
+        int next2 = BackTrack(start+1, start+2, nums) + Math.Max(nums[preIdx], nums[start]); // Select preIdx & start
+
+        int res = Math.Min(cur, Math.Min(next, next2));
+        dp[preIdx, start] = res;
+        return res;
+    }
+
+
+    public int MinCost(int[] nums) {
+        int len = nums.Length;
+        if (len < 2)
+            return nums[0];
+
+        dp = new int[len+1, len+1];
+        for (int i = 0; i <= len; i++)
+        {
+            for (int j = 0; j <= len; j++)
+            {
+                dp[i, j] = -1;
+            }
+        }
+
+        int res = BackTrack(0, 1, nums);
+
+        return res;
+    }
+}
