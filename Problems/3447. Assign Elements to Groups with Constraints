@@ -1,0 +1,29 @@
+public class Solution {
+    public int[] AssignElements(int[] groups, int[] elements) {
+        int n = groups.Length;
+        var dict = new Dictionary<int, List<int>>(n);
+        for(int i=0;i<n;i++) {
+            int g = groups[i];
+            dict.TryAdd(g, new());
+            dict[g].Add(i);
+        }
+        var res = new int[n];
+        Array.Fill(res, -1);
+        var set = new HashSet<int>();
+        for(int i=0;i<elements.Length;i++) {
+            int e = elements[i];
+            if (set.Contains(e)) continue;
+            set.Add(e);
+            if (dict.Count()==0) break;
+            for(int j=e;j<=100000;j+=e) {
+                if (dict.ContainsKey(j)) {
+                    foreach(int k in dict[j]) {
+                        res[k] = i;
+                    }
+                    dict.Remove(j);
+                }
+            }
+        }
+        return res;
+    }
+}
