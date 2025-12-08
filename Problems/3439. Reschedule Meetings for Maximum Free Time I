@@ -1,0 +1,70 @@
+public class Solution {
+    public int MaxFreeTime(int eventTime, int k, int[] startTime, int[] endTime) {
+        return MaxFreeTimeInternal1(eventTime, k, startTime, endTime);
+    }
+    public int MaxFreeTimeInternal1(int eventTime, int k, int[] startTime, int[] endTime) {
+        int max = 0, sum = 0, i=0, prevEnd = 0;
+
+        // Get the first window of k jobs
+        for(; i<k; i++)
+        {
+            sum += endTime[i] - startTime[i]; 
+        }
+
+        if(k == startTime.Length)
+        {
+            return eventTime - sum;
+        }
+
+        max = startTime[i] - prevEnd - sum;
+        prevEnd = endTime[0];
+
+        // Check for all the k job window
+        while(i<startTime.Length-1)
+        {
+            sum += endTime[i] - startTime[i];
+            sum -= endTime[i-k] - startTime[i-k];
+            prevEnd = endTime[i-k];
+            int gap = startTime[i+1] - prevEnd - sum;
+            max = max>gap? max : gap;
+            i++;
+        }
+
+        // Consider the interval between the last job and the event end time.
+        sum += endTime[i] - startTime[i];
+        sum -= endTime[i-k] - startTime[i-k];
+        prevEnd = endTime[i-k];
+        sum = eventTime - prevEnd - sum;
+        max = max>sum? max : sum;
+
+
+        return max;
+    }
+    public int MaxFreeTimeInternal(int eventTime, int k, int[] startTime, int[] endTime) {
+        int[] gaps = new int[startTime.Length + 1];
+        int max = 0, sum = 0, i=0;
+        gaps[0] = startTime[0];
+        for(; i<startTime.Length-1; i++)
+        {
+            gaps[i+1] = startTime[i+1] - endTime[i];
+        }
+
+        gaps[startTime.Length] = eventTime - endTime[startTime.Length-1];
+        i = 0;
+        for(; i<=k; i++)
+        {
+            sum += gaps[i]; 
+        }
+
+        max = sum;
+        while(i<gaps.Length)
+        {
+            sum -= gaps[i-k-1];
+            sum += gaps[i];
+            max = max>sum? max : sum;
+            i++;
+        }
+
+        return max;
+    }
+}
