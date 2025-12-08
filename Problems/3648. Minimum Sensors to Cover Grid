@@ -1,0 +1,7 @@
+public class Solution {
+    public int MinSensors(int n, int m, int k) {
+        int sideLen = 2*k+1;
+        int sensorR = m/sideLen + (m%sideLen != 0 ? 1 : 0), sensorC = n/sideLen + (n % sideLen != 0 ? 1 : 0);
+        return sensorR * sensorC;
+    }
+}
