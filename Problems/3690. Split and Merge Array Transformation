@@ -1,0 +1,81 @@
+public class Solution {
+    private Dictionary<string, int> dict = new();
+    private string ConvToStr(List<int> l)
+    {
+        string res = "";
+        foreach(int n in l)
+        {
+            res += (n + "#");
+        }
+
+        return res;
+    }
+    private List<List<int>> GeneratedNext(List<int> nums, int step)
+    {
+        int len = nums.Count;
+        List<List<int>> nextL = new();
+        for(int l = 0; l < len; l++) // left idx for cutting
+        {
+            List<int> sample = new(); // creat list to track;
+            for(int r = l; r < len; r++) // right idx for cutting
+            {
+                sample.Add(nums[r]);
+                List<int> restL = new();
+                for(int k = 0; k < len; k++) // fill in the rest of items in original order
+                {
+                    if(k < l || k > r)
+                        restL.Add(nums[k]);
+                }
+
+                // Insert cuted List:
+                for(int m = 0; m < restL.Count; m++)
+                {
+                    List<int> tmp = new List<int>(restL);
+                    tmp.InsertRange(m, sample);
+                    string convS = ConvToStr(tmp);
+
+                    if(!dict.ContainsKey(convS))
+                    {
+                        nextL.Add(tmp);
+                        dict.Add(convS, step);
+                    }
+                }
+            }
+        }
+
+        return nextL;
+    }
+    
+    public int MinSplitMerge(int[] nums1, int[] nums2) {
+			string target = ConvToStr(nums2.ToList());
+			string from = ConvToStr(nums1.ToList());
+			if (from == target)
+				return 0;
+
+			PriorityQueue<List<int>, int> pq = new();
+			pq.Enqueue(nums1.ToList(), 0);
+			HashSet<string> visited = new();
+
+			while (pq.Count > 0 && !dict.ContainsKey(target))
+			{
+				pq.TryDequeue(out List<int> cur, out int step);
+				{
+					string curS = ConvToStr(cur);
+					if (visited.Contains(curS))
+						continue;
+
+					visited.Add(curS);
+					var nextL = GeneratedNext(cur, step + 1);
+					foreach (List<int> next in nextL)
+					{
+						string nextS = ConvToStr(next);
+
+						if(!visited.Contains(nextS))
+							pq.Enqueue(next, step + 1);
+					}
+				}
+			}
+
+			return dict[target];
+    }
+}
