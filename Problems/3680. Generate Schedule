@@ -1,0 +1,67 @@
+public class Solution{
+    private Random rand = new Random();
+    private int trie_max = 100;
+
+    public int[][] GenerateSchedule(int n){
+        // Step 0. If not enough teams, impossible
+        if (n < 5) return Array.Empty<int[]>();
+
+        // Step 1. Generate all matches (home & away)
+        var matches = new List<(int, int)>();
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                if (i != j)
+                    matches.Add((i, j));
+
+        // Step 2–4. Shuffle until valid sequence found
+        int tries = 0;
+        while (tries < trie_max){ // safety cap{
+            tries++;
+            // Copy & shuffle
+            var shuffled = matches.ToList().OrderBy(_ => rand.Next()).ToList();
+            var schedule = new List<(int, int)>();
+
+            for (int k = 0; k < matches.Count; k++){
+                bool found = false;
+                for (int i = 0; i < shuffled.Count; i++){
+                    var (a, b) = shuffled[i];
+                    if (schedule.Count == 0 || 
+                        (a != schedule[^1].Item1 && a != schedule[^1].Item2 &&
+                         b != schedule[^1].Item1 && b != schedule[^1].Item2))
+                    {
+                        schedule.Add(shuffled[i]);
+                        shuffled.RemoveAt(i);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) break;
+            }
+
+            // Success?
+            if (schedule.Count == matches.Count){
+                var result = new int[schedule.Count][];
+                for (int i = 0; i < schedule.Count; i++)
+                    result[i] = new int[] { schedule[i].Item1, schedule[i].Item2 };
+                return result;
+            }
+            // else retry with a new shuffle
+        }
+
+        // If we failed after many tries → consider it unschedulable
+        Console.WriteLine("Error");
+        return Array.Empty<int[]>();
+    }
+
+    private bool IsValid(List<(int, int)> schedule){
+        for (int i = 1; i < schedule.Count; i++){
+            var prev = schedule[i - 1];
+            var curr = schedule[i];
+            // same team appears on consecutive days → invalid
+            if (prev.Item1 == curr.Item1 || prev.Item1 == curr.Item2 ||
+                prev.Item2 == curr.Item1 || prev.Item2 == curr.Item2)
+                return false;
+        }
+        return true;
+    }
+}
