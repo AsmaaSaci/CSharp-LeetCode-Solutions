@@ -1,0 +1,45 @@
+public class Solution 
+{
+    public IList<int> SolveQueries(int[] nums, int[] queries) 
+    {
+        int n = nums.Length;
+        var map = new Dictionary<int, List<int>>();
+        for (int i = 0; i < n; i++) 
+        {
+            if (map.ContainsKey(nums[i]))
+                map[nums[i]].Add(i);
+            else
+                map[nums[i]] = [i];
+        }
+        /*
+            num: 1 -> indices: 0,2,4
+            num: 3 -> indices: 1,5
+            num: 4 -> indices: 3
+            num: 2 -> indices: 6
+        */
+        int[] minDist = new int[n];
+        Array.Fill(minDist, -1);
+        foreach (var (num, indices) in map)
+        {
+            // var vals = string.Join(",", indices);
+            // Console.WriteLine($"num: {num} -> indices: {indices}");
+            int k = indices.Count;
+            if (k < 2) continue;
+            
+            for (int i = 0; i < k; i++) 
+            {
+                int prev = indices[(i - 1 + k) % k];
+                int curr = indices[i];
+                int next = indices[(i + 1 + k) % k];
+                // Console.WriteLine($"d1: {curr - prev} | d2: {next - curr}");
+                int d1 = (curr - prev + n) % n;
+                int d2 = (next - curr + n) % n;
+                minDist[curr] = Math.Min(d1, d2);
+            }
+        }
+        var ans = new List<int>();
+        foreach (var q in queries)
+            ans.Add(minDist[q]);
+        return ans; 
+    } 
+}
