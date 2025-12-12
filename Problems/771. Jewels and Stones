@@ -1,0 +1,25 @@
+public class Solution {
+    public int NumJewelsInStones(string jewels, string stones) //* 771 Jewels and Stones
+    {
+        long bitmask = 0;
+        int count = 0;
+        
+        //* Initialize bitmask.
+        foreach (char c in jewels)
+        {
+            int charIndex = c <= 'z' ? c - 'a' : c - 'A' + 26;
+            bitmask |= 1L << c;
+        }
+        
+        //* Check all stones.
+        foreach (char c in stones)
+        {
+            int charIndex = c <= 'z' ? c - 'a' : c - 'A' + 26;
+            
+            if (((bitmask >> c) & 1) == 1)
+                count++;
+        }
+
+        return count;
+    }
+}
