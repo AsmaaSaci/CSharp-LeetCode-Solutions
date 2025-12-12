@@ -1,0 +1,15 @@
+public class Solution {
+    public int NumWaterBottles(int numBottles, int numExchange) {
+
+        // Raj Thomas 12th Nov 2025 3:01PM IST
+
+        int total = numBottles;
+        while(numBottles >= numExchange) {
+            total += (numBottles / numExchange);
+            numBottles = (numBottles / numExchange) + (numBottles % numExchange);
+        }
+
+        return total;
+        
+    }
+}
