@@ -1,0 +1,29 @@
+public class Solution {
+    public int OddCells(int m, int n, int[][] indices) {
+        var rows = new int[m];
+        var cols = new int[n];
+
+        //Keep track of how often each row and each column are called
+        foreach (var i in indices)
+        {
+            rows[i[0]]++;
+            cols[i[1]]++;
+        }
+
+        var evenRows = 0;
+        var evenCols = 0;
+
+        //Count the even rows (subtract from m for odd rows)
+        foreach (var r in rows)
+            if (r % 2 == 0)
+                evenRows++;
+
+        //Count the even columns (subtract from n for odd columns)
+        foreach (var c in cols)
+            if (c % 2 == 0)
+                evenCols++;
+
+        //Multiply the even rows by odd columns and odd rows by even columns for the total pairs with an odd and an even number
+        return (evenRows * (n - evenCols)) + ((m - evenRows) * evenCp;s);
+    }
+}
