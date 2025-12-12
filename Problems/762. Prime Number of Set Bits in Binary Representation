@@ -1,0 +1,39 @@
+public class Solution {
+    public static bool[] notPrimes = SetNotPrimes(20);
+    
+    public int CountPrimeSetBits(int left, int right) {
+        int countPrimeSetBits = 0;
+        for (int i = left; i <= right; i++)
+        {
+            int number = i;
+            int countSetBit = 0;
+            while (number > 0)
+            {
+                if (number % 2 != 0) countSetBit++;
+                number /= 2;
+            }
+
+            if (!notPrimes[countSetBit]) { countPrimeSetBits++; }
+        }
+
+        return countPrimeSetBits;
+    }
+
+    public static bool[] SetNotPrimes(int length)
+    {
+        notPrimes = new bool[length];
+        notPrimes[1] = true;
+        for (int i = 2; i < length; i++)
+        {
+            if (i < Math.Sqrt(length))
+            {
+                for (int j = 2 * i; j < length; j += i)
+                {
+                    notPrimes[j] = true;
+                }
+            }
+        }
+        
+        return notPrimes;
+    }
+}
