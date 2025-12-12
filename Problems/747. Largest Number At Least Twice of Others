@@ -1,0 +1,25 @@
+public class Solution {
+    public int DominantIndex(int[] nums) {      
+        int greatestValPos = nums[0] > nums[1] ? 0 : 1;
+        int secondGreatestValPos = nums[0] > nums[1] ? 1 : 0;
+
+        if(nums.Length > 2) {
+            for(int i = 2; i < nums.Length; i++) {
+                if(nums[i] > nums[secondGreatestValPos]) {
+                    if(nums[i] > nums[greatestValPos]) {
+                        secondGreatestValPos = greatestValPos;
+                        greatestValPos = i;
+                    }
+                    else {
+                        secondGreatestValPos = i;
+                    }
+                }
+            }
+        }
+
+        if (nums[secondGreatestValPos] * 2 <= nums[greatestValPos]) {
+            return greatestValPos;
+        }
+        return -1;
+    }
+}
