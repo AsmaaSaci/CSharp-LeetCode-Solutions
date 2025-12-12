@@ -1,0 +1,34 @@
+public class Solution {
+    public bool IsUgly(int n) {
+        if (n < 1)
+        {
+            return false;
+        }
+
+        if (n == 1)
+        {
+            return true;
+        }
+
+        int divede = 1;
+        
+        if (n % 3 == 0)
+        {
+            divede = 3;
+        }
+        else if (n % 5 == 0)
+        {
+            divede = 5;
+        }
+        else if (n % 2 == 0)
+        {
+            divede = 2;
+        }
+        else 
+        {
+            return false;
+        }
+
+        return IsUgly(n / divede);
+    }
+}
