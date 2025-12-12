@@ -1,0 +1,41 @@
+public class Solution {
+    public int CountCharacters(string[] words, string chars) {
+        Dictionary<char,int>cnt2=new Dictionary<char,int>();
+        for(char ch='a';ch<='z';ch++){
+            if(!cnt2.ContainsKey(ch)){
+                cnt2[ch]=0;
+            }
+        }
+        int ans=0;
+        foreach(char u in chars){
+            cnt2[u]++;
+        }
+        foreach(string u in words){
+            string s=u;
+            Dictionary<char,int> cnt1=new Dictionary<char,int>();
+            foreach(char g in s){
+                if(!cnt1.ContainsKey(g)){
+                    cnt1[g]=0;
+                }
+                cnt1[g]++;
+            }
+            bool ok=true;
+            foreach(char g in s){
+                if(!cnt1.ContainsKey(g)||!cnt2.ContainsKey(g)){
+                    ok=false;
+                    break;
+                }
+                else{
+                    if(cnt1[g]>cnt2[g]){
+                        ok=false;
+                        break;
+                    }
+                }
+            }
+            if(ok==true){
+                ans+=s.Length;
+            }
+        }
+        return ans;
+    }
+}
