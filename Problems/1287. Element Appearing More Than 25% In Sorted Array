@@ -1,0 +1,25 @@
+public class Solution {
+    public int FindSpecialInteger(int[] arr) {
+    
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        int numberHaving25 = (int)(25 / 100.0 * arr.Length);
+        foreach(int i in arr)
+        {
+            if(dict.ContainsKey(i))
+            {
+                dict[i]++;
+            }
+            else
+            {
+                dict[i] = 1;
+            }
+
+            if(dict[i] > numberHaving25)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
