@@ -1,0 +1,59 @@
+public class Solution {
+    public IList<IList<int>> ShiftGrid(int[][] grid, int k)
+    {
+        int rows = grid.Length;
+        int cols = grid[0].Length;
+        while (k >= rows * cols)
+        {
+            k -= rows * cols;
+        }
+
+        int[] array = this.to1DArray(grid, rows, cols);
+        int[] rotated = this.rotate(array, k);
+        
+        
+        return this.to2DList(rotated, rows, cols);
+    }
+
+    private int[] to1DArray(int[][] arr, int rows, int cols)
+    {
+        int[] result = new int[rows * cols];
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                result[i * cols + j] = arr[i][j];
+            }
+        }
+        
+        return result;
+    }
+
+    private int[] rotate(int[] grid, int k)
+    {
+        int total = grid.Length;
+        int[] result = new int[total];
+        for (int i = 0; i < total; i++)
+        {
+            result[(i + k) % total] = grid[i];
+        }
+        
+        return result;
+    }
+
+    private IList<IList<int>> to2DList(int[] grid, int rows, int cols)
+    {
+        IList<IList<int>> result = new List<IList<int>>();
+        for (int i = 0; i < rows; i++)
+        {
+            List<int> row = new List<int>(cols);
+            for (int j = 0; j < cols; j++)
+            {
+                row.Add(grid[i * cols + j]);
+            }
+            result.Add(row);
+        }
+        
+        return result;
+    }
+}
