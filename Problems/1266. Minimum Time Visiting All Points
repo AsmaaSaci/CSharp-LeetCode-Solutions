@@ -1,0 +1,17 @@
+public class Solution {
+    public int MinTimeToVisitAllPoints(int[][] points) {
+        var ans = 0;
+        
+        for(var i = 0; i < points.Length -1; i += 1)
+        {
+            var p1 = points[i];
+            var p2 = points[i + 1];
+            
+            var dis = Math.Max(
+                Math.Abs(p1[0] - p2[0]), 
+                Math.Abs(p1[1] - p2[1]));
+            ans += dis;
+        }
+        return ans;
+    }
+}
