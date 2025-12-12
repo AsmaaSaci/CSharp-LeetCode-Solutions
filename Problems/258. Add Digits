@@ -1,0 +1,19 @@
+public class Solution {
+    public int AddDigits(int num) {
+        if (num < 10)
+        {
+            return num;
+        }
+
+        int sum = 0;
+
+        string numStrs = num.ToString();
+        
+        foreach (var numStr in numStrs)
+        {
+            sum += int.Parse(numStr.ToString());
+        }
+
+        return AddDigits(sum);
+    }
+}
