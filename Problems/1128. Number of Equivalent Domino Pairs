@@ -1,0 +1,23 @@
+public class Solution {
+    public int NumEquivDominoPairs(int[][] dominoes) {
+        
+        // Raj Thomas 26th Aug 2025 12:22AM IST
+
+        // main case
+        Dictionary<int, int> freq = new();
+        int counter = 0;
+
+        foreach(int[] d in dominoes) {
+
+            int key = Math.Min(d[0],d[1]) * 10 + (Math.Max(d[0],d[1]));
+            freq[key] = freq.GetValueOrDefault(key, 0) + 1;
+        }
+
+        foreach(int val in freq.Values) {
+            // formulae: (n * (n - 1)) / 2
+            counter += (val * (val - 1)) / 2;
+        }
+
+        return counter;
+    }
+}
