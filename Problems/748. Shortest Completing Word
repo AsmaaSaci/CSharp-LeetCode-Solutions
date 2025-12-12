@@ -1,0 +1,39 @@
+public class Solution {
+    public string ShortestCompletingWord(string licensePlate, string[] words) {
+        Dictionary<string,int> dict = new Dictionary<string,int>();
+        foreach (char c in licensePlate)
+        {
+            int cDec = (int)c;
+            if (cDec >= 65 && cDec <= 90 || cDec >= 97 && cDec <= 122)
+            {
+                string cLower = c.ToString().ToLower();
+                if (dict.ContainsKey(cLower)) { dict[cLower] += 1; }
+                else { dict.Add(cLower, 1); }
+            }
+        }
+
+        string shortest = words[0];
+        bool found = false;
+        foreach (string word in words)
+        {
+            bool completing = true;
+            foreach (KeyValuePair<string,int> kv in dict)
+            {
+                int count = kv.Value;
+                foreach (char c in word)
+                {
+                    if (c.ToString() == kv.Key) { count--; }
+                }
+                if (count > 0) { completing = false; break; }
+            }
+
+            if (
+                completing && word.Length > shortest.Length && !found
+                || completing && word.Length < shortest.Length
+                || completing && word.Length == shortest.Length && !found
+            ) { shortest = word; found = true; }
+        }
+
+        return shortest;
+    }
+}
