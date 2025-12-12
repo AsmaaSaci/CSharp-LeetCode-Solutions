@@ -1,0 +1,13 @@
+public class Solution {
+    public int[] ReplaceElements(int[] C) {
+       int  maxRight = -1;
+        for(int i = C.Length-1; i >= 0; i--){
+            int current = C[i];
+            C[i] = maxRight;
+            if(current > maxRight){
+                maxRight = current;
+            }
+        }     
+        return C;
+    }
+}
