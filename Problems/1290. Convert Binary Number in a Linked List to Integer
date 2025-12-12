@@ -1,0 +1,16 @@
+public class Solution {
+    public int GetDecimalValue(ListNode head) {
+        var binary = new List<int>();
+        while(head!=null) {
+            binary.Add(head.val);
+            head = head.next;
+        }
+        var num = 0;
+        var pow = 1;
+        for(int i=binary.Count - 1;i>=0;i--) {
+            num += binary[i] * pow;
+            pow *= 2;
+        }
+        return num;
+    }
+}
