@@ -1,0 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public int MinDiffInBST(TreeNode root) {
+        if (root == null) return 0;
+        List<int> BSTList = new List<int>();
+
+        Traversal(root, BSTList);
+
+        BSTList.Sort();
+        int minValue = int.MaxValue;
+        int abs = 0;
+
+        for (int i = 0; i < BSTList.Count - 1; i++)
+        {
+            abs = Math.Abs(BSTList[i] - BSTList[i + 1]);
+            if (abs < minValue)
+            {
+                minValue = abs;
+            }
+        }
+        
+        return minValue;
+    }
+
+    public void Traversal(TreeNode node, List<int> BSTList) {
+        BSTList.Add(node.val);
+
+        if (node.left != null)
+        {
+            Traversal(node.left, BSTList);
+        }
+        if (node.right != null)
+        {
+            Traversal(node.right, BSTList);
+        }
+    }
+}
