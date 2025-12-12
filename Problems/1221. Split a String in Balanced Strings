@@ -1,0 +1,16 @@
+public class Solution {
+public int BalancedStringSplit(string s)
+{
+    int balance = 0;
+    int result = 0;
+    foreach (char c in s)
+    {
+        if (c == 'L') balance++;
+        else balance--;
+
+        if (balance == 0)
+            result++;
+    }
+    return result;
+}
+}
