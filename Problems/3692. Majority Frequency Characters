@@ -1,0 +1,7 @@
+public class Solution
+{
+    public string MajorityFrequencyGroup(string s) => string.Concat(s
+        .GroupBy(c => c)
+        .GroupBy(f => f.Count(), f => f.Key)
+        .MaxBy(g => (g.Count(), g.Key)));
+}
