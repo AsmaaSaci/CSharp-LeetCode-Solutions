@@ -1,0 +1,23 @@
+public class Solution {
+    public int MaxSum(int[] nums) {
+        var digits=new Dictionary<char, List<int>>();
+        for(int i=0;i<nums.Length;i++){
+            var digit=nums[i].ToString().Max();
+            if(!digits.ContainsKey(digit))digits[digit]=new List<int>{nums[i]};
+            else digits[digit].Add(nums[i]);
+        }
+        var list=digits.Where(d=>d.Value.Count()>1).Select(d=>d.Value).ToList();
+        if(list.Count()==0)return -1;
+        int max=0;
+        int sum=0;
+        foreach(var l in list){
+            var maxvalue=l.Max();
+            sum+=maxvalue;
+            l.Remove(maxvalue);
+            sum+=l.Max();
+            if(max<sum)max=sum;
+            sum=0;
+        }
+        return max;
+    }
+}
