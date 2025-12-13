@@ -1,0 +1,17 @@
+public class Solution {
+    public bool CanBeEqual(string s1, string s2) {
+        int idx = 0;
+        while(idx < 4)
+        {
+            if(s1[idx] != s2[idx])
+            {
+                if(s1[idx] != s2[(idx+2)%4] || s1[(idx+2)%4] != s2[idx])
+                    return false;
+            }
+
+            idx++;
+        }
+
+        return true;
+    }
+}
