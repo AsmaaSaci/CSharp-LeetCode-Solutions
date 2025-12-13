@@ -1,0 +1,10 @@
+public class Solution {
+    public double TrimMean(int[] arr) {
+        var n=arr.Length;
+        Array.Sort(arr);
+        var a=arr.Skip(n/20).Take(n*9/10).ToList();
+        var sum=a.Sum();
+        double average=(double)sum*10/(n*9);
+        return average;
+    }
+}
