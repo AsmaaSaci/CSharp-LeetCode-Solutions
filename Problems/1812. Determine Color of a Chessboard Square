@@ -1,0 +1,7 @@
+public class Solution {
+    public bool SquareIsWhite(string coordinates) {
+        var (col, row) = (coordinates[0], coordinates[1]);
+        var nCol = col - 'a';
+        return nCol % 2 == 0 ? row % 2 == 0 : row % 2 != 0;
+    }
+}
