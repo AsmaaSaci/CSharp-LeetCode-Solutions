@@ -1,0 +1,60 @@
+public class Solution 
+{
+    private static readonly bool[,] AreCoprime = new bool[10, 10];
+
+    static Solution()
+    {
+        for (int d1 = 1; d1 <= 9; d1++)
+        {
+            for (int d2 = 1; d2 <= 9; d2++)
+                AreCoprime[d1, d2] = (GCD(d1, d2) == 1) ? true : false;
+        }
+    }
+
+    private static int GCD(int a, int b)
+    {
+        while (b != 0)
+        {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+
+        return a;
+    }
+
+    private int GetFirstDigit(int num)
+    {
+        while (num >= 10)
+            num /= 10;
+
+        return num;
+    }
+
+    public int CountBeautifulPairs(int[] nums) 
+    {
+        int totalBeautifulPairs = 0;
+        int[] lastDigitCounts = new int[10];
+
+        foreach (int num in nums)
+            lastDigitCounts[num % 10]++;
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            lastDigitCounts[nums[i] % 10]--;
+
+            int firstDigit = GetFirstDigit(nums[i]);
+
+            for (int possibleLastDigit = 1; possibleLastDigit <= 9; possibleLastDigit++)
+            {
+                if (lastDigitCounts[possibleLastDigit] > 0 
+                    && AreCoprime[firstDigit, possibleLastDigit])
+                {
+                    totalBeautifulPairs += lastDigitCounts[possibleLastDigit];
+                }
+            }
+        }
+
+        return totalBeautifulPairs;
+    }
+}
