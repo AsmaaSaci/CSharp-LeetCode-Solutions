@@ -1,0 +1,23 @@
+public class Solution {
+    public int[] GetNoZeroIntegers(int n) {
+        for(int i = 1; i <= n; i++)
+        {
+            if(!CheckItHasZero(i) && !CheckItHasZero(n-i))
+            {
+                return [i, n-i];
+            }
+        }
+        return [];
+    }
+
+    public bool CheckItHasZero(int n)
+    {
+        while (n > 0)
+        {
+            if (n % 10 == 0)
+                return true;
+            n /= 10;
+        }
+        return false;
+    }
+}
