@@ -1,0 +1,17 @@
+public class Solution {
+    public int DuplicateNumbersXOR(int[] nums) {
+        int[] freq = new int[51];
+        foreach (int num in nums) {
+            freq[num]++;
+        }
+
+        int xor = 0;
+        for (int i = 1; i <= 50; i++) {
+            if (freq[i] == 2) {
+                xor ^= i;
+            }
+        }
+
+        return xor;
+    }
+}
