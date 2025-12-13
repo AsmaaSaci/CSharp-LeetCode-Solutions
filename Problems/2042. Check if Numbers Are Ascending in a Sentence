@@ -1,0 +1,13 @@
+public class Solution {
+    public bool AreNumbersAscending(string s) {
+        string[] parts = s.Split(' ');
+        int prev = -1;
+        foreach (var part in parts) {
+            if (int.TryParse(part, out int num)) {
+                if (num <= prev) return false;
+                prev = num;
+            }
+        }
+        return true;
+    }
+}
