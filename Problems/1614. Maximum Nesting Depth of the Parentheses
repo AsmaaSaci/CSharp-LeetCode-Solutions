@@ -1,0 +1,16 @@
+public class Solution {
+    public int MaxDepth(string s) {
+        int c=0,maxi=0;
+
+        foreach(char ch in s){
+            if(ch=='(')
+                c++;
+            else if(ch==')'){
+                maxi=Math.Max(c,maxi);
+                c--;
+            }
+        }
+
+        return maxi;
+    }
+}
