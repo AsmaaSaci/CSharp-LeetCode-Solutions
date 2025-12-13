@@ -1,0 +1,24 @@
+public class Solution {
+    public bool CanBeEqual(int[] target, int[] arr) {
+        Dictionary<int, int> counter = new Dictionary<int, int>();
+
+        // Frequency counter for target
+        foreach(int num in target) {
+            counter[num] = counter.GetValueOrDefault(num, 0) + 1;
+        }
+
+        // Frequency counter for arr
+        foreach(int num in arr) {
+            counter[num] = counter.GetValueOrDefault(num, 0) - 1;
+        }
+
+        // Check if they're equal
+        foreach(int num in counter.Keys) {
+            if(counter[num] != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
