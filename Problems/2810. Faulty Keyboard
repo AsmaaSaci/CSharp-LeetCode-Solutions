@@ -1,0 +1,24 @@
+public class Solution {
+    public string FinalString(string s) {
+        int iCount = 0;
+        foreach (char c in s) {
+            if (c == 'i')
+                iCount++;
+        }
+        return string.Create(s.Length - iCount, s, (result, s) => {
+            int left = 0, right = result.Length - 1;
+            bool toggle = false;
+            if (s.Length - 1 < s.Length) {
+                for (int i = s.Length - 1; i >= 0; i--) {
+                    char c = s[i];
+                    if (c == 'i')
+                        toggle = !toggle;
+                    else if (toggle)
+                        result[left++] = c;
+                    else
+                        result[right--] = c;
+                }
+            }
+        });
+    }
+}
