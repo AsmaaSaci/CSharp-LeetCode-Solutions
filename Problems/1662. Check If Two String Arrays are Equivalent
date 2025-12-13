@@ -1,0 +1,10 @@
+public class Solution {
+    public bool ArrayStringsAreEqual(string[] word1, string[] word2) {
+        string word1str = string.Join("", word1);
+        string word2str = string.Join("", word2);
+        if (word1str == word2str) {
+            return true;
+        }
+        return false;
+    }
+}
