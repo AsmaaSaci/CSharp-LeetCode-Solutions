@@ -1,0 +1,12 @@
+public class Solution {
+    public int MinimizedStringLength(string s) {
+        HashSet<char> seen = new HashSet<char>();
+
+        for(int i = 0; i < s.Length; i++) {
+            char letter = s[i];
+            seen.Add(letter);
+        }
+
+        return seen.Count;
+    }
+}
