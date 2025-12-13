@@ -1,0 +1,15 @@
+public class Solution {
+    public int IsPrefixOfWord(string sentence, string searchWord) {
+        int position=0;
+        foreach(string p in sentence.Split(' '))
+        {
+             position++;  
+         if(p.StartsWith(searchWord))
+         {
+           return  position;
+         }     
+         
+        }
+        return -1;
+    }
+}
