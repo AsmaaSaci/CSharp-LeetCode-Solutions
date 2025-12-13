@@ -1,0 +1,14 @@
+public class Solution
+{
+    public int[] CircularGameLosers(int n, int k)
+    {
+        var friends = Enumerable.Range(1, n).ToHashSet();
+
+        Enumerable.Range(0, n)
+            .Select(turn => k * turn * (turn + 1) / 2)
+            .TakeWhile(i => friends.Remove(i % n + 1))
+            .Count();
+
+        return friends.Order().ToArray();
+    }
+}
