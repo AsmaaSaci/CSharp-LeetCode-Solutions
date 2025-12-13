@@ -1,0 +1,13 @@
+public class Solution {
+    public int NumberOfChild(int n, int k) {
+        int doubleSize = 2*(n-1);
+
+        k %= doubleSize; // calculate less than one round
+
+        if(k < n) // to right
+            return k;
+
+        k -= (n-1); // reduce from 0 to n-1
+        return n -1 -k; // return from n-1 to rest;
+    }
+}
