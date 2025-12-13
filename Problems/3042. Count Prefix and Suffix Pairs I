@@ -1,0 +1,23 @@
+public class Solution {
+    public int CountPrefixSuffixPairs(string[] words) 
+    {
+        int counter =0;
+        for(int i= 0; i< words.Length ; i++)
+        {
+            for(int j= i+1; j<words.Length ; j++)
+            {
+               int n = words[i].Length;
+               int m = words[j].Length;
+                if(n<=m)
+                {
+                    if(words[j].Substring(0,n).Equals(words[i]) &&
+                    words[j].Substring(m-n).Equals(words[i]))
+                    {
+                            counter++;
+                    }
+                }
+            }
+        }
+        return counter;
+    }
+}
