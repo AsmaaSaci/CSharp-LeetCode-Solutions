@@ -1,0 +1,14 @@
+public class Solution {
+    public bool IsPossibleToSplit(int[] nums) {
+        Dictionary<int, int> counter = new Dictionary<int, int>();
+
+        foreach(int num in nums) {
+            counter[num] = counter.GetValueOrDefault(num, 0) + 1;
+            if(counter[num] > 2) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
