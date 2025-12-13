@@ -1,0 +1,14 @@
+public class Solution {
+    public int SmallestAbsent(int[] nums) {
+        int sum = 0;
+        Span<bool> seen = stackalloc bool[202];
+        foreach (int num in nums) {
+            sum += num;
+            seen[num + 100] = true;
+        }
+        int candidate = (sum <= 0) ? 101 : sum / nums.Length + 101;
+        while (seen[candidate])
+            candidate++;        
+        return candidate - 100;
+    }
+}
