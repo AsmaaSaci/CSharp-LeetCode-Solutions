@@ -1,0 +1,33 @@
+public class Solution {
+    public int CountValidSelections(int[] nums) {
+        int sum = 0;
+        int possibilities = 0;
+        int leftSide = 0;
+        bool done = false;
+        for (int n = 0; n < nums.Length; n++)
+        {
+            if (done == false)
+                sum += nums[n];
+
+            leftSide += nums[n];
+            if (nums[n] == 0)
+            {
+                for (int m = n ; m < nums.Length && done == false; m++)
+                {
+                    sum += nums[m];
+                }
+                done = true;
+                var rightSide = sum - leftSide;
+                if (rightSide == leftSide)
+                {
+                    possibilities += 2;
+                }
+                else if (rightSide == leftSide+1 || rightSide == leftSide-1)
+                {
+                    possibilities += 1;
+                }
+            }
+        }
+        return possibilities;
+    }
+}
