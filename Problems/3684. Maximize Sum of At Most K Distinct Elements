@@ -1,0 +1,8 @@
+public class Solution {
+    public int[] MaxKDistinct(int[] n, int k) {
+        var nums = n.ToHashSet().ToArray();
+        Array.Sort(nums);
+        var whatever = nums.Reverse();
+        return whatever.Take(k).ToArray();
+    }
+}
