@@ -1,0 +1,32 @@
+using System.Collections.Generic;
+
+public class Solution
+{
+    public string ModifyString(string s)
+    {
+        char[] arr = s.ToCharArray();
+        HashSet<char> avoid;
+        List<char> options = new List<char>{ 'a', 'b', 'c' };
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] != '?') {continue;}
+            avoid = new HashSet<char>();
+            if (i >= 1)
+            {
+                avoid.Add(arr[i - 1]);
+            }
+            if (i + 1 < arr.Length)
+            {
+                avoid.Add(arr[i + 1]);
+            }
+            foreach (char c in options)
+            {
+                if (!avoid.Contains(c))
+                {
+                    arr[i] = c;
+                }
+            }
+        }
+        return new string(arr);
+    }
+}
