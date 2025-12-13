@@ -1,0 +1,58 @@
+public class Solution {
+    public int[] Decrypt(int[] code, int k) {
+        if (code.Length == 1 && k != 0) return code;
+
+        if (k > 0) return WhenKIsGreaterThanZero(code, k);
+        if (k == 0) return WhenKIsZero(code);
+        if (k < 0) return WhenKIsLessThanZero(code, -k);
+
+        return [];
+    }
+
+    private static int[] WhenKIsGreaterThanZero(int[] code, int k)
+    {
+        int right = 0, length = code.Length, sum = 0;
+        var result = new int[length];
+
+        for (int i = 1; i <= k; i++) sum += code[i];
+        result[0] = sum;
+
+        right = k + 1;
+        for (int left = 1; left < length; left++)
+        {
+            if (right > length - 1) right = 0;
+            sum += code[right] - code[left];
+            result[left] = sum;
+            right++;
+        }
+
+        return result;
+    }
+
+    private static int[] WhenKIsZero(int[] code)
+    {
+        for (int i = 0; i < code.Length; i++) code[i] = 0;
+
+        return code;
+    }
+
+    private static int[] WhenKIsLessThanZero(int[] code, int k)
+    {
+        int left = 0, length = code.Length, sum = 0;
+        var result = new int[length];
+
+        for (int i = length - 1; length - i <= k; i--) sum += code[i];
+        result[0] = sum;
+
+        left = length - k;
+        for (int right = 1; right < length; right++)
+        {
+            if (left > length - 1) left = 0;
+            sum += code[right - 1] - code[left];
+            result[right] = sum;
+            left++;
+        }
+
+        return result;
+    }
+}
