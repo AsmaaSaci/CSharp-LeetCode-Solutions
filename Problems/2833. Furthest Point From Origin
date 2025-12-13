@@ -1,0 +1,36 @@
+public class Solution {
+    public int FurthestDistanceFromOrigin(string moves) 
+    {
+        int count = 0;
+        int right = 0;
+        int left = 0;
+        int placeholder = 0;
+        foreach(char c in moves)
+        {
+            if(c == 'L')
+            {
+                left++;
+                count++;
+                continue;
+            }
+            if(c == 'R' )
+            {
+                right++;
+                count++;
+                continue;
+            }
+            placeholder++;
+        }
+
+        if(right >= left)
+        {
+            count = right - left + placeholder;
+        }
+        if(left > right)
+        {
+            count = right - left - placeholder;
+        }
+
+        return Math.Abs(count);
+    }
+}
