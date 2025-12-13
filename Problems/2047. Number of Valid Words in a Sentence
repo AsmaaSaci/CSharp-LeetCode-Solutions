@@ -1,0 +1,6 @@
+using System.Text.RegularExpressions;
+public class Solution {
+    public int CountValidWords(string sentence) {
+        return sentence.Split(" ").Count(new Regex(@"^[a-z]+([-][a-z]+)?[\.,!]?$|^[\.,!]$").IsMatch);
+    }
+}
