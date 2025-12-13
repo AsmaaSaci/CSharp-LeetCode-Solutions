@@ -1,0 +1,25 @@
+public class Solution
+{
+    public int CountStudents(int[] students, int[] sandwiches)
+    {
+        int cir = 0, squ = 0, n = students.Length, sandi = 0;
+
+        foreach (int s in students)
+        {
+            if (s == 1)
+                squ++;
+            else
+                cir++;
+        }
+
+        while (cir >= 0 && squ >= 0 && sandi < n)
+        {
+            if (sandwiches[sandi++] == 1)
+                squ--;
+            else
+                cir--;
+        }
+
+        return Math.Max(0, Math.Max(cir, squ));
+    }
+}
