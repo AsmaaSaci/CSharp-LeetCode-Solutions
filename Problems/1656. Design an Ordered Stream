@@ -1,0 +1,35 @@
+public class OrderedStream {
+    string[] streamContent;
+    int pointer;
+
+    public OrderedStream(int n) {
+        streamContent = new string[n];
+    }
+    
+    public IList<string> Insert(int idKey, string value) {
+        streamContent[idKey-1] = value;
+        int length = streamContent.Length;
+        List<string> chunks = new List<string>();
+        
+        for(int i = pointer; i < length; i++)
+        {
+            if(streamContent[i] != null)
+            {
+                chunks.Add(streamContent[i]);
+                pointer++;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return chunks;
+    } 
+}
+
+/**
+ * Your OrderedStream object will be instantiated and called as such:
+ * OrderedStream obj = new OrderedStream(n);
+ * IList<string> param_1 = obj.Insert(idKey,value);
+ */
