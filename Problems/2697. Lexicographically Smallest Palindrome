@@ -1,0 +1,23 @@
+public class Solution {
+    public string MakeSmallestPalindrome(string s) {
+        StringBuilder f=new StringBuilder(s);
+        int i=0;int j=s.Length-1;
+        while(i<=j)
+        {
+            if(f[i]==f[j]) {}
+            else
+            {
+                if(f[i]>f[j])
+                {
+                    f[i]=f[j];
+                }
+                else
+                {
+                    f[j]=f[i];
+                }
+            }
+            i++;j--;
+        }
+        return f.ToString();
+    }
+}
