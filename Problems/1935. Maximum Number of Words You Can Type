@@ -1,0 +1,19 @@
+public class Solution {
+    public int CanBeTypedWords(string text, string brokenLetters) {
+        
+        char[] arrayToChar = brokenLetters.ToCharArray();;
+        var words = text.Split(' ');
+        int count=0;
+        
+            foreach(var wrd in words){
+                bool cantype = true;
+                foreach(char ch in arrayToChar)
+                    if(wrd.Contains(ch)){ //counts words - even if one letter doesn't work similar to both letter not working on one word. 
+                        cantype = false;
+                        break;}
+                if(cantype)
+                    count++;
+        }
+        return count;
+    }
+}
