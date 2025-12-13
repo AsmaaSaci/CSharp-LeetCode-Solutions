@@ -1,0 +1,27 @@
+//First compress the array by removing consecutive 
+//duplicates (because they don’t affect hills/valleys).
+public class Solution {
+    public int CountHillValley(int[] nums) 
+    {
+        // Step 1: Remove consecutive duplicates
+        List<int> uniq = new List<int>();
+        uniq.Add(nums[0]);
+        for (int i = 1; i < nums.Length; i++)
+        {
+            if (nums[i] != nums[i - 1])
+                uniq.Add(nums[i]);
+        } 
+
+        // Step 2: Count hills and valleys
+        int count = 0;
+        for (int i = 1; i < uniq.Count - 1; i++)
+        {
+            if (uniq[i] > uniq[i - 1] && uniq[i] > uniq[i + 1])
+                count++; // Hill
+            else if (uniq[i] < uniq[i - 1] && uniq[i] < uniq[i + 1])
+                count++; // Valley
+        }
+
+        return count;
+    }
+}
