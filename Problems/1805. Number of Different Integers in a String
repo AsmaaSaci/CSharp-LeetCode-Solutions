@@ -1,0 +1,14 @@
+using System.Text.RegularExpressions;
+public class Solution {
+    public int NumDifferentIntegers(string word) {
+        string result = Regex.Replace(word, @"\D", " ");
+        string[] parts = result.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        HashSet<BigInteger> uniqueNumbers = new HashSet<BigInteger>();
+        foreach(string i in parts)
+        {
+            uniqueNumbers.Add(BigInteger.Parse(i));
+        }
+
+        return uniqueNumbers.Count;
+    }
+}
