@@ -1,0 +1,22 @@
+public class Solution {
+    public bool CheckAlmostEquivalent(string word1, string word2) {
+        Dictionary<char, int> freq1 = new();
+        Dictionary<char, int> freq2 = new();
+        
+        for(int i = 0; i < word1.Length; i++) {
+            if(freq1.ContainsKey(word1[i])) freq1[word1[i]]++;
+            else freq1[word1[i]] = 1;
+
+            if(freq2.ContainsKey(word2[i])) freq2[word2[i]]++;
+            else freq2[word2[i]] = 1;
+        }
+
+        foreach(char ch in freq1.Keys.Union(freq2.Keys)) {
+            int f1 = freq1.ContainsKey(ch) ? freq1[ch] : 0;
+            int f2 = freq2.ContainsKey(ch) ? freq2[ch] : 0;
+            if(Math.Abs(f1 - f2) > 3) return false;
+        }
+
+        return true;
+    }
+}
