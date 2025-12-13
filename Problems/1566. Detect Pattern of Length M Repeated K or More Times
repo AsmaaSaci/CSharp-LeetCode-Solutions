@@ -1,0 +1,44 @@
+public class Solution {
+
+    public static int[] Next(int pointer, int m, int[] arr){
+        if(pointer + m > arr.Length){
+            return new int[0];
+        }
+
+        var n = new int[m];
+        var j = 0;
+        for(var i=pointer; i < pointer+m; i++){
+            n[j] = arr[i];
+            j++;
+        }
+        return n;
+    }
+    public bool ContainsPattern(int[] arr, int m, int k) {
+        // Build up an array for m
+        var max = 0;
+        var run = 1;
+        var pattern = Next(0,m, arr);
+        var i = m;
+        while(i < arr.Length){
+            // Build up the pattern
+            var current = Next(i,m,arr);
+            if(current.Length == 0){
+                break;
+            }
+            if(current.SequenceEqual(pattern)){
+                run++;
+                i+=m;
+                continue;
+            }
+            // Set the current run and reset
+            max = Math.Max(run, max);
+            run = 1;
+            // Rebuild the sliding window, pop off the original index and add current
+            i = i - m + 1;
+            pattern = Next(i, m, arr);
+            i += m;
+
+        }
+        return Math.Max(run, max) >= k;
+    }
+}
