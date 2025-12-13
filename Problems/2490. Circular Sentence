@@ -1,0 +1,22 @@
+public class Solution {
+    public bool IsCircularSentence(string sentence) {
+        if (string.IsNullOrEmpty(sentence)){
+            return false;
+        }
+
+        var wordEndIndex = -1;
+
+        for(int sentenceIndex = 1; sentenceIndex < sentence.Length; sentenceIndex++){
+            if (sentence[sentenceIndex] == ' '){
+                wordEndIndex = sentenceIndex - 1;
+            }
+
+            if (sentence[sentenceIndex - 1] == ' ' && 
+                   sentence[sentenceIndex] != sentence[wordEndIndex]){
+                    return false;
+            }
+        }
+
+        return sentence[0] == sentence[sentence.Length - 1];
+    }
+}
