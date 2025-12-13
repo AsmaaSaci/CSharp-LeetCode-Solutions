@@ -1,0 +1,29 @@
+public class Solution {
+    public IList<string> SplitWordsBySeparator(IList<string> words, char separator) {
+        var result = new List<string>();
+
+        foreach(var word in words)
+        {
+            var builder = new StringBuilder();
+            foreach(var c in word)
+            {
+                if(c == separator)
+                {
+                    var split1 = builder.ToString();
+                    if(split1 != "")
+                        result.Add(split1); 
+                    builder.Clear();
+                }
+                else{
+                    builder.Append(c);
+                }
+            }
+
+            var split2 = builder.ToString();
+            if(split2 != "")
+                result.Add(split2);
+        }
+
+        return result;
+    }
+}
