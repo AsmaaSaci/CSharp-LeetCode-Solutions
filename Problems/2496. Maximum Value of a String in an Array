@@ -1,0 +1,15 @@
+public class Solution {
+    public int MaximumValue(string[] strs) {
+        int maxsum = 0;
+
+        foreach (var arr in strs) {
+            if (arr.All(char.IsDigit)) {
+                maxsum = Math.Max(maxsum, int.Parse(arr));
+            } else {
+                maxsum = Math.Max(maxsum, arr.Length);
+            }
+        }
+
+        return maxsum;
+    }
+}
