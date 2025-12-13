@@ -1,0 +1,76 @@
+public class Solution {
+    public string BestHand(int[] ranks, char[] suits)
+    {
+        var rankers = new IRanker[] 
+        {
+            new FlushRanker(),
+            new ThreeOfAKindRanker(),
+            new PairRanker(),
+            new HighCardRanker()
+        };
+
+        return rankers.First(r => r.IsMatchRank(ranks, suits)).RankName;
+    }
+}
+
+public interface IRanker
+{
+    string RankName {get;}
+    bool IsMatchRank(int[] ranks, char[] suits);
+}
+
+public class FlushRanker : IRanker
+{
+    public string RankName => "Flush";
+    public bool IsMatchRank(int[] ranks, char[] suits)
+    {
+        foreach(var suit in suits)
+        {
+            if(suit != suits[0]){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+public class ThreeOfAKindRanker : IRanker
+{
+    public string RankName => "Three of a Kind";
+    public bool IsMatchRank(int[] ranks, char[] suits)
+    {
+        var groups = ranks.GroupBy(x => x); 
+        foreach(var group in groups)
+        {
+            if (group.Count() >= 3){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+public class PairRanker : IRanker
+{
+    public string RankName => "Pair";
+    public bool IsMatchRank(int[] ranks, char[] suits)
+    {
+        var groups = ranks.GroupBy(x => x); 
+        foreach(var group in groups)
+        {
+            if (group.Count() >= 2){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+public class HighCardRanker : IRanker
+{
+    public string RankName => "High Card";
+    public bool IsMatchRank(int[] ranks, char[] suits)
+    {
+        return true;
+    }
+}
