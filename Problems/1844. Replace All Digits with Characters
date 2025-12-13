@@ -1,0 +1,29 @@
+public class Solution {
+    public string ReplaceDigits(string s) {
+        string str = ""; // variable declare to return final string
+        char prevChar = '\0'; // char declare to store prev loop value , used to calculate with number++
+        foreach (var ch in s)
+        {
+            if(prevChar== '\0')//if loop is first time 
+            {
+                prevChar = ch;//set current value as previou value ,first time will run 
+            }
+
+            if (char.IsNumber(ch))//if current char is number
+            {
+                for (int i = 0;i<=Convert.ToInt32(ch);i++) 
+                {
+                    char currentChar=prevChar++; // increment char
+                    str += (char)(currentChar+Convert.ToInt32(ch.ToString()));
+                    break;
+                }
+            }
+            else
+            {
+                str += ch; //if it is not number then cancate as it is
+            }
+            prevChar = ch;
+        }
+        return str; // return final string
+    }
+}
