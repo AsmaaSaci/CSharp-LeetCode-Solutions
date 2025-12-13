@@ -1,0 +1,45 @@
+public class Solution {
+    public string ReorderSpaces(string text) {
+        List<string> words = new();
+        StringBuilder sb = new();
+        int spaceCounter = 0;
+        for(int i = 0; i < text.Length; i++){
+            if(text[i] == ' '){
+                spaceCounter++;
+                if(sb.Length != 0){
+                    words.Add(sb.ToString());
+                    sb.Clear();
+                }
+            }else{
+                sb.Append(text[i]);
+            }
+        }
+        if(sb.Length != 0){
+            words.Add(sb.ToString());
+            sb.Clear();
+        }
+        if(words.Count == 1){
+            sb.Append(words[0]);
+            sb.Append(GenerateSpaces(spaceCounter));
+            return sb.ToString();
+        }else{
+            StringBuilder spaces = GenerateSpaces(spaceCounter / (words.Count - 1));
+            for(int i = 0; i < words.Count; i++){
+                sb.Append(words[i]);
+                sb.Append(spaces);
+            }
+            if(text.Length - sb.Length > 0)
+                sb.Append(GenerateSpaces(text.Length - sb.Length));
+            else
+                sb.Length -= (sb.Length - text.Length);
+            return sb.ToString();
+        }
+    }
+    private StringBuilder GenerateSpaces(int n){
+        StringBuilder sb = new();
+        for(int i = 0; i < n; i++){
+            sb.Append(' ');
+        }
+        return sb;
+    }
+}
