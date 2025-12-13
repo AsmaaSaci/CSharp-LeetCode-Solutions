@@ -1,0 +1,22 @@
+public class Solution {
+    public bool HalvesAreAlike(string s) {
+        HashSet<char> vowels = new HashSet<char>{'a', 'e', 'i', 'o', 'u','A', 'E', 'O', 'I', 'U'};
+
+        int count = 0;
+        int sHalfLength = s.Length/2;
+
+        for(int i = 0; i < s.Length; i++)
+        {
+            if(i < sHalfLength && vowels.Contains(s[i]))
+            {
+                count++;
+            }
+            else if(i >= sHalfLength && vowels.Contains(s[i]))
+            {
+                count--;
+            }
+        }
+
+        return count == 0;
+    }
+}
