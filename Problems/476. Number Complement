@@ -1,0 +1,21 @@
+public class Solution {
+    public int FindComplement(int num) {
+        int result = 0;
+
+        // Convert integer to binary
+        string binaryS = "";
+        int numTemp = num;
+        
+        while (numTemp > 0)
+        {
+            // Flip 0 -> 1; 1 -> 0
+            binaryS = ((numTemp % 2) == 0 ? 1 : 0).ToString() + binaryS;
+            numTemp /= 2;
+        }
+
+        // Convert binary to integer
+        result = Convert.ToInt32(binaryS, 2);
+
+        return result;
+    }
+}
