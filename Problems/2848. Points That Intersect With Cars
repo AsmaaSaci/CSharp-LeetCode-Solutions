@@ -1,0 +1,42 @@
+public class Solution {
+    
+    public int NumberOfPoints(IList<IList<int>> nums)
+    {
+        List<(int,int)> nonOverlappingIntervals = new List<(int, int)>();
+        // Sort the intervals by StartTime.
+        nums = nums.OrderBy(n => n.First()).ToList();
+        
+        int x_1 = nums.First()[0];
+        int y_1 = nums.First()[1];
+        foreach (var element in nums.Skip(1))
+        {
+            int x_2 = element[0];
+            int y_2 = element[1];
+            
+            // Check if overlap.
+            if (x_2 < y_1 && y_2 > x_1)
+            {
+                x_1 = Math.Min(x_1, x_2);
+                y_1 = Math.Max(y_1, y_2);
+            }
+            else
+            {
+                nonOverlappingIntervals.Add((x_1,y_1));
+                x_1 = element[0];
+                y_1 = element[1];
+            }
+        }
+        
+        nonOverlappingIntervals.Add((x_1, y_1));
+        HashSet<int> c = new HashSet<int>();
+        foreach (var element in nonOverlappingIntervals)
+        {
+            Enumerable.Range(element.Item1, element.Item2 - element.Item1 + 1).Select(l => c.Add(l)).ToList();
+        }
+        
+        
+        return c.Count();
+        
+    }
+
+}
