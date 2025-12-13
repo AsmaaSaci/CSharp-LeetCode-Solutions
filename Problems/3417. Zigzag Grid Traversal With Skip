@@ -1,0 +1,28 @@
+public class Solution {
+    public IList<int> ZigzagTraversal(int[][] grid) {
+        int n = grid.Length;
+        int m = grid[0].Length;
+        int rev_edge = m - ((m & 1) + 1);
+
+        int[] res = new int[(int)Math.Ceiling(m * n / 2f)];
+        int ri = 0;
+
+        for(int row = 0; row < n; row++)
+        {
+            int[] r;
+            
+            r = grid[row];
+            for(int col = 0; col < m; col += 2)
+                res[ri++] = r[col];
+
+            if(++row >= n)
+                break;
+
+            r = grid[row];
+            for(int col = rev_edge; col >= 0; col -= 2)
+                res[ri++] = r[col];
+        }
+
+        return res;
+    }
+}
