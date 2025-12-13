@@ -1,0 +1,4 @@
+public class Solution
+{
+    public int HammingDistance(int x, int y) => BitOperations.PopCount((uint)x ^ (uint)y);
+}
