@@ -1,0 +1,16 @@
+public class Solution {
+    public int MinimumChairs(string s) {
+        int current = 0;
+        int max = 0;
+        foreach (char c in s) {
+            if (c == 'E') {
+                current++;
+            }
+            else {
+                current--;
+            }
+            max = Math.Max(current, max);
+        }
+        return max;
+    }
+}
