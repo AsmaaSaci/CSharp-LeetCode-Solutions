@@ -1,0 +1,63 @@
+public class Solution {
+    public int CountSymmetricIntegers(int low, int high) {
+        int first, last, count = 0;
+        if (low <= 99) {
+            first = low / 10;
+            if (first * 11 < low)
+                first++;
+            if (high < 99) {
+                last = high / 10;
+                if (last * 11 > high)
+                    last--;
+            } else {
+                last = 9;
+            }
+            count += last - first + 1;
+        }
+        if (low <= 9999 && high >= 1001) {
+            int d1d2, sum, n, c;
+            if (low > 1001) {
+                first = low / 100;
+                sum = first / 10 + first % 10;
+                d1d2 = first * 100;
+                if (sum < 10) {
+                    n = d1d2 + sum;
+                    c = sum;
+                } else {
+                    n = d1d2 + (sum - 9) * 10 + 9;
+                    c = 18 - sum;
+                }
+                for (; c >= 0 && n <= high; c--) {
+                    if (n >= low)
+                        count++;
+                    n += 9;
+                }
+                if (n > high)
+                    return count;
+            } else {
+                first = 9;
+            }
+            last = high / 100;
+            if (last > first) {
+                sum = last / 10 + last % 10;
+                d1d2 = last *100;
+                if (sum < 10) {
+                    n = d1d2 + sum;
+                    c = sum;
+                } else {
+                    n = d1d2 + (sum - 9) * 10 + 9;
+                    c = 18 - sum;
+                }
+                for (; c >= 0 && n <= high; c--) {
+                    count++;
+                    n += 9;
+                }
+            }
+            for (d1d2 = first + 1; d1d2 < last; d1d2++) {
+                sum = d1d2 / 10 + d1d2 % 10;
+                count += sum < 10 ? sum + 1 : 19 - sum;
+            }
+        }
+        return count;
+    }
+}
