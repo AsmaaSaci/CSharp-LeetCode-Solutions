@@ -1,0 +1,31 @@
+public class Solution {
+    public int SecondHighest(string s) {
+       HashSet<int> hs = new HashSet<int>();
+
+       foreach(char ch in s)
+       {
+            if(char.IsDigit(ch))
+            {
+                hs.Add(ch - '0');
+            }
+       } 
+       if(hs.Count < 2)return -1;
+       int highestNumber = 0, secondLargest = 0; 
+       foreach(int i in hs)
+       {
+         if(highestNumber < i)
+         {
+            secondLargest = highestNumber;
+            highestNumber = i;
+         }
+         else if(i > secondLargest && highestNumber > i)
+         {
+            secondLargest =  i;
+         }
+       }
+        return secondLargest;
+
+
+
+    }
+}
