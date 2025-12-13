@@ -1,0 +1,24 @@
+public class Solution {
+    public int GetLeastFrequentDigit(int n) {
+        int a=n;
+        Dictionary<int,int> b=new Dictionary<int,int>();
+        while(a>0)
+        {
+            int f=a%10;
+            if(!b.ContainsKey(f))
+            {
+                b.Add(f,1);
+            }
+            else
+            {
+                b[f]++;
+            }
+            a=a/10;
+        }
+        int min=9999;
+        var c=b.OrderBy(b=>b.Value).ThenBy(b=>b.Key);
+        var k=c.ElementAt(0);
+    
+        return k.Key;
+    }
+}
