@@ -1,0 +1,13 @@
+public class Solution {
+    public string ClearDigits(string s) {
+        var list = new List<char>();
+        foreach (char c in s) {
+            if (char.IsDigit(c)) {
+                if (list.Count > 0) list.RemoveAt(list.Count - 1);
+            } else {
+                list.Add(c);
+            }
+        }
+        return new string(list.ToArray());
+    }
+}
