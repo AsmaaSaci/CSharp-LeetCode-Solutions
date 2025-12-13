@@ -1,0 +1,14 @@
+public class Solution {
+    public int MinimumOperations(int[] nums) {
+        HashSet<int> seens = [];
+        foreach (var num in nums)
+        {
+            if (num > 0)
+            {
+                seens.Add(num);
+            }
+        }
+
+        return seens.Count;
+    }
+}
