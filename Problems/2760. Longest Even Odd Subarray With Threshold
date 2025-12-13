@@ -1,0 +1,37 @@
+public class Solution {
+    public int LongestAlternatingSubarray(int[] nums, int threshold) {
+
+        // Raj Thomas 14th Aug 2025 3:01PM IST
+
+        // main case
+        int len = nums.Length;
+        int longestCount = 0;
+
+        for(int left = 0; left < len; left++) {
+
+            if(nums[left] <= threshold && nums[left] % 2 == 0) {
+
+                int counter = 1;
+                for(int right = left; 
+                    right < len - 1 && nums[right] <= threshold && nums[right + 1] <= threshold; 
+                    right++) {
+
+                        // if both are even nums or both are odd nums
+                        if(nums[right] % 2 == nums[right + 1] % 2) {
+                            break;
+                        }
+                        else {
+                            counter++;
+                        }
+
+                }
+                longestCount = Math.Max(longestCount, counter);
+            }
+            
+        }
+
+        return longestCount;
+    }
+
+    
+}
