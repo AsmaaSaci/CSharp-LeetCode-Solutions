@@ -1,0 +1,13 @@
+public class Solution {
+    public int MinOperations(string[] logs) {
+        Stack<string> stack = new();
+        foreach(string log in logs) {
+            switch(log) {
+                case "../": if (stack.Count > 0) stack.Pop(); break;
+                case "./": break;
+                default : stack.Push(log); break;
+            }
+        }
+        return stack.Count();
+    }
+}
