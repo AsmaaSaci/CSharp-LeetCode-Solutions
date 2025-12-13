@@ -1,0 +1,26 @@
+public class Solution {
+    public string KthDistinct(string[] arr, int k) {
+        var dic = new Dictionary<string, int>();
+
+        foreach (var w in arr)
+        {
+            if (dic.ContainsKey(w))
+                dic[w]++;
+            else
+                dic[w] = 1;
+        }
+       
+        int counter = 0;
+        foreach (var word in dic)
+        {
+            if (word.Value == 1)
+            {
+                counter++;
+                if (counter == k)
+                    return word.Key;
+            }
+        }
+
+        return "";
+    }
+}
