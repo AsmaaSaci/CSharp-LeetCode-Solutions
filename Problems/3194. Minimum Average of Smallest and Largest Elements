@@ -1,0 +1,43 @@
+public class Solution {
+    public double MinimumAverage(int[] nums) {
+        var num = new List<int>(nums);
+var res = new List<double>();
+
+while (num.Count != 0)
+{
+    int min = int.MaxValue;
+    int max = int.MinValue;
+
+    int indexMin = 0;
+    int indexMax = 0;
+
+    for (int i = 0; i < num.Count; i++)
+    {
+        if (num[i] > max)
+        {
+            max = num[i];
+            indexMax = i;
+        }
+
+    }
+
+    num.RemoveAt(indexMax);
+
+    for (int i = 0; i < num.Count; i++)
+    {
+        if (num[i] < min)
+        {
+            min = num[i];
+            indexMin = i;
+        }
+    }
+
+    num.RemoveAt(indexMin);
+
+    res.Add((float)(min + max)/2);
+
+}
+
+return res.Min();
+    }
+}
