@@ -1,0 +1,22 @@
+public class Solution {
+    public string LicenseKeyFormatting(string s, int k) {
+     s = s.ToUpper().Replace("-", "");
+    var sb = new StringBuilder();
+    var groupSize = s.Length % k;
+    if (groupSize == 0) groupSize = k;
+
+    for (int i = 0; i < s.Length; i++)
+    {
+        if (groupSize == 0)
+        {
+            sb.Append("-");
+            groupSize = k;
+        }
+
+        sb.Append(s[i]);
+        groupSize--;
+    }
+
+    return sb.ToString();
+    }
+}
