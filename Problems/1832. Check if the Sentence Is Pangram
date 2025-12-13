@@ -1,0 +1,15 @@
+public class Solution {
+    public bool CheckIfPangram(string sentence) {
+        HashSet<char> unique = new HashSet<char>();
+        for(int i = 0; i < sentence.Length; i++)
+        {
+            if(!unique.Contains(sentence[i]))
+            {
+                unique.Add(sentence[i]);
+            }
+            if(unique.Count == 26)
+                return true;    
+        }
+        return false;
+    }
+}
