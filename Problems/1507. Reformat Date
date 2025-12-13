@@ -1,0 +1,23 @@
+public class Solution {
+    public string ReformatDate(string date) {
+        List<string> monthsAbbreviations = new()
+        {
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        };
+
+        var parsedDate = date.Split(' ');
+
+        var day = parsedDate[0][..^2];
+        
+		if (Int32.Parse(day) < 10)
+			day = day.Insert(0, "0");
+
+        var dateNumber = monthsAbbreviations.IndexOf(parsedDate[1]) + 1;
+        var month = dateNumber.ToString();
+
+        if (dateNumber < 10)
+            month = month.Insert(0, "0");
+
+        return parsedDate[2] + "-" + month + "-" + day;
+    }
+}
