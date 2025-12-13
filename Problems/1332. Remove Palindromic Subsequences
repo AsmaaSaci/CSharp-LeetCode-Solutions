@@ -1,0 +1,25 @@
+public class Solution {
+    public int RemovePalindromeSub(string s) {
+        if(Palindrome(s)){
+            return 1;
+        }
+    return 2;
+
+    }
+
+    private bool Palindrome(string s){
+      int n = s.Length;
+      int left = 0;
+      int right = n-1;
+
+    while(left < right){
+        if(s[left] != s[right]){
+            return false;
+        }
+        left++;
+        right--;
+    }
+return true;
+
+    }
+}
