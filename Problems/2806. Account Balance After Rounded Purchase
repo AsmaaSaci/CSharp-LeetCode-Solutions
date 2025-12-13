@@ -1,0 +1,7 @@
+public class Solution {
+    public int AccountBalanceAfterPurchase(int purchaseAmount) {
+        double val = (double)purchaseAmount / 10;
+        int sum = (int)Math.Round(val, MidpointRounding.AwayFromZero) * 10;
+        return 100 - sum;
+    }
+}
