@@ -1,0 +1,23 @@
+public class Solution {
+    public int NearestValidPoint(int x, int y, int[][] points) {
+        int n = points.Length;
+        int res = -1;
+        int mindist = int.MaxValue;
+
+        for(int i =0;i < n;i++){
+           int px = points[i][0], py = points[i][1];
+
+           if(x == px || py == y){
+            int dist = Math.Abs(x - px) + Math.Abs(y-py);
+
+            if(dist < mindist){
+                mindist = dist;
+                res = i;
+
+               }
+            }
+        }
+   return res;
+
+    }
+}
