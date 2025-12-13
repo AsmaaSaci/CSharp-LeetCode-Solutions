@@ -1,0 +1,44 @@
+public class Solution {
+    public int MaxDifference(string s) {
+        
+        // Raj Thomas 5th Aug 2025 12:43PM IST
+
+        // main case
+        Dictionary<char, int> freq = new();
+        foreach(char ch in s) {
+            freq[ch] = freq.GetValueOrDefault(ch, 0) + 1;
+        }
+
+        // Case - 1, when maxOdd > minEven is positive
+        int maxOdd = freq.OrderByDescending(x => x.Value).Where(x => x.Value % 2 == 1).First().Value;
+        int minEven = freq.OrderBy(x => x.Value).Where(x => x.Value % 2 == 0).First().Value;
+        if(maxOdd > minEven) return maxOdd - minEven;
+        
+        // Case - 2, when maxOdd > minEven is negative
+        List<int> maxOddList = freq.OrderByDescending(x => x.Value)
+                                .Where(x => x.Value % 2 == 1).Select(x => x.Value).ToList();
+        List<int> minEvenList = freq.OrderBy(x => x.Value)
+                                .Where(x => x.Value % 2 == 0).Select(x => x.Value).ToList();
+
+        //mmsmsym
+        // m - 4
+        // s - 2
+        // y - 1
+        int maxDiff = int.MinValue;
+        int odd = maxOddList.First();
+        int leftEven = 0;
+
+        while(leftEven < minEvenList.Count) {
+            int even = minEvenList[leftEven];
+            int diff = odd - even;
+            maxDiff = Math.Max(diff, maxDiff);
+
+            if(maxDiff > diff) {
+                return maxDiff;
+            }
+            leftEven++;
+        }
+        return maxDiff;
+
+    }
+}
