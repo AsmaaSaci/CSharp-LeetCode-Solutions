@@ -1,0 +1,14 @@
+public class Solution {
+    public int[] KWeakestRows(int[][] mat, int k) {
+        PriorityQueue<int, (int, int)> minQueue = new PriorityQueue<int, (int, int)>();
+        for(int i = 0; i < mat.Length; i++){
+            minQueue.Enqueue(i, (mat[i].Sum(), i));
+        }
+        List<int> KWeakestRows = new List<int>();
+        while(k > 0){
+            KWeakestRows.Add(minQueue.Dequeue());
+            k--;
+        }
+        return KWeakestRows.ToArray();
+    }
+}
