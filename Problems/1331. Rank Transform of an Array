@@ -1,0 +1,30 @@
+public class Solution {
+    public int[] ArrayRankTransform(int[] arr) {
+        
+        // Raj Thomas 27th Aug 2025 1:12AM IST
+
+        // main case
+        int[] brr = new int[arr.Length];
+        Array.Copy(arr, brr, arr.Length);
+
+        Array.Sort(brr);
+
+        int rankId = 1;
+        Dictionary<int, int> rank = new();
+
+        for(int i = 0; i < brr.Length; i++) {
+            if(!rank.ContainsKey(brr[i])) {
+                rank[brr[i]] = rank.GetValueOrDefault(brr[i], 0) + rankId;
+                rankId++;
+            }
+        }
+
+        for(int i = 0; i < arr.Length; i++) {
+
+            int rankVal = rank[arr[i]];
+            arr[i] = rankVal;
+        }
+
+        return arr;
+    }
+}
