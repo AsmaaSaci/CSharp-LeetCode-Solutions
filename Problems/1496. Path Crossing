@@ -1,0 +1,22 @@
+public class Solution {
+    public bool IsPathCrossing(string path) {
+        var pairs = new HashSet<string>();
+        pairs.Add("0,0");
+        int x = 0;
+        int y = 0;
+
+        foreach (var dir in path) {
+            if (dir == 'E') x++;
+            else if (dir == 'W') x--;
+            else if (dir == 'N') y++;
+            else y--;
+
+            string curr = $"{x},{y}";
+            if (pairs.Contains(curr)) return true;
+
+            pairs.Add(curr);
+        }
+
+        return false;
+    }
+}
