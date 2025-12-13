@@ -1,0 +1,9 @@
+public class Solution {
+    public int EarliestTime(int[][] tasks) {
+        var quickest = int.MaxValue;
+        foreach(var task in tasks){
+            quickest = Math.Min(quickest, task[0] + task[1]);
+        }
+        return quickest;
+    }
+}
