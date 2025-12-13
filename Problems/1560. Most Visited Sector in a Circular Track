@@ -1,0 +1,33 @@
+public class Solution {
+    public IList<int> MostVisited(int n, int[] rounds) {
+       
+        int len = rounds.Length;
+        List<int> res = new();
+        if(rounds[0] < rounds[len-1]) // case round[0] < round[last]:
+        {
+            for(int i = rounds[0]; i <= rounds[len-1]; i++)
+            {
+                res.Add(i);
+            }
+        }
+        else if(rounds[0] > rounds[len-1]) // case rounds[0] > rounds[last]
+        {
+            for(int i = 1; i <= rounds[len-1]; i++)
+            {
+                res.Add(i);
+            }
+
+            // from 1 to rounds[len-1], then from rounds[0] to n
+            for(int i = rounds[0]; i <= n; i++)
+            {
+                res.Add(i);
+            }
+        }
+        else // single point is most visited
+        {
+            res.Add(rounds[0]);
+        }
+
+        return res;
+    }
+}
