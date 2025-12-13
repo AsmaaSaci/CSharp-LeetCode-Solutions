@@ -1,0 +1,24 @@
+public class Solution {
+    public int ConvertTime(string current, string correct) {
+        TimeSpan t1 = TimeSpan.Parse(current);
+        TimeSpan t2 = TimeSpan.Parse(correct);
+
+        int minDiff = (int)Math.Abs((t2 - t1).TotalMinutes);
+        Console.WriteLine(minDiff);
+        int[] times = {1,5,15,60};
+        int[] dp = new int[minDiff+1];
+        dp[0] = 0;
+        for(int i = 1;i<=minDiff;i++){
+            dp[i] = int.MaxValue;
+            for(int j = 0;j<times.Length;j++){
+                int rem = i - times[j];
+                if(rem >= 0 && dp[rem]!=int.MaxValue){
+                    dp[i] = Math.Min(dp[i],dp[rem]+1);
+                }
+
+            }
+        }
+
+        return dp[minDiff];
+    }
+}
