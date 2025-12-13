@@ -1,0 +1,15 @@
+public class Solution {
+    public int SemiOrderedPermutation(int[] nums) {
+        int n = nums.Length;
+        int firstNum = -1 , lastNum = -1;
+        for(int i = 0;i < n && Math.Min(firstNum,lastNum) == -1;i++){
+            if(nums[i] == 1)
+                firstNum = i;
+            else if(nums[i] == n)
+                lastNum = i;
+        }
+        return firstNum + 
+                (n - 1 - lastNum) + 
+                (firstNum > lastNum ? -1 : 0);
+    }
+}
