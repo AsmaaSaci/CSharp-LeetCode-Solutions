@@ -1,0 +1,31 @@
+public class Solution {
+    public int[] DistinctDifferenceArray(int[] nums) {
+        
+        // result array
+        int[] result = new int[nums.Length];
+
+        // Iterate through nums till the end of array
+        for (int i = 0; i < nums.Length; i++)
+        {
+            // Add all distict elements from 0 till i to prefixSet
+            HashSet<int> prefixSet = new HashSet<int>();
+            for (int j = 0; j <= i; j++)
+            {
+                prefixSet.Add(nums[j]);
+            }
+
+            // Add all distict elements from nums.Length -1 till i to suffixSet
+            HashSet<int> suffixSet = new HashSet<int>();
+            for ( int j = nums.Length - 1; j > i; j--)
+            {
+                suffixSet.Add(nums[j]);
+            }
+
+            // add different of distinct elements in result array
+            result[i] = prefixSet.Count - suffixSet.Count;
+            
+        }     
+
+        return result;
+    }
+}
