@@ -1,0 +1,16 @@
+public sealed class Solution {
+    public string FindValidPair(string s) {
+        var digits = new int[10];
+        foreach (char c in s)
+            digits[c - 48]++;
+        for (int i = 1; i < s.Length; i++)
+            if (IsValid(s[i]) && IsValid(s[i - 1]) && s[i] != s[i - 1])
+                return new string(new char[] {s[i - 1], s[i]});
+        return string.Empty;
+
+        bool IsValid(char c) {
+            int x = c - 48;
+            return digits[x] == x;
+        }
+    }
+}
