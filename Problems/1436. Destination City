@@ -1,0 +1,24 @@
+public class Solution {
+    public string DestCity(IList<IList<string>> paths) {
+        
+        // Raj Thomas 29th Aug 2025 5:56PM IST
+
+        HashSet<string> source = new();
+        HashSet<string> destination = new();
+
+        foreach(var path in paths) {
+            source.Add(path[0]);
+            destination.Add(path[1]);
+        }
+
+        // find in destination
+        foreach(string dest in destination) {
+
+            if(!source.Contains(dest)) {
+                return dest;
+            }
+        }
+
+        return "";
+    }
+}
