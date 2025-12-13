@@ -1,0 +1,17 @@
+public class Solution {
+    public int FinalPositionOfSnake(int n, IList<string> commands) {
+        int currentPosition = 0;
+        foreach (var item in commands)
+        {
+            if (item == "LEFT")
+                currentPosition--;
+            if(item == "RIGHT")
+                currentPosition++;
+            if (item == "UP")
+                currentPosition -= n;
+            if(item == "DOWN")
+                currentPosition += n;
+        }
+        return currentPosition;
+    }
+}
