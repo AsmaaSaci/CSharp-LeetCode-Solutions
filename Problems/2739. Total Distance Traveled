@@ -1,0 +1,18 @@
+public class Solution {
+    public int DistanceTraveled(int mainTank, int additionalTank) {
+        int total = 0;
+        while(mainTank > 4)
+        {
+            int times = mainTank/5;
+            int rest = mainTank%5;
+            int transfer = Math.Min(times, additionalTank);
+            total += times*5;
+            additionalTank -= transfer;
+            mainTank = rest + transfer;
+        }
+
+        total += mainTank;
+        
+        return total*10;
+    }
+}
