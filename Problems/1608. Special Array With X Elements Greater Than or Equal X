@@ -1,0 +1,25 @@
+public class Solution {
+    public int SpecialArray(int[] nums) {
+        int left = 0, right = nums.Length;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2; // candidate x
+            int count = 0;
+
+            // count how many numbers >= mid
+            foreach (int num in nums) {
+                if (num >= mid) count++;
+            }
+
+            if (count == mid) {
+                return mid; // found the special number
+            } else if (count < mid) {
+                right = mid - 1; // too few numbers ≥ mid → try smaller x
+            } else {
+                left = mid + 1;  // too many numbers ≥ mid → try bigger x
+            }
+        }
+
+        return -1; // no special number exists
+    }
+}
