@@ -1,0 +1,10 @@
+public class Solution {
+    public long SumAndMultiply(int n) => n.ToString().
+        Select(m => (int)char.GetNumericValue(m)).
+        Aggregate((0L, 0L), (acum, current) => 
+        (
+            current != 0 ? acum.Item1 * 10 + current : acum.Item1,
+            acum.Item2 + current
+        ), 
+        acum => acum.Item1 * acum.Item2);
+}
