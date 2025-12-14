@@ -1,0 +1,21 @@
+public class Solution {
+    public int[][] ReverseSubmatrix(int[][] grid, int x, int y, int k) {
+        if ( x >= grid.Length || y >= grid[x].Length || k <= 1) {
+            return grid;
+        }
+
+        int temp = 0, rt = x, rb = x + k - 1;
+
+        while(rt < rb ) {
+            for ( int c = y; c < y + k; c++ ) {
+                temp = grid[rb][c];
+                grid[rb][c] = grid[rt][c];
+                grid[rt][c] = temp;
+            }
+            rt++;
+            rb--;
+        }       
+
+        return grid;
+    }
+}
