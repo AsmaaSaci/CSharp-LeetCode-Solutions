@@ -1,0 +1,13 @@
+public class Solution {
+    public int CountElements(int[] nums) {
+        int res=0;
+        int min = nums.Min();
+        int max = nums.Max();
+        foreach (int n in nums)
+        {
+            if(n != min && n != max)
+                res++;
+        }
+        return res;        
+    }
+}
