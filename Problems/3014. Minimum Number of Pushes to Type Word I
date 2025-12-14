@@ -1,0 +1,7 @@
+public class Solution {
+    public int MinimumPushes(string word) {
+        int groups = word.Length / 8;
+        int remainder = word.Length % 8;
+        return (groups + 1) * (groups * 4 + remainder);
+    }
+}
