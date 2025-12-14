@@ -1,0 +1,12 @@
+public class Solution {
+    public int BitwiseComplement(int n) {
+        if (n == 0)
+        return 1;
+        int notnine = ~n;
+        string binary = Convert.ToString(notnine, 2);
+        binary.IndexOf('0', 0);
+        string res = binary.Substring(binary.IndexOf('0', 0));
+        int result = Convert.ToInt32(res, 2);
+        return result;        
+    }
+}
