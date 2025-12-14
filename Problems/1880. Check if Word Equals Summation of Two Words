@@ -1,0 +1,22 @@
+public class Solution {
+    public bool IsSumEqual(string firstWord, string secondWord, string targetWord) {
+        int sum = 0;
+
+        for(int i = firstWord.Length - 1, multiply = 1; i >= 0; i--) {
+            sum += multiply * (firstWord[i] - 'a');
+            multiply *= 10;
+        }
+
+        for(int i = secondWord.Length - 1, multiply = 1; i >= 0; i--) {
+            sum += multiply * (secondWord[i] - 'a');
+            multiply *= 10;
+        }
+
+        for(int i = targetWord.Length - 1, multiply = 1; i >= 0; i--) {
+            sum -= multiply * (targetWord[i] - 'a');
+            multiply *= 10;
+        }
+
+        return sum == 0;
+    }
+}
