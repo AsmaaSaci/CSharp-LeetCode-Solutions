@@ -1,0 +1,80 @@
+public class Solution {
+    public bool ValidPath(int n, int[][] edges, int source, int destination) {
+        List<int>[] adj = new List<int>[n];
+        for(int i=0;i<n;i++)
+        {
+            adj[i] = new List<int>();
+        }
+        foreach(var edge in edges)
+        {
+            int u =edge[0];
+            int v = edge[1];
+
+            adj[u].Add(v);
+            adj[v].Add(u);
+        }
+        bool[] visited = new bool[n];
+        for(int i= source;i<n;i++)
+        {
+            if(!visited[source])
+            {
+                if(Solve(source,adj,visited,destination)) return true;
+            }
+        }
+        return false;
+     }
+
+     public bool Solve(int source,List<int>[] adj,bool[] visited,int destination)
+     {
+        visited[source] =true;
+        if(source==destination) return true;
+        foreach(int next in adj[source])
+        {
+            if(next==destination) return true;
+            if(visited[next]) continue;
+            if(!visited[next])
+            {
+               if(Solve(next,adj,visited,destination))
+                   return true;
+            }
+        }
+        return false;
+     }
+}
+
+---
+public class Solution {
+    public bool ValidPath(int n, int[][] edges, int source, int destination) {
+        List<int>[] adj = new List<int>[n];
+        for(int i=0;i<n;i++)
+        {
+            adj[i] = new List<int>();
+        }
+        foreach(var edge in edges)
+        {
+            int u =edge[0];
+            int v = edge[1];
+
+            adj[u].Add(v);
+            adj[v].Add(u);
+        }
+        bool[] visited = new bool[n];
+        Queue<int> queue = new();
+        visited[source]=true;
+        queue.Enqueue(source);
+        while(queue.Count!=0)
+        {
+            int node = queue.Dequeue();
+            if(node==destination) return true;
+            foreach(int next in adj[node])
+            {
+                if(!visited[next])
+                {
+                    visited[next]=true;
+                    queue.Enqueue(next);
+                }
+            }
+        }
+        return false;
+     }
+}
