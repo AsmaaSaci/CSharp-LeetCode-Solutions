@@ -1,0 +1,35 @@
+public class Solution {
+    public string ToGoatLatin(string sentence) {
+        string vowel = "aeiouAEIOU";
+        string[] splited = sentence.Split(' ');
+        List<string> output = new List<string>();
+        int addA = 1;
+        foreach (string word in splited)
+        {
+            if (vowel.IndexOf(word[0]) != -1)
+            {
+                string newWord = word + "ma" + new string('a', addA);
+                output.Add(newWord);
+                addA++;
+                continue;
+            }
+
+            char[] wordArr = word.ToCharArray();
+            int wArrC = wordArr.Length;
+            char moveToEnd = wordArr[0];
+            int j = 0;
+            while (j < wArrC)
+            {
+                if (j == wArrC - 1) { wordArr[j] = moveToEnd; break; }
+                wordArr[j] = wordArr[j+1];
+                j++;
+            }
+
+            string newWord2 = new string(wordArr) + "ma" + new string('a', addA);
+            output.Add(newWord2);
+            addA++;
+        }
+
+        return string.Join(" ", output);
+    }
+}
