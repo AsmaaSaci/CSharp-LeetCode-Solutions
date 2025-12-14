@@ -1,0 +1,15 @@
+public class Solution {
+    public int[] DiStringMatch(string s) {
+        int sL = s.Length, min = 0, max = sL;
+        var perm = new int[sL + 1];
+
+        for (int i = 0; i < sL; i++)
+        {
+            if (s[i] == 'I') { perm[i] = min; min++; continue; }
+            if (s[i] == 'D') { perm[i] = max; max--; continue; }
+        }
+        perm[sL] = max;
+
+        return perm;
+    }
+}
