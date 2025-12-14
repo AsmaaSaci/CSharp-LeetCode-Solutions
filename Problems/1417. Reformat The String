@@ -1,0 +1,52 @@
+public class Solution {
+    public string Reformat(string s) {
+
+        List<int> numList = new();
+        List<char> charList = new();
+        foreach(char ch in s) {
+            if(char.IsDigit(ch)) {
+                numList.Add(ch - '0');
+            }
+            else{
+                charList.Add(ch);
+            }
+        }
+
+        // if not possible combination then return here itself
+        if(!(numList.Count == charList.Count ||
+            numList.Count + 1 == charList.Count ||
+            numList.Count == charList.Count + 1) 
+        ) {
+            return "";
+        }
+
+        StringBuilder sb = new();
+        if(numList.Count < charList.Count) {
+            for(int i = 0; i < numList.Count; i++) {
+                sb.Append(charList[i]);
+                sb.Append(numList[i]);
+            }
+            sb.Append(charList[charList.Count - 1]);
+
+        }
+        else if(numList.Count > charList.Count) {
+            for(int i = 0; i < charList.Count; i++) {
+                sb.Append(numList[i]);
+                sb.Append(charList[i]);
+            }
+            sb.Append(numList[numList.Count - 1]);
+
+        }
+        else {
+            for(int i = 0; i < numList.Count; i++) {
+                sb.Append(numList[i]);
+                sb.Append(charList[i]);
+            }
+        }
+
+        return sb.ToString();
+
+    }
+
+
+}
