@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+
+public class Solution
+{
+    private static readonly int ALPHABET_SIZE = 26;
+
+    public IList<string> RemoveAnagrams(string[] words)
+    {
+        List<string> removedAnagrams = [];
+
+        int index = 0;
+        while (index < words.Length)
+        {
+            removedAnagrams.Add(words[index]);
+            int indexFirst = index;
+            ++index;
+
+            while (index < words.Length)
+            {
+                if (!WordsAreAnagrams(words[indexFirst], words[index]))
+                {
+                    break;
+                }
+                ++index;
+            }
+        }
+
+        return removedAnagrams;
+    }
+
+    private bool WordsAreAnagrams(string first, string second)
+    {
+        if (first.Length != second.Length)
+        {
+            return false;
+        }
+
+        int[] frequency = new int[ALPHABET_SIZE];
+        foreach (char letter in first)
+        {
+            ++frequency[letter - 'a'];
+        }
+
+        foreach (char letter in second)
+        {
+            --frequency[letter - 'a'];
+            if (frequency[letter - 'a'] < 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
