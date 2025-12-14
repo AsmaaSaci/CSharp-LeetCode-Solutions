@@ -1,0 +1,18 @@
+public class Solution {
+    public int CountPoints(string rings) {
+        int r = 0;
+        Dictionary<char,HashSet<char>> result = new Dictionary<char,HashSet<char>>();
+        for(int i=1;i<rings.Length;i+=2){
+            if(!result.ContainsKey(rings[i])){
+                result[rings[i]] = new HashSet<char>();
+            }
+            result[rings[i]].Add(rings[i-1]);
+        }
+        foreach(var pair in result.Values){
+            if(pair.Count==3){
+                r++;
+            }
+        }
+        return r;
+    }
+}
