@@ -1,0 +1,32 @@
+public class Solution {
+    public string ReverseOnlyLetters(string s) {
+        StringBuilder reversedString = new StringBuilder("");
+int right = s.Length - 1;
+for (int left = 0; left < s.Length; left++)
+{
+    if (Char.IsLetter(s[left]) && Char.IsLetter(s[right]))
+    {
+        reversedString.Append(s[right]);
+        right--;
+    }
+    else if (right > -1)
+    {
+        if (!Char.IsLetter(s[right]))
+        {
+            right--;
+            left--;
+        }
+        else
+        {
+            reversedString.Append(s[left]);
+        }
+    }
+    else
+    {
+        reversedString.Append(s[left]);
+    }
+}
+
+return reversedString.ToString();
+    }
+}
