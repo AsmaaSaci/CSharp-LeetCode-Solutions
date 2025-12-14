@@ -1,0 +1,29 @@
+public class Solution {
+    public IList<string> CellsInRange(string s) {
+    //Split into two parts
+    string startingLetter=s.Split(':')[0];
+    string endingLetter = s.Split(':')[1];
+
+    //Find startWith letter and EndWith Letter
+    char StartsWith = Convert.ToChar(startingLetter.Substring(0, 1));
+    char EndsWith = Convert.ToChar(endingLetter.Substring(0, 1));
+
+    List<string> lines = new List<string>();
+    //Find Starts With Column Index
+    int index = Convert.ToInt32(startingLetter.Substring(1));
+
+    //Loop Will execute till StartLetter To EndLetter
+    for (char j = StartsWith; j <= EndsWith; j++)
+    {
+        for (int i= Convert.ToInt32(startingLetter.Substring(1)); i<= Convert.ToInt32(endingLetter.Substring(1));i++) {
+    
+        
+            lines.Add(j.ToString() + index); // Create Custom String Letter+Index value // eg. A1
+            index++;
+        }
+        index = Convert.ToInt32(startingLetter.Substring(1));
+
+    }   
+    return lines; 
+    }
+}
