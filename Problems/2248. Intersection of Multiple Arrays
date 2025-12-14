@@ -1,0 +1,32 @@
+public class Solution {
+    public IList<int> Intersection(int[][] nums) {
+        List<int> Rel = new List<int>();
+        Dictionary<int, int> map = new Dictionary<int, int>();
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            for (int j = 0; j < nums[i].Length; j++)
+            {
+                if (map.ContainsKey(nums[i][j]))
+                {
+                    map[nums[i][j]]++;
+                }
+                else
+                {
+                    map[nums[i][j]] = 1;
+                }
+            }
+        }
+
+        foreach (var num in map)
+        {
+            if (num.Value == nums.Length)
+            {
+                Rel.Add(num.Key);
+            }
+        }
+
+        Rel.Sort();
+        return Rel;
+    }
+}
