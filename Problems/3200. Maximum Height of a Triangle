@@ -1,0 +1,10 @@
+public class Solution {
+    public int MaxHeightOfTriangle(int red, int blue) {
+        return int.Max(Height(red, blue), Height(blue, red));
+    }
+    private int Height(int a, int b) {
+        int aHeight = (int)Math.Sqrt(a) * 2 - 1;
+        int bHeight = ((int)Math.Sqrt(4 * b + 1) - 1) / 2 * 2;
+        return (aHeight > bHeight) ? bHeight + 1 : aHeight + 1;
+    }
+}
