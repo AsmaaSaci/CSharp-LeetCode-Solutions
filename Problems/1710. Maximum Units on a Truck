@@ -1,0 +1,24 @@
+public class Solution {
+     
+    public int MaximumUnits(int[][] boxTypes, int truckSize) {
+        int result = 0;
+        int truck = truckSize;
+        int Numbox = 0;
+        int Units = 0;
+        int tmp = 0;
+        System.Array.Sort(boxTypes, (a, b) => b[1].CompareTo(a[1]));
+        foreach (var boxType in boxTypes)
+        {
+            Numbox = boxType[0];
+            Units = boxType[1];
+            tmp = Math.Min(Numbox, truckSize);
+            truckSize -= tmp;
+            result += Units * tmp;
+            if (truckSize == 0)
+            {
+                return result;
+            }
+        }
+        return result;
+    }
+}
