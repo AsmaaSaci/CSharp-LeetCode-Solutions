@@ -1,0 +1,24 @@
+public class Solution {
+    public string CapitalizeTitle(string title) {
+
+        // Converting the string into an array.
+        string[] words = title.Split(' ');
+
+        for(int i=0; i<words.Length; i++)
+        {
+            string word = words[i].ToLower(); // Change the word to lowercase.
+
+            if(word.Length > 2)
+            {
+                // Change the first letter to uppercase.
+                words[i] = char.ToUpper(word[0]) + word.Substring(1);
+            }
+            else{
+                words[i] = word;
+            }
+        }
+
+        // Convert it back into a string and return it.
+        return string.Join(" ", words);
+    }
+}
