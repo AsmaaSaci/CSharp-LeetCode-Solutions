@@ -1,0 +1,24 @@
+public class Solution {
+    public bool ValidMountainArray(int[] arr) {
+        int arrL = arr.Length;
+        if (arrL < 3) { return false; }
+        bool incresing = false, reached = false;
+
+        for (int i = 0; i < arrL - 1; i++)
+        {
+            if (!reached)
+            {
+                if (arr[i] < arr[i+1]) { incresing = true; continue; }
+                else if (arr[i] == arr[i+1]) { return false; }
+                else if (arr[i] > arr[i+1]) { reached = true; continue; }
+            }
+            else
+            {
+                if (arr[i] > arr[i+1]) { continue; }
+                else if (arr[i] <= arr[i+1]) { return false; }
+            }
+        }
+
+        return reached && incresing;
+    }
+}
