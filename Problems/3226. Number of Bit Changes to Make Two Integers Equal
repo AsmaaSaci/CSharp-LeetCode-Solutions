@@ -1,0 +1,17 @@
+public class Solution {
+    public int MinChanges(int n, int k) {
+        if ((n & k) != k) return -1;
+
+        int xor = n ^ k;
+        return CountBits(xor);
+    }
+
+    private int CountBits(int x) {
+        int count = 0;
+        while (x > 0) {
+            count += x & 1;
+            x >>= 1;
+        }
+        return count;
+    }
+}
