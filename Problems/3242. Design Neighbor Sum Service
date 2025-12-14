@@ -1,0 +1,65 @@
+public class NeighborSum {
+private Dictionary<int, Pair> value_coord;
+    private Dictionary<Pair, int> coord_value;
+
+    public NeighborSum(int[][] grid) {
+        value_coord = new Dictionary<int, Pair>();
+        coord_value = new Dictionary<Pair, int>();
+
+        for (int row = 0; row < grid.Length; row++) {
+            for (int col = 0; col < grid[row].Length; col++) {
+                value_coord[grid[row][col]] = new Pair(row, col);
+                coord_value[new Pair(row, col)] = grid[row][col];
+            }
+        }
+    }
+
+    public int AdjacentSum(int value) {
+        var rc = value_coord[value];
+        int row = rc.Row;
+        int col = rc.Col;
+
+        int sum = 0;
+        sum += coord_value.TryGetValue(new Pair(row + 1, col), out int up) ? up : 0;   // above
+        sum += coord_value.TryGetValue(new Pair(row - 1, col), out int down) ? down : 0; // below
+        sum += coord_value.TryGetValue(new Pair(row, col - 1), out int left) ? left : 0; // left
+        sum += coord_value.TryGetValue(new Pair(row, col + 1), out int right) ? right : 0; // right
+
+        return sum;
+    }
+
+    public int DiagonalSum(int value) {
+        var rc = value_coord[value];
+        int row = rc.Row;
+        int col = rc.Col;
+
+        int sum = 0;
+        sum += coord_value.TryGetValue(new Pair(row - 1, col - 1), out int ul) ? ul : 0; // up-left
+        sum += coord_value.TryGetValue(new Pair(row - 1, col + 1), out int ur) ? ur : 0; // up-right
+        sum += coord_value.TryGetValue(new Pair(row + 1, col - 1), out int dl) ? dl : 0; // down-left
+        sum += coord_value.TryGetValue(new Pair(row + 1, col + 1), out int dr) ? dr : 0; // down-right
+
+        return sum;
+    }
+
+    private class Pair {
+        public int Row { get; }
+        public int Col { get; }
+
+        public Pair(int row, int col) {
+            Row = row;
+            Col = col;
+        }
+
+        public override bool Equals(object obj) {
+            if (obj is Pair other) {
+                return Row == other.Row && Col == other.Col;
+            }
+            return false;
+        }
+
+        public override int GetHashCode() {
+            return HashCode.Combine(Row, Col);
+        }
+    }
+}
