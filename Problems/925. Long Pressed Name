@@ -1,0 +1,24 @@
+public class Solution
+{
+    public bool IsLongPressedName(string name, string typed)
+    {
+        int i = 0, j = 0;
+        char lastMatched = default;
+        while (i < name.Length && j < typed.Length)
+        {
+            if (name[i] == typed[j])
+            {
+                lastMatched = name[i];
+                i++;
+
+            }
+            if (lastMatched == typed[j])
+                j++;
+            else
+                return false;
+        }
+        while (j < typed.Length && typed[j] == lastMatched)
+            j++;
+        return (i == name.Length && j == typed.Length);
+    }
+}
