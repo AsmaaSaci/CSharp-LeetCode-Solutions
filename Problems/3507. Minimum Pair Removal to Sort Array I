@@ -1,0 +1,39 @@
+public class Solution {
+    public int MinimumPairRemoval(int[] nums) {
+        int len = nums.Length, opt = 0;
+        if(len < 2)
+            return 0;
+
+        List<int> sample = nums.ToList();
+        bool inOrder = false;
+
+        while(true)
+        {
+            int[] preCheck = [int.MaxValue, -1];
+            int sum = sample[0];
+            bool checkValid = true;
+            for(int i = 1; i < sample.Count; i++)
+            {
+                if(sample[i] < sample[i-1])
+                    checkValid = false;
+
+                sum += sample[i];
+
+                if(i >= 2)
+                    sum -= sample[i-2];
+
+                if(preCheck[0] > sum)
+                    preCheck = [sum, i-1];
+            }
+
+            if(checkValid)
+                return opt;
+
+            sample[preCheck[1]] = preCheck[0];
+            sample.RemoveAt(preCheck[1]+1);
+            opt++;
+        }
+
+        return opt;
+    }
+}
