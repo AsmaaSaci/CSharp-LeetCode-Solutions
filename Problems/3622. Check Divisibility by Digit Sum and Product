@@ -1,0 +1,16 @@
+public class Solution {
+    public bool CheckDivisibility(int n) {
+        int y = n;
+        int sum = 0;
+        int mlt = 1;
+
+        while (y > 0) {
+            int digit = y % 10;
+            y = y / 10;
+            sum += digit;
+            mlt *= digit;
+        }
+
+        return n % (sum + mlt) == 0;
+    }
+}
