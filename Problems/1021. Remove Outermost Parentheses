@@ -1,0 +1,26 @@
+public class Solution {
+    public string RemoveOuterParentheses(string s) {
+        StringBuilder result = new StringBuilder();
+        int openParentheses  = 0;
+        
+        foreach(char e in s)
+        {
+            if(e == '(')
+            {
+                if(openParentheses++ > 0)
+                {
+                    result.Append(e);
+                }
+            }
+            if(e == ')')
+            {
+                if(--openParentheses > 0)
+                {
+                    result.Append(e);
+                }
+            }
+        }
+
+        return result.ToString();
+    }
+}
