@@ -1,0 +1,8 @@
+public class Solution {
+    public int MaxProduct(int n) {
+        char[] s = n.ToString().ToCharArray();
+        Array.Sort(s);
+        int len = s.Length;
+        return (s[len-1] -'0') * (s[len-2] - '0');
+    }
+}
