@@ -1,0 +1,6 @@
+public class Solution {
+    public int MinimumCost(int[] cost) => cost
+        .OrderByDescending(x => x)
+        .Chunk(3)
+        .Sum(chunk => chunk.Take(2).Sum());
+}
