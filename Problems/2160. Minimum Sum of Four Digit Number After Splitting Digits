@@ -1,0 +1,15 @@
+public class Solution {
+    public int MinimumSum(int num) {
+        
+        string s = num.ToString();
+        char[] chArr = s.ToCharArray();
+
+        Array.Sort(chArr);
+
+        int result = (( chArr[0] - '0') * 10  + (chArr[2] - '0')) +
+                    ((chArr[1] - '0') * 10 + (chArr[3] - '0')); 
+
+        return result;
+    }
+
+}
