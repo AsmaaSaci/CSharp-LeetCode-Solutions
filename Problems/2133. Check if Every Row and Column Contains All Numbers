@@ -1,0 +1,25 @@
+public class Solution {
+    public bool CheckValid(int[][] matrix) {
+        List<HashSet<int>> rowSeen = new List<HashSet<int>>();
+        List<HashSet<int>> colSeen = new List<HashSet<int>>();
+
+        // Initialize sets for each row and column
+        for (int i = 0; i < matrix.Length; i++) {
+            rowSeen.Add(new HashSet<int>());
+            colSeen.Add(new HashSet<int>());
+        }
+
+        for(int row = 0; row < matrix.Length; row++) {
+            for(int col = 0; col < matrix[0].Length; col++) {
+                int value = matrix[row][col];
+                if(rowSeen[row].Contains(value) || colSeen[col].Contains(value)) {
+                    return false;
+                }
+                rowSeen[row].Add(value);
+                colSeen[col].Add(value);
+            }
+        }
+
+        return true;
+    }
+}
