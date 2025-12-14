@@ -1,0 +1,33 @@
+public class Solution {
+    public int[] FairCandySwap(int[] aliceSizes, int[] bobSizes) {
+        int sumAlice = aliceSizes.Sum();
+        int sumBob = bobSizes.Sum();
+        int diff = (sumBob - sumAlice) / 2;
+        Array.Sort(bobSizes);
+        foreach(int x in aliceSizes){
+            int y = x + diff;
+            if(isExist(y, bobSizes)){
+                return new int[2] {x, y};
+            }
+        }
+        return Array.Empty<int>();
+    }
+
+    bool isExist(int key, int[] aliceSizes){
+        int low = 0;
+        int high = aliceSizes.Length - 1;
+        while(low <= high){
+            int mid = low + (high - low) / 2;
+            if(key == aliceSizes[mid]){
+                return true;
+            }
+            else if(key <= aliceSizes[mid]){
+                high = mid - 1;
+            }
+            else{
+                low = mid + 1;
+            }
+        }
+        return false;
+    }
+}
