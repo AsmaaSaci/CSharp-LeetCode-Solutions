@@ -1,0 +1,5 @@
+public class Solution {
+    public long MinCuttingCost(int n, int m, int k) {
+        return Math.Max(m, n) > k ? (long)k * (Math.Max(m, n) - k) : 0L;
+    }
+}
