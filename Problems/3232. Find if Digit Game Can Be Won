@@ -1,0 +1,22 @@
+public class Solution {
+    public bool CanAliceWin(int[] nums)
+    {
+        var sumSingles = 0;
+        var sumDoubles = 0;
+        foreach (var num in nums)
+        {
+            if (num.ToString().Length < 2)
+            {
+                sumSingles += num;
+            }
+            else
+            {
+                sumDoubles += num;
+            }
+        }
+
+        var result = !sumSingles.Equals(sumDoubles);
+
+        return result;
+    }
+}
