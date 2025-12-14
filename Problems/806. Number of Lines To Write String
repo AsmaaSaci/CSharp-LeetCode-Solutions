@@ -1,0 +1,15 @@
+public class Solution {
+    public int[] NumberOfLines(int[] widths, string s) {
+        int lines = 1;
+        int pixels = 0;
+        foreach (char c in s)
+        {
+            if (pixels == 100) { lines++; pixels = 0; }
+            int cInWidths = (int)c - 97;
+            if (pixels + widths[cInWidths] > 100) { lines++; pixels = 0; }
+            pixels += widths[cInWidths];
+        }
+
+        return new int[2] { lines, pixels };
+    }
+}
