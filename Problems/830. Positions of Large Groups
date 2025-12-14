@@ -1,0 +1,29 @@
+public class Solution {
+    public IList<IList<int>> LargeGroupPositions(string s) {
+        IList<IList<int>> output = new List<IList<int>>();
+        int sL = s.Length;
+        int l = 0;
+        int r = 0;
+
+        for (int i = 0; i < sL - 1; i++)
+        {
+            if (s[i] == s[i + 1]) { r++; }
+            else
+            {
+                if (r - l >= 2)
+                {
+                    output.Add(new List<int> { l, r });
+                }
+                l = i + 1;
+                r = l;
+            }
+
+            if (r == sL - 1)
+            {
+                if (r - l >= 2) { output.Add(new List<int> { l, r }); }
+            }
+        }
+
+        return output;
+    }
+}
