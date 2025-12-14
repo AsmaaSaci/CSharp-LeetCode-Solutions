@@ -1,0 +1,13 @@
+public class Solution {
+    public int CountAsterisks(string s) {
+        int result = 0;
+        string[] sArray = s.Split("|");
+        for(int i = 0; i<=sArray.Length; i= i+2){
+            char[] charS = sArray[i].ToCharArray();
+            for(int j = 0;j<charS.Length;j++){
+                if(charS[j]=='*') result++;
+            }
+        }
+        return result;
+    }
+}
