@@ -1,0 +1,35 @@
+public class Solution {
+    public bool HasGroupsSizeX(int[] deck) {
+        
+        // Raj Thomas 22nd July 2025 12:41AM IST
+
+        // main case
+        Dictionary<int, int> freq = new();
+
+        foreach(int i in deck) {
+            freq[i] = freq.GetValueOrDefault(i, 0) + 1;
+        }
+
+        List<int> arr = freq.Select(kvp => kvp.Value).ToList();
+
+        int gcd = arr[0];
+        for(int i = 1; i < arr.Count; i++) {
+            gcd = GCD(gcd, arr[i]);
+        }
+
+        return gcd == 1 ? false : true;
+    }
+
+    private static int GCD(int a, int b) {
+
+        while(b != 0) {
+            int temp = b;
+            int rem = a % b;
+            b = rem;
+            a = temp;
+        }
+
+        return a;
+
+    }
+}
