@@ -1,0 +1,39 @@
+public class Solution {
+    public string SortString(string s) {
+        
+        int[] freq = new int[26];
+        foreach(char ch in s) {
+            int val = ch - 'a';
+            freq[val]++;
+        }
+
+        StringBuilder sb = new();
+        int remaining = s.Length;
+
+        while(remaining > 0) {
+
+            // increase
+            for(int i = 0; i < 26; i++) {
+                if(freq[i] > 0) {
+                    char ch = (char)(i + 'a');
+                    sb.Append(ch);
+                    freq[i]--;
+                    remaining--;
+                }
+            }
+
+            // decrease
+            for(int i = 25; i >= 0; i--) {
+                if(freq[i] > 0) {
+                    char ch = (char)(i + 'a');
+                    sb.Append(ch);
+                    freq[i]--;
+                    remaining--;
+                }
+            }
+
+        }
+
+        return sb.ToString();
+    }
+}
