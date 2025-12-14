@@ -1,0 +1,42 @@
+public class Solution {
+    public bool BuddyStrings(string s, string goal) {
+        if(s.Length != goal.Length )
+        {
+            return false;
+        }
+        if(s == goal && !s.GroupBy(x=>x).Any(g => g.Count() > 1))
+        {
+            return false;
+        }
+        
+        
+    
+        var count = 0;
+        var a = 'A';
+        var b = 'A';
+        
+        for(var i = 0; i < s.Length ; i += 1)
+        {
+            
+            if(s[i] != goal[i])
+            {
+                if(a != 'A' && (a != s[i] || b != goal[i]))
+                {
+
+                    return false;
+                }
+                a = goal[i];
+                b = s[i];
+                
+                count +=1;
+                if(count >= 3)
+                {   
+
+                    return false;
+                } 
+            }
+        }
+        
+        return count == 0 || count == 2;
+    }
+}
