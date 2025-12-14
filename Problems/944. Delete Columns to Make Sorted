@@ -1,0 +1,20 @@
+public class Solution {
+    public int MinDeletionSize(string[] strs) {
+        int cloumnCounter = 0;
+        int numRows = strs.Length;
+        int numColumns = strs[0].Length;
+        for(int i = 0; i < numColumns; i++)
+        {
+            for(int j= 1; j < numRows; j++)
+            {
+                if(strs[j][i] < strs[j-1][i])
+                {
+                    cloumnCounter++;
+                    break;
+                }
+            }
+        }
+
+        return cloumnCounter;
+    }
+}
