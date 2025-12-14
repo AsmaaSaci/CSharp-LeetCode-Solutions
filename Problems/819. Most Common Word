@@ -1,0 +1,27 @@
+public class Solution {
+    public string MostCommonWord(string paragraph, string[] banned) {
+        string[] p = paragraph.ToLower().Replace(".", " ")
+            .Replace(",", " ").Replace("!", " ").Replace("?", " ")
+            .Replace("'", " ").Replace(";", " ")
+            .Replace("  ", " ").Trim().Split(' ');
+
+        HashSet<string> set = new HashSet<string>();
+        Dictionary<string, int> dict = new Dictionary<string, int>();
+
+        foreach (string s in banned)
+            set.Add(s);
+
+        foreach (string s in p)
+        {
+            if (!set.Contains(s))
+            {
+                if (dict.ContainsKey(s))
+                    dict[s]++;
+                else
+                    dict[s] = 1;
+            }
+        }
+
+        return dict.MaxBy(p => p.Value).Key;
+    }
+}
