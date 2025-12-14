@@ -1,0 +1,38 @@
+public class Solution {
+    public int[][] FloodFill(int[][] image, int sr, int sc, int color) 
+    {
+        int[][] resArray= (int[][])image.Clone();
+        Queue<(int,int)> imageQueue = new Queue<(int,int)>();
+        int height=resArray.Length;
+        int width=resArray[0].Length;
+        int init=resArray[sr][sc];
+        if(init==color)
+            return resArray;
+        imageQueue.Enqueue((sr,sc));
+        while(imageQueue.Count>0)
+        {
+            var (row,column)=imageQueue.Dequeue();
+            resArray[row][column]=color;
+            if(row-1>=0 && resArray[row-1][column]==init)
+            {
+                imageQueue.Enqueue((row-1,column));
+            }
+                
+            if(row+1<height && resArray[row+1][column]==init)
+            {
+                imageQueue.Enqueue((row+1,column));
+            }
+                
+            if(column+1<width && resArray[row][column+1]==init)
+            {
+                imageQueue.Enqueue((row,column+1));
+            }
+                
+            if(column-1>=0 && resArray[row][column-1]==init)
+            {
+                imageQueue.Enqueue((row,column-1));
+            }
+        }
+        return resArray;
+    }
+}
