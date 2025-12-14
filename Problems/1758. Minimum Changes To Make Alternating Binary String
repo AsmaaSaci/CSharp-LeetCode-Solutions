@@ -1,0 +1,8 @@
+public class Solution {
+    public int MinOperations(string s) {
+        int alt = '0', count = 0;
+        foreach (char c in s)
+            count += c ^ (alt ^= 1);
+        return Math.Min(count, s.Length - count);
+    }
+}
