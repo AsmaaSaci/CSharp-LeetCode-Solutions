@@ -1,0 +1,45 @@
+public class Solution {
+    public IList<int> LuckyNumbers(int[][] matrix) {
+        int rows = matrix.Length;
+        int cols = matrix[0].Length;
+
+        var rowMins = new int[rows];
+        for(int i = 0; i < rows;i++)
+        {
+            rowMins[i] = matrix[i][0];
+            for(int j = 1; j < cols;j++)
+            {
+                if(matrix[i][j] < rowMins[i])
+                {
+                    rowMins[i] = matrix[i][j];
+                }                
+            }
+        }
+        var colMaxs = new int[cols];
+        for(int j = 0; j < cols;j++)
+        {
+            colMaxs[j] = matrix[0][j];
+            for(int i = 1; i < rows;i++)
+            {
+                if(matrix[i][j] > colMaxs[j])
+                {
+                    colMaxs[j] = matrix[i][j];
+                }
+            }
+        }
+
+        var result = new List<int>();
+        for(int i = 0; i < rows;i++)
+        {
+            for(int j = 0; j < cols;j++)
+            {
+                if (matrix[i][j] == rowMins[i] && matrix[i] [j] == colMaxs[j]) {
+                    result.Add(matrix[i][j]);
+                }
+            }
+        }
+        return result;
+
+
+    }
+}
