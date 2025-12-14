@@ -1,0 +1,98 @@
+public class Solution {
+    public bool FindRotation(int[][] mat, int[][] target) {
+        //Approach1
+
+        int n = mat.Length;
+        int c90 = 0, c180 = 0, c270 = 0, c360 = 0;
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(mat[i][j] == target[n-j-1][i]) c90++;
+                if(mat[i][j] == target[n-i-1][n-j-1]) c180++;
+                if(mat[i][j] == target[j][n-i-1]) c270++;
+                if(mat[i][j] == target[i][j]) c360++;
+            }
+        }
+            
+        return (c90 == n*n || c180 == n*n || c270 == n*n || c360 == n*n); 
+    }
+    private bool Approach1(int [][] matrix, int [][] target)
+    {
+        for(int i = 1; i <= 4; i++)
+        {
+            Rotate(matrix);
+            if(Compare(matrix, target)) return true;
+        }        
+        return false;
+    }
+    private bool Compare(int [][] matrix, int [][] target)
+    {
+        for(int i = 0; i < matrix.Length; i++)
+        {
+            for(int j = 0; j < matrix[0].Length; j++)
+            {
+                if(matrix[i][j] != target[i][j])
+                    return false;
+            }
+        }
+        return true;
+    }
+    private void Rotate(int[][] matrix) {
+        
+        /*GENERAL APPROACH*/
+        /*
+        * clockwise rotate
+        * first swap the symmetry (i.e. transpose the matrix), then reverse each row
+        * 1 2 3     1 4 7     7 4 1
+        * 4 5 6  => 2 5 8  => 8 5 2
+        * 7 8 9     3 6 9     9 6 3
+        * 
+        * anti-clockwise rotate
+        * first swap the symmetry (i.e. transpose the matrix), then reverse each col
+        */
+
+        int rows = matrix.Length - 1;
+        int cols = matrix[0].Length - 1;
+
+        //transpose the matrix (coverting the each row into col)
+        for(int i = 0; i < matrix.Length; i++)
+        {
+            for(int j = i + 1; j < matrix[0].Length; j++)
+            {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;    
+            }
+        }
+        
+        /*REVERSING THE EACH ROW*/
+        /*Iterating over each row and swapping the cell values from left to right*/
+        for(int row = 0; row < matrix.Length; row++)
+        {
+            int i = 0;
+            int j = matrix[0].Length - 1;
+            while(i < j)
+            {
+                int temp = matrix[row][i];
+                matrix[row][i] = matrix[row][j];
+                matrix[row][j] = temp;
+                i++;
+                j--;
+            }
+        }           
+    }
+}
+
+/*
+
+0 0 0 
+0 1 0
+1 1 1
+
+0 0 1
+0 1 1
+0 0 1
+
+
+*/
