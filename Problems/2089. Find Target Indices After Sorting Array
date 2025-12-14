@@ -1,0 +1,24 @@
+public class Solution {
+    public IList<int> TargetIndices(int[] nums, int target) {
+        int numLower = 0;
+        int numEqual = 0;
+
+        // Count number of lower than and equal to
+        foreach(int num in nums) {
+            if(num < target) {
+                numLower++;
+            } else if (num == target) {
+                numEqual++;
+            }
+        }
+
+        // Fill in indices for result
+        IList<int> result = new List<int>();
+
+        for(int i = numLower; i < numLower + numEqual; i++) {
+            result.Add(i);
+        }
+
+        return result;
+    }
+}
