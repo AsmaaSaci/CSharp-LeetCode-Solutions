@@ -1,0 +1,20 @@
+public class Solution {
+    public int ButtonWithLongestTime(int[][] events) {
+        int buttonInd = events[0][0];
+        int maxTime = events[0][1];
+        int timeInt = 0;
+
+        for(int i = 1; i < events.Count(); i++) {
+            timeInt = events[i][1] - events[i - 1][1];
+            if(timeInt > maxTime){
+                buttonInd = events[i][0];
+                maxTime = events[i][1] - events[i - 1][1];
+            }
+            else if(timeInt == maxTime) {
+                buttonInd = Math.Min(events[i][0], buttonInd);
+            }
+        }
+
+        return(buttonInd);
+    }
+}
