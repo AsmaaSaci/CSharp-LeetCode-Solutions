@@ -1,0 +1,15 @@
+public class Solution {
+    public int[] SortByBits(int[] arr) {
+        int[] keys = new int[arr.Length];
+
+        for(int i = 0; i < arr.Length; i++) {
+
+            int key = arr[i];
+            key |= BitOperations.PopCount((uint) key) << 14;
+            keys[i] = key;
+        }
+
+        Array.Sort(keys, arr);
+        return arr;
+    }
+}
