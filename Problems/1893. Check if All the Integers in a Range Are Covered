@@ -1,0 +1,16 @@
+public class Solution {
+    public bool IsCovered(int[][] ranges, int left, int right) {
+        var diff = new int[52];                // indices 1..50; 51 handles r+1 when r==50
+        foreach (var seg in ranges) {
+            diff[seg[0]]++;
+            diff[seg[1] + 1]--;
+        }
+        int cover = 0;
+        for (int x = 1; x <= 50; x++) {
+            cover += diff[x];                  // prefix sum → #active ranges at x
+            if (x >= left && x <= right && cover == 0) return false;
+            if (x == right) return true;       // already verified the target range
+        }
+        return true;                            // defensive
+    }
+}
