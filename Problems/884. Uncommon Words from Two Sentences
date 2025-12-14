@@ -1,0 +1,32 @@
+public class Solution 
+{
+    public string[] UncommonFromSentences(string s1, string s2) 
+    {
+        HashSet<string> commonWords = new(), uncommonWords = new();
+        
+        void FindUncommonWords(string str)
+        {
+            foreach (var word in str.Split(' '))
+            {
+                if (commonWords.Contains(word))
+                {
+                    continue;
+                }
+                if (uncommonWords.Contains(word))
+                {
+                    uncommonWords.Remove(word);
+                    commonWords.Add(word);
+                }
+                else
+                {
+                    uncommonWords.Add(word);
+                }
+            }
+        }
+
+        FindUncommonWords(s1);
+        FindUncommonWords(s2);
+        
+        return uncommonWords.ToArray();
+    }
+}
