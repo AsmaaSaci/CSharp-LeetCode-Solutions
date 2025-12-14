@@ -1,0 +1,24 @@
+public class Solution {
+    public IList<int> MinSubsequence(int[] nums) {
+        int sum = 0;
+        int curr = 0;
+        List<int> result = new List<int>();
+
+        foreach (int n in nums)
+            sum += n;
+
+        Array.Sort(nums);
+
+        for (int i = nums.Length - 1; i >= 0; i--)
+        {
+            sum -= nums[i];
+            curr += nums[i];
+            result.Add(nums[i]);
+
+            if (curr > sum)
+                return result;
+        }
+
+        return result;
+    }
+}
