@@ -1,0 +1,16 @@
+public class Solution {
+    public int FindShortestSubArray(int[] nums) {
+        var groups = nums
+            .GroupBy(x => x)
+            .Select(x => new int[] { x.Key, x.Count() })
+            .OrderByDescending(x => x[1])
+            .ToArray();
+        var maxFreq = groups[0][1];
+        return groups
+            .TakeWhile(x => x[1] == maxFreq)
+            .Select(x => x[0])
+            .Select(target => Array.LastIndexOf(nums, target) - Array.IndexOf(nums, target))
+            .OrderBy(x => x)
+            .First() + 1;
+    }
+}
