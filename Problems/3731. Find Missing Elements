@@ -1,0 +1,6 @@
+public class Solution {
+    public IList<int> FindMissingElements(int[] nums) => Enumerable.
+        Range(nums.Min(), nums.Max() - nums.Min()).
+        Except(nums).
+        ToArray();
+}
