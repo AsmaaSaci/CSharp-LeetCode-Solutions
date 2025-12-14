@@ -1,0 +1,28 @@
+public class Solution {
+    public int MinTimeToType(string word) {
+        int time = 0;
+        char standing = 'a';
+        for (int i = 0; i < word.Length; i++) {
+            char destination = word[i];
+            if (standing == destination) {
+                time += 1;
+            } else {
+                //moving in right direction
+                int dx1 = word[i] - standing;
+                int dx2 = standing - word[i];
+                // Console.WriteLine($"{dx1} | {dx2}");
+                if (dx1 < 0)
+                    dx1 += 26;
+                if (dx2 < 0)
+                    dx2 += 26;
+                // Console.WriteLine($"{dx1} | {dx2}");
+                
+                time += Math.Min(dx1, dx2); // have reached
+                time += 1; // have to type
+                standing = word[i];
+            }
+        }
+        return time;
+        
+    }
+}
