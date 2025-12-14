@@ -1,0 +1,25 @@
+public class Solution {
+    public int[][] ImageSmoother(int[][] img) {
+        var (m, n) = (img.Length, img[0].Length);
+        var result = new int[m][];
+        for (var i = 0; i < m; i++)
+        {
+            result[i] = new int[n];
+            for (var j = 0; j < n; j++)
+            {
+                var total = 0;
+                var (lx, ux) = (Math.Max(0, i - 1), Math.Min(m, i + 2));
+                var (ly, uy) = (Math.Max(0, j - 1), Math.Min(n, j + 2));
+                for (var x = lx; x < ux; x++) 
+                {
+                    for (var y = ly; y < uy; y++) 
+                    {
+                        total += img[x][y];
+                    }
+                }
+                result[i][j] = (int)(total / ((ux - lx) * (uy - ly)));
+            }
+        }
+        return result;
+    }
+}
