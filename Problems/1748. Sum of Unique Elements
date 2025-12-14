@@ -1,0 +1,21 @@
+public class Solution {
+    public int SumOfUnique(int[] nums) {
+        int res = 0;
+        Dictionary<int, int> dic = new Dictionary<int, int>();
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (dic.ContainsKey(nums[i]))
+            {
+                dic[nums[i]] = dic[nums[i]] + 1;
+                if(dic[nums[i]] == 2)
+                res -= nums[i];
+            }
+            else
+            {
+                dic.Add(nums[i], 1);
+                res += nums[i];
+            }
+        }
+        return res;       
+    }
+}
