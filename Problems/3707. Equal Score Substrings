@@ -1,0 +1,11 @@
+public class Solution {
+    public bool ScoreBalance(string s) => s.ToCharArray().
+        Aggregate(new { target = s.ToCharArray().Sum(n => n - 'a' + 1), current = 0, found = false }, (acum, current) =>
+            new
+            {
+                acum.target,
+                current = acum.current + (current - 'a' + 1),
+                found = acum.found || (acum.current + current - 'a' + 1) * 2 == acum.target
+            }, 
+        result => result.found);
+}
