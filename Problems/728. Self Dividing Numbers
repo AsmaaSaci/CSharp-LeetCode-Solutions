@@ -1,0 +1,21 @@
+public class Solution {
+    public IList<int> SelfDividingNumbers(int lft, int rgt) {
+        List<int> res = new List<int>();
+        for (int num = lft; num <= rgt; num++) {
+            int tmp = num;
+            bool ok = true;
+            while (tmp > 0) {
+                int dig = tmp % 10;
+                if (dig == 0 || num % dig != 0) {
+                    ok = false;
+                    break;
+                }
+                tmp /= 10;
+            }
+            if (ok){
+                res.Add(num);
+            }
+        }
+        return res;
+    }
+}
