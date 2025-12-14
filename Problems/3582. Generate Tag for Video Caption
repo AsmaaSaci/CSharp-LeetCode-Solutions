@@ -1,0 +1,27 @@
+public class Solution {
+    public string GenerateTag(string caption) {
+        Span<char> res = stackalloc char[100];
+        res[0] = '#';
+        int ix = 1;
+
+        bool space = false;
+        for(int i = 0; i < caption.Length && ix < 100; i++)
+        {
+            int c = (int)caption[i];
+            if(c == ' ')
+            {
+                space = (ix > 1);
+                continue;
+            }
+
+            c &= 0b11011111;
+            if(c < 'A' || c > 'Z') continue;
+            c |= !space ? 0b00100000 : 0;
+            res[ix++] = (char)c;
+
+            space = false;
+        }
+
+        return new string(res.Slice(0, ix));
+    }
+}
