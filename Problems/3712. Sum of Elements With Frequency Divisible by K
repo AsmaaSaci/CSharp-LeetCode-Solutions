@@ -1,0 +1,16 @@
+public class Solution {
+    public int SumDivisibleByK(int[] nums, int k) {
+        HashSet<int> s = new HashSet<int>(nums);
+        int count = 0;
+
+        foreach (int i in s) {
+            int cnt = 0;
+            foreach (int n in nums) {
+                if (n == i) cnt++;
+            }
+            if (cnt % k == 0) count += i * cnt;
+        }
+
+        return count;
+    }
+}
