@@ -1,0 +1,38 @@
+public class Solution {
+    public int[] ShortestToChar(string s, char c) {
+        int sL = s.Length;
+        int[] output = new int[sL];
+
+        for (int i = 0; i < sL; i++)
+        {
+            if (s[i] == c) { output[i] = 0; continue; }
+            
+            int minDistance = int.MaxValue;
+            int iL = i;
+            int iR = i;
+            while (iL > 0 || iR < sL)
+            {
+                if (iL > 0 && s[iL] != c) iL--;
+                if (iR < sL - 1 && s[iR] != c) iR++;
+
+                // Nếu một trong 2 con trỏ dưới đây tìm thấy 'c' thì lấy kết quả đó luôn
+                if (s[iL] == c)
+                {
+                    int abs = i - iL;
+                    if (abs < minDistance) { minDistance = abs; }
+                    break;
+                }
+                if (s[iR] == c)
+                {
+                    int abs = iR - i;
+                    if (abs < minDistance) { minDistance = abs; }
+                    break;
+                }
+            }
+
+            output[i] = minDistance;
+        }
+
+        return output;
+    }
+}
