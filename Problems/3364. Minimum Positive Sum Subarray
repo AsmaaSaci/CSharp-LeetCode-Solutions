@@ -1,0 +1,30 @@
+public class Solution {
+    public int MinimumSumSubarray(IList<int> nums, int l, int r) {
+        
+        // Raj Thomas 16th Aug 2025 1:40AM IST
+
+        // main case
+
+        int len = nums.Count;
+        int minSum = int.MaxValue;
+        for(int i = 0; i < len; i++) {
+
+            int sum = 0;
+            for(int j = i; j < len; j++) {
+
+                int eleCount = (j - i) + 1;
+                if(eleCount > r) {
+                    break;
+                }
+                sum += nums[j];
+
+                if(sum > 0 && eleCount >= l && eleCount <= r) {
+                   minSum = Math.Min(minSum, sum); 
+                }
+            }
+
+        }
+
+        return minSum == int.MaxValue ? -1 : minSum;
+    }
+}
