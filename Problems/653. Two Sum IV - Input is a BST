@@ -1,0 +1,67 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean findMatch(TreeNode node,TreeNode current,int num)
+    {
+        if(node==null)
+        {
+            return false;
+        }
+        if(node.val==num && node!=current)
+        {
+            return true;
+        }
+        else if(node.val>num)
+        {
+            return findMatch(node.left,current,num);
+        }
+        else
+        {
+            return findMatch(node.right,current,num);
+        }
+    }
+    public boolean findFirst(TreeNode root,TreeNode node,int k)
+    {
+        if(node==null)
+        {
+            return false;
+        }
+        int num=k-node.val;
+        boolean valid=false;
+        if(num<node.val)
+        {
+            valid=findMatch(root,node,num);
+            if(valid)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            valid=findMatch(root,node,num);
+            if(valid)
+            {
+                return true;
+            }
+        }
+        return findFirst(root,node.left,k)||findFirst(root,node.right,k);
+    }
+    public boolean findTarget(TreeNode root, int k) {
+
+        return findFirst(root,root,k);
+        
+    }
+}
