@@ -1,0 +1,33 @@
+public class Solution {
+    public int LargestInteger(int num) {
+       List<int> odds = new(), evens = new();
+       int cur = num;
+       while(cur > 0)
+       {
+            int rest = cur%10;
+            if(rest%2 == 0)
+                evens.Add(rest);
+            else
+                odds.Add(rest);
+
+            cur /= 10;
+       }
+ 
+       int digits = 1; 
+       odds.Sort();
+       evens.Sort();
+       int idxOdd = 0, idxEven =0;
+       int res = 0;
+       cur = num;
+       while(cur > 0)
+       {
+            int rest = cur %10;
+            int val = rest%2 == 0 ? evens[idxEven++] : odds[idxOdd++];
+            res += (val*digits);
+            digits *= 10;
+            cur /= 10;
+       }
+
+       return res;
+    }
+}
