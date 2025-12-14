@@ -1,0 +1,48 @@
+public class Solution {
+    public bool IsAlienSorted(string[] words, string order) {
+        
+        // Raj Thomas 22nd Aug 2025 23:52PM IST
+
+        // main case
+        Dictionary<char, int> rank = new();
+        int rankId = 1;
+        foreach(char ch in order) {
+            rank[ch] = rank.GetValueOrDefault(ch, 0) + rankId;
+            rankId++;
+        }
+
+        int len = words.Length;
+        int left = 0;
+        int right = left + 1;
+        while(left < len && right < len) {
+
+            string leftWord = words[left];
+            string rightWord = words[right];
+            int idx = 0;
+            while(idx < leftWord.Length && idx < rightWord.Length) {
+
+                int leftRank = rank[leftWord[idx]];
+                int rightRank = rank[rightWord[idx]];
+
+                if(leftRank > rightRank) {
+                    return false;
+                }
+                
+                if(leftRank < rightRank) {
+                    break;
+                }
+                
+                idx++;
+            }
+
+            if(idx == rightWord.Length && idx < leftWord.Length) {
+                return false;
+            }
+
+            left++;
+            right++;
+        }
+
+        return true;
+    }
+}
