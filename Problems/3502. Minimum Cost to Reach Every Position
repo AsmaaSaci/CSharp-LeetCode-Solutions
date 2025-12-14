@@ -1,0 +1,20 @@
+    public class Solution
+    {
+        public int[] MinCosts(int[] cost)
+        {
+            int[] swaps = new int[cost.Length];
+            swaps[0] = cost[0];
+            int min = cost[0];
+            for (int i = 1; i < cost.Length; i++)
+            {
+                if (min > cost[i])
+                {
+                    min = cost[i];
+                }
+
+                swaps[i] = min;
+            }
+
+            return swaps;
+        }
+    }
