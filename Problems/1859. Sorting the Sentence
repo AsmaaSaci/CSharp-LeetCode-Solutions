@@ -1,0 +1,5 @@
+public class Solution {
+    public string SortSentence(string s) { 
+        return string.Join(" ", s.Split(" ", StringSplitOptions.RemoveEmptyEntries).OrderBy(word => word[^1]).Select(w => w[0..(w.Length - 1)]));
+    }
+}
