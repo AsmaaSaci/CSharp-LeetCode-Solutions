@@ -1,0 +1,32 @@
+public class Solution {
+    public int MaxFrequencyElements(int[] nums) {
+        Dictionary<int, int> dic = new Dictionary<int, int>();
+        int max = 1;
+        int rep = 1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (dic.ContainsKey(nums[i]))
+            {
+                dic[nums[i]] = dic[nums[i]] + 1;
+                if (dic[nums[i]] == max)
+                {
+                    rep++;
+                }
+                else if (dic[nums[i]] > max)
+                {
+                    max = dic[nums[i]];
+                    rep = 1;
+                }
+            }
+            else
+            {
+                dic.Add(nums[i], 1);
+            }
+        }
+        if(max>1)
+        {
+            return max*rep;
+        }
+        return nums.Length;        
+    }
+}
