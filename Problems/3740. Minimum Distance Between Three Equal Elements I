@@ -1,0 +1,23 @@
+public class Solution {
+    public int MinimumDistance(int[] nums) {
+        int best = int.MaxValue;
+        Span<Info> data = stackalloc Info[101];
+        for (int index = 0; index < nums.Length; index++) {
+            ref Info info = ref data[nums[index]];
+            int k = index + 1;
+            if (info.i == 0) {
+                info.i = k;
+            } else if (info.j == 0) {
+                info.j = k;
+            } else {
+                best = int.Min(best, k - info.i);
+                (info.i, info.j) = (info.j, k);
+            }
+        }
+        return best == int.MaxValue ? -1 : best * 2;
+    }
+    private struct Info {
+        public int i;
+        public int j;
+    }
+}
