@@ -1,0 +1,13 @@
+public class Solution {
+    public int CountGoodSubstrings(string s) {
+        if(s.Length < 3) return 0;
+        int count=0;
+        for(int i = 0; i <= s.Length-3; i++)
+        {
+           char a = s[i], b = s[i + 1], c = s[i + 2];
+           if(a!=b && a!=c && b!=c)
+           count++;
+        }   
+        return count;
+    }
+}
