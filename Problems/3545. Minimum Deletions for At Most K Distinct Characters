@@ -1,0 +1,9 @@
+public class Solution {
+    public int MinDeletion(string s, int k)
+      => s
+        .GroupBy(c => c)
+        .Select(c => c.Count())
+        .OrderBy(count => -count)
+        .Skip(k)
+        .Sum();
+}
