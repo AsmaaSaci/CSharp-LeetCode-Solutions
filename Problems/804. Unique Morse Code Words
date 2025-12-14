@@ -1,0 +1,19 @@
+public class Solution {
+private string[] morse = new string[]
+    {
+".-","-...","-.-.","-..",".","..-.","--.","....","..",
+".---","-.-",".-..","--","-.","---",".--.","--.-",
+".-.","...","-","..-","...-",".--","-..-","-.--","--.."
+    };
+public int UniqueMorseRepresentations(string[] words)
+{
+    HashSet<string> hash = new HashSet<string>();
+    foreach (string word in words)
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (char c in word) sb.Append(morse[c - 'a']);
+        hash.Add(sb.ToString());
+    }
+    return hash.Count;
+}
+}
