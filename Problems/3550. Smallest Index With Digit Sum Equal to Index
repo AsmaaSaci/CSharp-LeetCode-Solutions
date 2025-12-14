@@ -1,0 +1,30 @@
+public class Solution {
+    public int SmallestIndex(int[] nums)
+    {
+        var arr = ToArray(nums);
+        for(int i = 0; i < arr.Length; i++)
+            if (i == arr[i])
+                return i;
+        
+        return -1;
+    }
+
+    static int[] ToArray(int[] nums)
+    {
+        for (int i = 0; i < nums.Length; i++)
+            nums[i] = SumNums(nums[i]);
+        
+        return nums;
+    }
+
+    static int SumNums(int i)
+    {
+        int sum = 0;
+        while (i != 0)
+        {
+            sum += i % 10;
+            i /= 10;
+        }
+        return sum;
+    }
+}
