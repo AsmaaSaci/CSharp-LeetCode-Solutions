@@ -1,0 +1,42 @@
+public class Solution {
+    public bool HasMatch(string s, string p) 
+    {
+        int indiceAsterisco = p.IndexOf("*");
+        if (indiceAsterisco == 0)
+        {
+            if (p.Length == 1)
+            {
+                return true;
+            }
+            string p1 = p.Substring(1, p.Length-1);
+            bool resultado = s.Contains(p1);
+            return resultado;
+        }
+        else if (p.Length-1 > indiceAsterisco)
+        {
+            string p1 = p.Substring(0,indiceAsterisco);
+            string p2 = p.Substring(indiceAsterisco +1, p.Length-1 - indiceAsterisco);
+
+            int indiceS1 = s.IndexOf(p1);
+            if (indiceS1 == -1)
+            {
+                return false;
+            }
+            string s1 = s.Substring(indiceS1 + p1.Length, s.Length - indiceS1 - p1.Length);
+            int resultado = s1.IndexOf(p2);
+            if (resultado == -1)
+            {
+                return false;
+            } 
+            return true;
+        }
+        else if (p.Length -1 == indiceAsterisco)
+        {
+            string p1 = p.Substring(0, p.Length -1 );
+            bool resultado = s.Contains(p1);
+            return resultado;
+        }
+        
+        return false;
+    }
+}
