@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public double LargestTriangleArea(int[][] points) {
+        var hull = ConvexHull(points);
+
+        int h = hull.Count;
+        if (h < 3) return 0;
+
+        double maxArea = 0;
+
+        for (int i = 0; i < h; i++) {
+            for (int j = i + 1; j < h; j++) {
+                int k = (j + 1) % h;
+                while (true) {
+                    int next = (k + 1) % h;
+                    double currArea = Area(hull[i], hull[j], hull[k]);
+                    double nextArea = Area(hull[i], hull[j], hull[next]);
+
+                    if (nextArea > currArea) {
+                        k = next;
+                    } else {
+                        break;
+                    }
+                }
+                maxArea = Math.Max(maxArea, Area(hull[i], hull[j], hull[k]));
+            }
+        }
+
+        return maxArea;
+    }
+
+    private double Area(int[] p1, int[] p2, int[] p3) {
+        return 0.5 * Math.Abs(
+            p1[0] * (p2[1] - p3[1]) +
+            p2[0] * (p3[1] - p1[1]) +
+            p3[0] * (p1[1] - p2[1])
+        );
+    }
+
+    private List<int[]> ConvexHull(int[][] points) {
+        Array.Sort(points, (a, b) => 
+            a[0] == b[0] ? a[1].CompareTo(b[1]) : a[0].CompareTo(b[0])
+        );
+
+        var lower = new List<int[]>();
+        foreach (var p in points) {
+            while (lower.Count >= 2 && Cross(lower[lower.Count - 2], lower[lower.Count - 1], p) <= 0)
+                lower.RemoveAt(lower.Count - 1);
+            lower.Add(p);
+        }
+
+        var upper = new List<int[]>();
+        for (int i = points.Length - 1; i >= 0; i--) {
+            var p = points[i];
+            while (upper.Count >= 2 && Cross(upper[upper.Count - 2], upper[upper.Count - 1], p) <= 0)
+                upper.RemoveAt(upper.Count - 1);
+            upper.Add(p);
+        }
+
+        lower.RemoveAt(lower.Count - 1);
+        upper.RemoveAt(upper.Count - 1);
+        lower.AddRange(upper);
+
+        return lower;
+    }
+
+    private long Cross(int[] o, int[] a, int[] b) {
+        return (long)(a[0] - o[0]) * (b[1] - o[1]) -
+               (long)(a[1] - o[1]) * (b[0] - o[0]);
+    }
+}
