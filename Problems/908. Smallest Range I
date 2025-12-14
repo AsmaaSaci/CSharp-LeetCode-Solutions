@@ -1,0 +1,4 @@
+public class Solution {
+    public int SmallestRangeI(int[] nums, int k)
+        => Math.Clamp(nums.Max() - nums.Min() - 2 * k, 0, int.MaxValue);
+}
