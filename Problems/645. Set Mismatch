@@ -1,0 +1,19 @@
+public class Solution {
+    public int[] FindErrorNums(int[] nums) {
+        int[] ans=new int[nums.Length+1];
+        int d=0;
+        for (int i=0;i<nums.Length;i++)
+        {
+        if( ans[nums[i]]==0)
+        {
+            ans[nums[i]]=nums[i];
+        }
+        else
+        {
+            d=nums[i];
+        }
+        }
+var l=Array.LastIndexOf(ans,0);
+      return new int[]{d,l};
+    }
+}
