@@ -1,0 +1,13 @@
+public class Solution {
+    public string RemoveDuplicates(string s) {
+        StringBuilder sb = new();
+        foreach (var letter in s) {
+            if (sb.Length == 0 || sb[sb.Length - 1] != letter) {
+                sb.Append(letter);
+            } else {
+                sb.Remove(sb.Length - 1, 1);
+            }
+        }
+        return sb.ToString();
+    }
+}
