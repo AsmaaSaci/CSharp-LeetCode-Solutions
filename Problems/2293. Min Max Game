@@ -1,0 +1,11 @@
+public class Solution {
+    public int MinMaxGame(int[] nums) {
+        int n = nums.Length;        
+        int solve(int l,int r,Func<int,int,int> func){
+            if(r == l) return nums[l];
+            int mid = (r + l) / 2;
+            return func(solve(l,mid,Math.Min),solve(mid + 1,r,Math.Max));
+        }
+        return solve(0,n - 1,Math.Min);
+    }
+}
