@@ -1,0 +1,22 @@
+public class Solution {
+    public int TotalMoney(int n) {
+        int days = 0;
+        int result = 0;
+        int reset = 1;
+        int newDay = 0;
+
+        for (int i = 1; i <= n; i++) {
+            newDay++;
+            days++;
+            result += days;
+
+            if(newDay > 6) {
+                newDay = 0;
+                days = reset++;
+            }
+        }
+
+
+        return result;
+    }
+}
