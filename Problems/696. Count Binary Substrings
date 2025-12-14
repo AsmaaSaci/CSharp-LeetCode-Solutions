@@ -1,0 +1,23 @@
+public class Solution {
+    public int CountBinarySubstrings(string s) 
+    {
+        int prev = 0, curr = 1, count = 0;
+
+        for (int i = 1; i < s.Length; i++) 
+        {
+            if (s[i] == s[i - 1]) 
+            {
+                curr++;               // continue current group
+            } 
+            else 
+            {
+                count = count+ Math.Min(prev, curr); // add possible substrings
+                prev = curr;          // current becomes previous group
+                curr = 1;             // reset current group
+            }
+        }
+        // Add last group comparison
+        count = count+ Math.Min(prev, curr);
+        return count;
+    }
+}
