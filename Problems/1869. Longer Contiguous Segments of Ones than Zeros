@@ -1,0 +1,23 @@
+public class Solution {
+    public bool CheckZeroOnes(string s) {
+        int s1 = 0, target1 = 0;
+        int s0 = 0, target0 = 0;
+        for(int i = 0; i < s.Length; i++)
+        {
+            if(s[i] == '1')
+            {
+                target1++;
+                target0 = 0;
+                s1 = Math.Max(target1, s1);
+            }
+            else
+            {
+                target0++;
+                target1 = 0;
+                s0 = Math.Max(target0, s0);
+            }
+        }
+        return s1 > s0;
+        
+    }
+}
