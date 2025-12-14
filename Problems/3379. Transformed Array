@@ -1,0 +1,19 @@
+public class Solution {
+    public int[] ConstructTransformedArray(int[] nums) {
+        // Raj Thomas 23rd July 2025 3:14AM IST
+
+        // main case
+        int len = nums.Length;
+        List<int> result = new();
+        int newIdx;
+        for(int idx =0; idx < len; idx++) {
+            newIdx = ((idx + nums[idx]) % len + len) % len;
+
+            result.Add(nums[newIdx]);
+
+        }
+        
+        return result.ToArray();
+
+    }
+}
