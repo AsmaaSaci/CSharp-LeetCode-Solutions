@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+
+public class Solution {
+    public TreeNode GetTargetCopy(TreeNode original, TreeNode cloned, TreeNode target) {
+        Queue<TreeNode> o = new();
+        o.Enqueue(original);
+        Queue<TreeNode> c = new();
+        c.Enqueue(cloned);
+
+        while (o.Count > 0) {
+            TreeNode oNode = o.Dequeue();
+            TreeNode cNode = c.Dequeue();
+            if (oNode == target) return cNode;
+            else if (oNode != null) {
+                o.Enqueue(oNode.left);
+                c.Enqueue(cNode.left);
+                o.Enqueue(oNode.right);
+                c.Enqueue(cNode.right);
+            }
+        }
+        
+        return null;
+    }
+}
