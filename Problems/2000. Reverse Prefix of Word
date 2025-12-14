@@ -1,0 +1,23 @@
+public class Solution 
+{
+    public string ReversePrefix(string word, char ch) 
+    {
+        var sb = new StringBuilder();
+        var find = false;
+
+        foreach (var letter in word)
+        {
+            if (find)
+                sb.Append(letter);
+            else
+            {
+                sb.Insert(0, letter);
+
+                if (ch == letter)
+                    find = true;
+            }
+        }
+
+        return find ? sb.ToString() : word;       
+    }
+}
