@@ -1,0 +1,14 @@
+public class Solution {
+    public int LastStoneWeight(int[] stones) {
+        if (stones.Length == 1) return stones[0];
+
+        PriorityQueue<int, int> Pq = new PriorityQueue<int, int>();
+        foreach(int num in stones) Pq.Enqueue(num, -num);
+
+        while(Pq.Count > 1) {
+            int remaining = Pq.Dequeue() - Pq.Dequeue();
+            if (remaining > 0) Pq.Enqueue(remaining, (-1)*remaining);
+        }
+        return Pq.Count == 1 ? Pq.Peek() : 0;
+    }
+}
