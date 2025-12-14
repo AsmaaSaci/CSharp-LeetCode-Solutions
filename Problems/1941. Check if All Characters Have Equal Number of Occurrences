@@ -1,0 +1,9 @@
+public class Solution {
+    public bool AreOccurrencesEqual(string s) {
+       //group by count based on characters
+        var r = s.GroupBy(a => a).Select(a=> new {key= a, val=a.Count()});
+       //Find distinct count of characters if it is 1 then return true
+        bool res = r.Select(a=> a.val).Distinct().ToList().Count() == 1 ? true :false;
+        return res;
+    }
+}
