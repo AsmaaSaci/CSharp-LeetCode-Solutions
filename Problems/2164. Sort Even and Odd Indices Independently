@@ -1,0 +1,33 @@
+public class Solution {
+    public int[] SortEvenOdd(int[] nums) {
+        List<int> even = new List<int>();
+        List<int> odd = new List<int>();
+        int n = nums.Length;
+        for(int i = 0; i < n; i += 2)
+        {
+            even.Add(nums[i]);
+        }
+        for(int i = 1; i < n; i += 2)
+        {
+            odd.Add(nums[i]);
+        }
+        int evenInd = 0;
+        int oddInd = 0;
+        int[] oddArr = odd.OrderByDescending(num => num).ToArray();;
+        int[] evenArr = even.OrderBy(num => num).ToArray();
+        for(int i = 0; i < n; i++)
+        {
+            if(i % 2 == 0)
+            {
+                nums[i] = evenArr[evenInd];
+                evenInd++;
+            } 
+            else
+            {
+                nums[i] = oddArr[oddInd];
+                oddInd++;
+            }
+        }
+        return nums;
+    }
+}
