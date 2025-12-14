@@ -1,0 +1,53 @@
+public class Solution {
+    private long Gcd(long n1, long n2)
+    {
+        while (n2 != 0)
+        {
+            long temp = n2;
+            n2 = n1 % n2;
+            n1 = temp;
+        }
+        return n1;
+    }
+
+    private long Lcm(long n1, long n2)
+    {
+        if (n1 == 0 || n2 == 0)
+        {
+            return 0;
+        }
+        return (n1 * n2) / Gcd(n1, n2);
+    }
+
+    public int MaxLength(int[] nums) {
+        // we will start with easies solution - brute force
+        int maxLength = int.MinValue;
+        int length = nums.Length;
+
+        for(int i=0; i<length; i++)
+        {
+            long prod = nums[i];
+            long gcd = nums[i];
+            long lcm = nums[i];
+            int count = 1;
+
+            for(int j=i+1; j<length; j++)
+            {
+                prod*=nums[j];
+                gcd = Gcd(gcd, nums[j]);
+                lcm = Lcm(lcm, nums[j]);
+
+                if(prod == (lcm*gcd))
+                    count++;
+                else 
+                    break; // break for better performance
+            }
+
+            // in the end - calculate
+            maxLength = Math.Max(maxLength, count); 
+        }
+
+        // return
+        return maxLength;
+    }
+}
