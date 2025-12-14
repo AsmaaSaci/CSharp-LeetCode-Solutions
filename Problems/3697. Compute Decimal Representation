@@ -1,0 +1,20 @@
+public class Solution {
+    public int[] DecimalRepresentation(int n) {
+        List<int> list = new List<int>();        
+        int cou = 1;
+        while (n > 0)
+        {
+            int fig = n % 10;            
+            if (fig != 0)
+            {
+                list.Add(fig*cou);
+            }
+            cou = cou * 10;
+            n = n / 10;
+        }
+        int[] res = new int[list.Count];
+        list.Reverse();
+        res = list.ToArray();
+        return res;       
+    }
+}
