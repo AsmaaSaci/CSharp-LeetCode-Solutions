@@ -1,0 +1,15 @@
+public class Solution {
+    public int[][] AllCellsDistOrder(int rows, int cols, int rCenter, int cCenter) {
+        var array = new List<(int, int)>();
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                array.Add((i, j));
+            }
+        }
+
+        return array.OrderBy(cell => Math.Abs(cell.Item1 - rCenter) + Math.Abs(cell.Item2 - cCenter))
+                    .Select(cell => new int[] { cell.Item1, cell.Item2 })
+                    .ToArray();
+    }
+}
