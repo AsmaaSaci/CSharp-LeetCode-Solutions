@@ -1,0 +1,29 @@
+public class Solution {
+    public int CountBalls(int lowLimit, int highLimit) {
+        
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        int maxFreq = 0;
+        for ( int i = lowLimit; i <= highLimit; i++)
+        {
+            int currentSum = sumOfNumbersOfBall(i);
+            dict.TryAdd(currentSum, 0);
+            dict[currentSum]++;
+            maxFreq = Math.Max(maxFreq, dict[currentSum]);
+        }
+
+        return maxFreq;
+
+    }
+
+    public int sumOfNumbersOfBall(int num)
+    {
+        int sum = 0;
+        while(num > 0)
+        {
+            int reminder = num % 10;
+            sum += reminder;
+            num /= 10;
+        }
+        return sum;
+    }
+}
