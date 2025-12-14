@@ -1,0 +1,20 @@
+public class Solution {
+    public string GreatestLetter(string s) {
+        var str="";
+        var arr=s.ToCharArray();
+        Array.Sort(arr);
+        for(int i=arr.Length-1;i>=0;i--)
+        {
+            for(int j=i;j>=0;j--)
+            {
+                if(arr[i]-arr[j]==32)
+                {
+                    str+=arr[j];
+                    return str;
+                }
+                else if(arr[i]-arr[j]>32) break;
+            }
+        }
+        return str;
+    }
+}
