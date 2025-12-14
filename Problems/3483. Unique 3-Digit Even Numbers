@@ -1,0 +1,40 @@
+public class Solution {
+    public int TotalNumbers(int[] digits) {
+        var dic = CreateNumDic(digits);
+        var rs = 0;
+        for (int i = 100; i <= 998; i += 2)
+        {
+            if (CanForm(i, dic)) rs++;
+        }
+        return rs;
+    }
+    private bool CanForm(int n, int[] dic)
+    {
+        var digits = new List<int>();
+        while (n > 0)
+        {
+            digits.Add(n % 10);
+            n /= 10;
+        }
+        var rs = true;
+        for (int i = 0; i < digits.Count; i++)
+        {
+            dic[digits[i]]--;
+            if (dic[digits[i]] < 0) rs = false;
+        }
+        for (int i = 0; i < digits.Count; i++)
+        {
+            dic[digits[i]]++;
+        }
+        return rs;
+    }
+    private int[] CreateNumDic(int[] digits)
+    {
+        var rs = new int[10];
+        for (int i = 0; i < digits.Length; i++)
+        {
+            rs[digits[i]]++;
+        }
+        return rs;
+    }
+}
