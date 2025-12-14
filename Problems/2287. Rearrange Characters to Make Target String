@@ -1,0 +1,41 @@
+public class Solution {
+    public int RearrangeCharacters(string s, string target) {
+        
+        Dictionary<char, int> freq = new Dictionary<char, int>();
+        int n = s.Length;
+
+        // Count frequency of characters in s
+        for (int i = 0; i < n; i++) {
+            if (freq.ContainsKey(s[i]))
+                freq[s[i]]++;
+            else
+                freq[s[i]] = 1;
+        }
+
+        Dictionary<char, int> targetfreq = new Dictionary<char, int>();
+        n = target.Length;
+
+        // Count frequency of characters in target
+        for (int i = 0; i < n; i++) {
+            if (targetfreq.ContainsKey(target[i]))
+                targetfreq[target[i]]++;
+            else
+                targetfreq[target[i]] = 1;
+        }
+
+        int count = int.MaxValue;
+
+        // Find the minimum number of times target can be formed
+        foreach (var val in targetfreq) {
+            char c = val.Key;
+            int required = val.Value;
+
+            if (!freq.ContainsKey(c))
+                return 0;
+
+            count = Math.Min(count, freq[c] / required);
+        }
+
+        return count;
+    }
+}
