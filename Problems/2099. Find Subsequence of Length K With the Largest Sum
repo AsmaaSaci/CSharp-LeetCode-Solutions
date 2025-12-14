@@ -1,0 +1,21 @@
+public class Solution {
+    public int[] MaxSubsequence(int[] nums, int k) {
+        List<int> subsequence = nums.ToList();
+
+        while (subsequence.Count > k)
+        {
+            int minValue = subsequence.Min();
+
+            for (int i = subsequence.Count - 1; i >= 0; i--)
+            {
+                if (subsequence[i] == minValue)
+                {
+                    subsequence.RemoveAt(i);
+                    break; 
+                }
+            }
+        }
+
+        return subsequence.ToArray();
+    }
+}
