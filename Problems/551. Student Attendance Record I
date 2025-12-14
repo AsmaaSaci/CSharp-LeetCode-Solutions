@@ -1,0 +1,24 @@
+public class Solution {
+public bool CheckRecord(string s)
+{
+    int countA = 0;
+    int countL = 0;
+
+    foreach (char c in s)
+    {
+        switch (c)
+        {
+            case 'A': countA++; 
+                if (countA >= 2) return false;
+                countL = 0; ; break;
+            case 'L':
+                countL++;
+                if (countL >= 3) return false;
+                break;
+            default:countL = 0; break;
+        }
+    }
+
+    return true;
+}
+}
