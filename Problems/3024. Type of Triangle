@@ -1,0 +1,48 @@
+public class Solution {
+    public bool validTriangle(int [] sides)
+    {
+        bool checkSideOne = (sides[0] + sides[1]) > sides[2];
+        bool checkSideTwo = (sides[1] + sides[2]) > sides[0];
+        bool checkSideThree = (sides[0] + sides[2]) > sides[1];
+        if (checkSideOne && checkSideTwo && checkSideThree)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    public string TriangleType(int[] nums) {
+        // I should have sorted....
+        if (nums[0] == nums[1] && nums[1] == nums[2])
+        {
+            return "equilateral";
+        }
+
+        HashSet<int> triangleCheck = new HashSet<int>(nums);
+        if (triangleCheck.Count == 2)
+        {
+            if (validTriangle(nums))
+            {
+                return "isosceles";
+            }
+            else
+            {
+                return "none";
+            }
+        }
+
+        if (triangleCheck.Count == 3)
+        {
+            if (validTriangle(nums))
+            {
+                return "scalene";
+            }
+            else
+            {
+                return "none";
+            }
+        }
+
+        return "none";
+    }
+}
