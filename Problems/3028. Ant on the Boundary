@@ -1,0 +1,16 @@
+public class Solution {
+    public int ReturnToBoundaryCount(int[] nums) {
+        int cumsum = 0;
+        int boundaryReturns = 0;
+
+        foreach(int num in nums) {
+            cumsum += num;
+
+            if(num != 0 && cumsum == 0) {
+                boundaryReturns++;
+            }
+        }
+
+        return boundaryReturns;
+    }
+}
