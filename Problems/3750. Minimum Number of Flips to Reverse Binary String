@@ -1,0 +1,12 @@
+public class Solution {
+    public int MinimumFlips(int n) {
+        uint m = (uint)(n << int.LeadingZeroCount(n));
+        m = m >> 16 | m << 16;
+        m = (m & 0xFF00FF00) >> 8 | (m & 0x00FF00FF) << 8;
+        m = (m & 0xF0F0F0F0) >> 4 | (m & 0x0F0F0F0F) << 4;
+        m = (m & 0xCCCCCCCC) >> 2 | (m & 0x33333333) << 2;
+        m = (m & 0xAAAAAAAA) >> 1 | (m & 0x55555555) << 1;
+        n ^= (int)m;
+        return int.PopCount(n);
+    }
+}
