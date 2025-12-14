@@ -1,0 +1,9 @@
+public class Solution {
+    public int[][] FlipAndInvertImage(int[][] image)
+        => image
+            .Select(row => row
+                .Select(x => x == 0 ? 1 : 0)
+                .Reverse()
+                .ToArray())
+            .ToArray();
+}
