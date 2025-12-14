@@ -1,0 +1,23 @@
+public class Solution {
+    public int GetLucky(string s, int k)
+    {
+        string number = "";
+        foreach (var item in s)
+        {
+            int temp = item - 'a' + 1;
+            number += temp.ToString();
+        }
+
+        while (k-- > 0)
+        {
+            int sum = 0;
+            foreach(var item in number)
+            {
+                sum += item - '0';
+            }
+            number = sum.ToString();
+        }
+        
+        return int.Parse(number);
+    }
+}
