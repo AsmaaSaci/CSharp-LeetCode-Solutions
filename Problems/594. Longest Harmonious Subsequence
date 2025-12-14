@@ -1,0 +1,30 @@
+public class Solution {
+    public int FindLHS(int[] nums) {
+        int nL = nums.Length;
+        Array.Sort(nums);
+        int max = 0;
+        int count = 0;
+        bool isHappy = false;
+
+        for (int i = 0; i < nL - 1; i++)
+        {
+            count = 1;
+            isHappy = false;
+            for (int j = i + 1; j < nL; j++)
+            {
+                if (Math.Abs(nums[j] - nums[i]) == 1 || nums[j] == nums[i])
+                {
+                    if (nums[j] > nums[i] || nums[j] < nums[i]) isHappy = true;
+                    count++;
+                    continue;
+                }
+                else break;
+            }
+
+            if (count == nL && !isHappy) return 0;
+            if (count > max && isHappy) max = count;
+        }
+
+        return max;
+    }
+}
