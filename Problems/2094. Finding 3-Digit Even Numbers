@@ -1,0 +1,28 @@
+public class Solution {
+    public int[] FindEvenNumbers(int[] digits) {
+        
+        HashSet<int> even = new();
+
+        for (int i = 0; i < digits.Length; i++) {
+            for (int j = 0; j < digits.Length; j++) {
+                for (int x = 0; x < digits.Length; x++) {
+                    if (i != j && j != x && x != i) {
+                        int d1 = digits[i];
+                        int d2 = digits[j];
+                        int d3 = digits[x];
+
+                        if (d1 == 0) continue;       // no leading zero
+                        if (d3 % 2 != 0) continue;   // must be even
+
+                        int number = d1 * 100 + d2 * 10 + d3;
+                        even.Add(number);
+                    }
+                }
+            }
+        }
+
+        int[] result = even.ToArray();
+        Array.Sort(result);
+        return result;
+    }
+}
