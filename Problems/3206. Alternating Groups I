@@ -1,0 +1,20 @@
+public class Solution {
+    public int NumberOfAlternatingGroups(int[] colors) {
+        int n=colors.Length;
+        int val=0,valLeft=0,valRight=0;
+        int count=0;
+        if(n < 3) return 0;
+        for(int i=0;i<=n-1;i++)
+        {
+            valLeft=colors[((i-1)+n)%n];
+            val=colors[i];
+            valRight=colors[(i+1)%n];
+            if(val!=valLeft && val!=valRight)
+            {
+                count++;
+            }
+        }
+    return count;
+
+    }
+}
