@@ -1,0 +1,7 @@
+public class Solution {
+    public string WinningPlayer(int x, int y) {
+        int hold=Math.Min(x,y/4);
+        if(hold%2==1)return "Alice";
+        return "Bob";
+    }
+}
