@@ -1,4 +1,4 @@
-public class Solution {
+ public class Solution {
     public IList<string> CommonChars(string[] words) {
         Dictionary<char, int> commonCount = new Dictionary<char, int>();
 
