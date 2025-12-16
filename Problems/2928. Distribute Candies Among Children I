@@ -1,0 +1,15 @@
+public sealed class Solution 
+{
+    public int DistributeCandies(int n, int limit) 
+    {
+        var r = 0;
+        var right = Math.Min(n, limit);
+
+        for(int i = Math.Max(n - 2 * limit, 0); i <= right; i++)
+        {
+            r += Math.Min((n - i), limit) - Math.Max((n - i) - limit, 0) + 1;
+        }
+
+        return r;
+    }
+}
