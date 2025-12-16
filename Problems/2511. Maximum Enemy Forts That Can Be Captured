@@ -1,0 +1,18 @@
+public class Solution {
+    const int NO_FORT = -1;
+    const int ENEMY = 0;
+    const int MY_FORT = 1;
+
+    public int CaptureForts(int[] forts) {
+        int max = 0;
+        int previous = -1; // index of previous NO_FORT or MY_FORT 
+        for (int i=0; i<forts.Length; i++) {
+            if (forts[i] == NO_FORT || forts[i] == MY_FORT) {
+                if (previous >= 0 && forts[i] != forts[previous]) 
+                    max = Math.Max(i - previous - 1, max);            
+                previous = i;
+            }
+        }
+        return max;
+    }
+}
