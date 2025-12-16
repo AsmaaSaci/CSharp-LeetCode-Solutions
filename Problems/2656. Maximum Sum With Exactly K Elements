@@ -1,0 +1,4 @@
+public class Solution {
+    public int MaximizeSum(int[] nums, int k) 
+        => Enumerable.Range(nums.Max(), k).Sum();
+}
