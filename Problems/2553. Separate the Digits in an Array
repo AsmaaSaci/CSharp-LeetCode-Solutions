@@ -1,0 +1,15 @@
+public class Solution {
+    public int[] SeparateDigits(int[] nums) {
+        List<int> tem = new List<int>();
+        foreach (int fg in nums)
+        {
+            string inputString = fg.ToString();
+            for (int i = 0; i < inputString.Length; i++)
+            {
+                int digit = inputString[i] - '0';
+                tem.Add(digit);
+            }
+        }
+        return tem.ToArray();        
+    }
+}
