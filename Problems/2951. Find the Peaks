@@ -1,0 +1,14 @@
+public class Solution {
+    public List<int> FindPeaks(int[] mountain) {
+        List<int> peaks = new List<int>();
+        int n = mountain.Length;
+
+        for (int i = 1; i < n - 1; i++) {
+            if (mountain[i] > mountain[i - 1] && mountain[i] > mountain[i + 1]) {
+                peaks.Add(i);
+            }
+        }
+
+        return peaks;
+    }
+}
