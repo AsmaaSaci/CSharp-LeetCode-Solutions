@@ -1,0 +1,22 @@
+public class Solution {
+    public int[] MinBitwiseArray(IList<int> nums) {
+        int n = nums.Count;
+        int[] ans = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            int target = nums[i];
+            int found = -1;
+
+            for (int x = 0; x <= target; x++) {
+                if ((x | (x + 1)) == target) {
+                    found = x;
+                    break;
+                }
+            }
+
+            ans[i] = found;
+        }
+
+        return ans;
+    }
+}
