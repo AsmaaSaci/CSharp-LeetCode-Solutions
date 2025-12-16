@@ -1,0 +1,11 @@
+public class Solution {
+    public int FindPermutationDifference(string s, string t) {
+        int count = 0;
+        foreach (char c in s) {
+            int posS = s.IndexOf(c);
+            int posT = t.IndexOf(c);
+            count += Math.Abs(posS - posT);
+        }
+        return count;
+    }
+}
