@@ -1,0 +1,22 @@
+public class Solution {
+    public int KItemsWithMaximumSum(int numOnes, int numZeros, int numNegOnes, int k) {
+        //first pick numOnes then numZeros and then numNegOnes
+        int answer =0;
+
+        while(k-->0){
+            if(numOnes!=0){
+                answer+=1;
+                numOnes--;
+            }
+            else if(numZeros!=0){
+                answer+=0;
+                numZeros--;
+            }
+            else{
+                answer-=1;
+                numNegOnes--;
+            }
+        }
+        return answer;
+    }
+}
