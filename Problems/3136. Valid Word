@@ -1,0 +1,9 @@
+using System;
+using System.Text.RegularExpressions;
+
+public class Solution {
+    public bool IsValid(string word) {
+        Regex re = new Regex(@"(?i)^(?=.*[b-df-hj-np-tv-z])(?=.*[aieou])[a-z0-9]{3,}$");
+        return re.IsMatch(word);
+    }
+}
