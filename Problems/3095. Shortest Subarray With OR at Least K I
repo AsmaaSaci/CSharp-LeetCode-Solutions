@@ -1,0 +1,21 @@
+public class Solution {
+    public int MinimumSubarrayLength(int[] nums, int k) {
+        int n = nums.Length;
+        int minval = int.MaxValue;
+
+        for (int rt = 0; rt < n; rt++) {
+            int OrVal = 0;
+
+            for (int lt = rt; lt < n; lt++) {
+                OrVal |= nums[lt];
+
+                if (OrVal >= k) {
+                    minval = Math.Min(minval, lt - rt + 1);
+                    break; // further expansion only increases length
+                }
+            }
+        }
+
+        return minval == int.MaxValue ? -1 : minval;
+    }
+}
