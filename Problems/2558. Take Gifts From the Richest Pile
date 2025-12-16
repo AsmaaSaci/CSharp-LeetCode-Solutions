@@ -1,0 +1,24 @@
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public long PickGifts(List<int> gifts, int k) {
+        var maxHeap = new PriorityQueue<int, int>();
+        foreach (var val in gifts) {
+            maxHeap.Enqueue(val, -val); // Invert to simulate max-heap
+        }
+
+        while (k > 0) {
+            int val = maxHeap.Dequeue();
+            int rem = (int)Math.Floor(Math.Sqrt(val));
+            maxHeap.Enqueue(rem, -rem);
+            k--;
+        }
+
+        long ans = 0;
+        while (maxHeap.Count > 0) {
+            ans += maxHeap.Dequeue();
+        }
+        return ans;
+    }
+}
