@@ -1,0 +1,16 @@
+public class Solution {
+    public int SumIndicesWithKSetBits(IList<int> nums, int k)
+    {
+        return nums.Where((t, i) => CountOnes(i) == k).Sum();
+    }
+
+    private static int CountOnes(int num) {
+        int count = 0;
+        while (num != 0) {
+            if ((num & 1) == 1)
+                ++count;
+            num >>= 1;
+        }
+        return count;
+    }
+}
