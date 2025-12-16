@@ -1,0 +1,18 @@
+public class Solution {
+    public int AddedInteger(int[] nums1, int[] nums2) {
+         int oneMinNumber = int.MaxValue;
+        int twoMinNumber = int.MaxValue;
+        for (int i = 0; i < nums1.Length; i++)
+        {
+            if (nums1[i] < oneMinNumber)
+                oneMinNumber = nums1[i];
+        }
+        for (int i = 0; i < nums2.Length; i++)
+        {
+            if (nums2[i] < twoMinNumber)
+                twoMinNumber = nums2[i];
+        }
+        
+        return twoMinNumber - oneMinNumber;
+    }
+}
