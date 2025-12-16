@@ -1,0 +1,26 @@
+public class Solution {
+    public int MinimumBoxes(int[] apple, int[] capacity) {
+        int total =0;
+        foreach(int ap in apple){
+            total +=ap;
+        }
+
+Array.Sort(capacity, (a,b)  => b.CompareTo(a));
+
+int box =0;
+int used =0;
+
+foreach(int c  in capacity){
+    used +=c;
+    box++;
+
+    if(used >= total){
+return box;
+
+    }
+}
+return box;
+
+
+    }
+}
