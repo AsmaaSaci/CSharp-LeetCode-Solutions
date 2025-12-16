@@ -1,0 +1,5 @@
+public class Solution
+{
+    public int GenerateKey(params int[] nums) =>
+        new[] { 1, 10, 100, 1000 }.Sum(d => d * nums.Min(n => n / d % 10));
+}
