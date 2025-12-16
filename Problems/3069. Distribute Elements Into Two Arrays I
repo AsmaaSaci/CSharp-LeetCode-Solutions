@@ -1,0 +1,23 @@
+public class Solution {
+   	public int[] ResultArray(int[] nums)
+	{
+		List<int> arr1 = new List<int>();
+		List<int> arr2 = new List<int>(); 
+		arr1.Add(nums[0]); // First element goes to arr1
+		arr2.Add( nums[1]); // Second element goes to arr2		
+		for(int i=2;i<nums.Length;i++)
+		{
+			if(arr1.Last()>arr2.Last())
+			{
+			arr1.Add(nums[i]); // Append to arr1
+			}
+			else
+			{
+			arr2.Add(nums[i]); ; // Append to arr2
+			}
+		}
+		
+
+		return arr1.Concat(arr2).ToArray();
+	}
+}
