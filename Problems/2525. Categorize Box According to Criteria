@@ -1,0 +1,3 @@
+public class Solution {
+    public string CategorizeBox(in int l, in int w, in int h, in int m) => (l >= 10_000 || w >= 10_000 || h >= 10_000 || (long)l * w * h >= 1_000_000_000, m >= 100) switch { (true, true) => "Both", (false, false) => "Neither", (true, false) => "Bulky", (false, true) => "Heavy"};
+}
