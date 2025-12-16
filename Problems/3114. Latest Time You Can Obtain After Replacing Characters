@@ -1,0 +1,49 @@
+public class Solution {
+    public string FindLatestTime(string s) {
+        char[] q = s.ToCharArray();
+        int a = 0;
+        int b = 0;
+        int c = 0;
+        int d = 0;
+
+        if (int.TryParse(s[0].ToString(), out a)) { }
+        else if (int.TryParse(s[1].ToString(), out b)) { }
+        else if (int.TryParse(s[3].ToString(), out c)) { }
+        else if (int.TryParse(s[4].ToString(), out d)) { }
+
+        if (s[0] == '?' && s[1] != '?') {
+            if (b <= 9 && b >= 2) {
+                q[0] = '0';
+            } else {
+                q[0] = '1';
+            }
+        }
+        else if (s[1] == '?' && s[0] != '?') {
+            if (a == 0) {
+                q[1] = '9';
+            } else if (a == 1) {
+                q[1] = '1';
+            }
+        }
+
+        if (s[3] == '?' && s[4] != '?') {
+            q[3] = '5';
+        } else if (s[3] != '?' && s[4] == '?') {
+            if (c <= 5) {
+                q[4] = '9';
+            }
+        }
+
+        if (s[0] == '?' && s[1] == '?') {
+            q[0] = '1';
+            q[1] = '1';
+        }
+
+        if (s[3] == '?' && s[4] == '?') {
+            q[3] = '5';
+            q[4] = '9';
+        }
+
+        return new string(q);
+    }
+}
