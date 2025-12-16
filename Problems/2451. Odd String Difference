@@ -1,0 +1,9 @@
+public class Solution {
+    public string OddString(string[] words) => words
+            .GroupBy(word => string.Join(",", Enumerable
+                .Range(0, word.Length - 1)
+                .Select(i => word[i] - word[i + 1])))
+            .Where(group => group.Count() == 1)
+            .First()
+            .First();        
+}
