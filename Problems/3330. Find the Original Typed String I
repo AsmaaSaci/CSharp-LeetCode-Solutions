@@ -1,0 +1,24 @@
+public class Solution {
+    public int PossibleStringCount(string word) {
+        int total = 1, groupCount = 1;
+        var stack = new Stack<char>();
+        stack.Push(word[0]);
+
+        for (var i = 1; i < word.Length; i++)
+        {
+            if(word[i] == stack.Peek())
+                groupCount++;
+            else
+            {
+                if (groupCount > 1)
+                    total += groupCount - 1;
+                groupCount = 1;
+            }
+            stack.Push(word[i]);
+        }
+        
+        if(groupCount > 1) total += groupCount - 1;
+        
+        return total;
+    }
+}
