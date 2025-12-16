@@ -1,0 +1,22 @@
+public class Solution {
+    public int FindMinimumOperations(string s1, string s2, string s3) {
+        int[] lengths = { s1.Length, s2.Length, s3.Length };
+        int minimumLength = Math.Min(Math.Min(lengths[0], lengths[1]), lengths[2]);
+        int count = 0;
+        for (int i = 0; i < minimumLength; i++) {
+            if (s1[i] == s2[i] && s1[i] == s3[i]) {
+                count++;
+            } else {
+                break;
+            }
+        }
+        if (count == 0) {
+            return -1;
+        }
+        int result = 0;
+        foreach (int length in lengths) {
+            result += length - count;
+        }
+        return result;
+    }
+}
