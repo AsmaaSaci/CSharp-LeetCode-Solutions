@@ -1,0 +1,24 @@
+using System;
+using System.Collections.Generic;
+
+public class Solution {
+    public IList<int> LastVisitedIntegers(IList<string> words) {
+        List<int> st = new List<int>();
+        List<int> ans = new List<int>();
+        int conspre = 0;
+        foreach (string word in words) {
+            if (word == "prev") {
+                conspre++;
+                if (conspre <= st.Count) {
+                    ans.Add(st[st.Count - conspre]);
+                } else {
+                    ans.Add(-1);
+                }
+            } else {
+                st.Add(int.Parse(word));
+                conspre = 0;
+            }
+        }
+        return ans;
+    }
+}
