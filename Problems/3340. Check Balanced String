@@ -1,0 +1,15 @@
+public class Solution {
+    public bool IsBalanced(string num) {
+        int evenCount = 0;
+        int oddCount = 0;
+        for (int i = 0; i < num.Length; i++) {
+            if (i % 2 == 0) {
+                // even index
+                evenCount += num[i] - '0';
+            } else {
+                oddCount += num[i] - '0';
+            }
+        }
+        return evenCount == oddCount;
+    }
+}
