@@ -1,0 +1,5 @@
+public class Solution {
+    public char KthCharacter(int k) {
+        return (char) ((int) 'a' + BitOperations.PopCount((uint) k - 1) % 26);
+    }
+}
