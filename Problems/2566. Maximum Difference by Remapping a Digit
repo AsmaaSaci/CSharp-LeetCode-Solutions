@@ -1,0 +1,18 @@
+public class Solution {
+    public int MinMaxDifference(int num) {
+        String numbrStr = num.ToString();
+        char numberToChange = 'z';
+        foreach(char n in numbrStr)
+        {
+            if (n != '9'){
+                numberToChange = n;
+                break;
+            }
+        }
+
+        int maxNum = int.Parse(numbrStr.Replace(numberToChange, '9'));
+        int minNumber = int.Parse(numbrStr.Replace(numbrStr[0], '0'));
+
+        return maxNum - minNumber;
+    }
+}
