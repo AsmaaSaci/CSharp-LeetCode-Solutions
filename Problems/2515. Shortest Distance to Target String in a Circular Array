@@ -1,0 +1,34 @@
+public class Solution {
+    public int ClosetTarget(string[] words, string target, int startIndex) {
+           if (!words.Contains(target))
+            {
+                return -1;
+            }
+
+            List<int> list= new List<int>();    
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (words[i] == target)
+                {
+                    list.Add(i);
+                }
+            }
+           
+            int total = 0;
+            int distance = 0;
+            int MinDistance = Int32.MaxValue;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] - startIndex > 0)
+                {
+                    distance = Math.Min(list[i] - startIndex, words.Length  - list[i] +startIndex );
+                    MinDistance = Math.Min(distance, MinDistance);
+                }
+                else {
+                    total = Math.Min( startIndex - list[i], words.Length -  startIndex  + list[i]);
+                    MinDistance = Math.Min(total, MinDistance);
+                }
+            }
+            return MinDistance;
+    }
+}
