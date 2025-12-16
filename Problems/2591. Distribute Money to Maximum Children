@@ -1,0 +1,51 @@
+public class Solution {
+    public int DistMoney(int money, int children) {
+        // Every child needs atleast 1 dollar
+        // => impossible if less money than children
+        if(money < children) return -1;
+
+        // give each child 1 dollar
+        money -= children;
+
+        // Theoretical maximum number of children to
+        // receive 7 extra dollars for a total of 8
+        // dollars each
+        int childrenWithEight = money / 7;
+        if(childrenWithEight > children)
+            childrenWithEight = children;
+
+        // The money leftover after giving out the extra 7 dollars
+        // to some children, as well as the amount of children
+        // that still have 1 dollar
+        money -= childrenWithEight * 7;
+        int childrenWithOne = children - childrenWithEight;
+
+        // Ff there are no more children left that don't have
+        // 8 dollars but there is still some money left we give
+        // one of the children the rest of the money and thereby
+        // losing a child with exactly 8 dollars.
+        if(childrenWithOne == 0 && money > 0)
+            return childrenWithEight - 1;
+
+        // If there is one child left that still has 1 dollar
+        // and there are 3 dollars left to hand out then we cannot
+        // give all of the money left to the one child with 1 dollar
+        // because then they would have 4 dollars, violating the
+        // rules.
+        // Instead we for example hand out 2 dollars to the one child
+        // with 1 dollar and the last dollar goes to some child with
+        // 8 dollars. This child now has 9 dollars and we thereby
+        // lost a child with exactly 8 dollars.
+        if(childrenWithOne == 1 && money == 3)
+            return childrenWithEight - 1;
+
+        // In this case we either have no child left over
+        // and no money left over meaning everybody got
+        // 8 bucks or we had 1 child left over that we could
+        // give all the money to or we had 2 or more children
+        // left over in which case we can always hand out
+        // any amount of money to them both without one
+        // of them having 4 dollars in total.
+        return childrenWithEight;
+    }
+}
