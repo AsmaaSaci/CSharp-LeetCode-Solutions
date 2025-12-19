@@ -1,0 +1,21 @@
+public class Solution {
+    public int MinOperations(int[] nums) {
+        int ans=0;
+        for (int i=nums.Length-2; i>=0;i--){
+            if(nums[i]<=nums[i+1]) continue;
+            else {               
+               while(nums[i]>nums[i+1]){
+                ans++;                
+                int x=nums[i];
+                int k=2;
+                while(k<=x){
+                    if(x%k==0 ){ if(x/k!=1){ nums[i]=k; break;}
+                     else return-1;}
+                  k++;
+                }
+            }
+            }
+        }
+        return ans;
+    }
+}
