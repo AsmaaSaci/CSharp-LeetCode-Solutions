@@ -1,0 +1,65 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class CBTInserter {
+    private TreeNode rootN;
+    private Queue<TreeNode> que = new();
+    public CBTInserter(TreeNode root) {
+        rootN = root;
+
+        que.Enqueue(rootN);
+    }
+    
+    public int Insert(int val) {
+        int parV = -1;
+        TreeNode nextN = new TreeNode(val);
+
+        while(que.Count > 0)
+        {
+            TreeNode cur = que.Peek();
+            if(cur.left != null && cur.right != null)
+            {
+                que.Dequeue();
+                que.Enqueue(cur.left);
+                que.Enqueue(cur.right);
+                continue;
+            }
+           
+            int curV = cur.val;
+            if(cur.left == null)
+                cur.left = nextN;
+            else
+            {
+                que.Enqueue(cur.left);
+                cur.right = nextN;
+            }
+
+            que.Enqueue(nextN);
+            parV = curV;
+            break;
+        }
+
+        return parV;
+    }
+    
+    public TreeNode Get_root() {
+        return rootN;
+    }
+}
+
+/**
+ * Your CBTInserter object will be instantiated and called as such:
+ * CBTInserter obj = new CBTInserter(root);
+ * int param_1 = obj.Insert(val);
+ * TreeNode param_2 = obj.Get_root();
+ */
