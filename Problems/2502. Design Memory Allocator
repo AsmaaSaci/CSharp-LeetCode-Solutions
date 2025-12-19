@@ -1,0 +1,60 @@
+class Allocator {
+private:
+    int capacity;
+    list<pair<int, int>> blocks {};
+    list<pair<int, int>>::iterator ptr = blocks.begin();
+    unordered_map<int, vector<list<pair<int, int>>::iterator>> id_to_blocks;
+
+public:
+    Allocator(int n) : capacity(n) {
+        // n represents the size of a 0-indexed memory array
+        blocks.push_back(make_pair(0, 0)); // dummy head
+    }
+    
+    int allocate(int size, int mID) {
+        // allocate a block os size consecutive free memory unites
+        // assign it mId
+        // the leftmost block of size consecutive free memory
+        // return the first 
+        auto cur = ptr;
+        int start, end;
+
+        start = cur->second;
+        while (++cur != blocks.end()) {
+            end = cur->first;
+            if (end - start >= size) break;
+            start = cur->second;
+        }
+        if (cur == blocks.end() && capacity - start < size) 
+            return -1;
+
+        auto it = blocks.insert(cur, make_pair(start, start + size)); //  no need to merge
+        id_to_blocks[mID].push_back(it);
+        // adjust ptr, only when there is possibility to merge
+        end = ptr->second;
+        while (++ptr != blocks.end() && ptr->first == end) 
+            end = ptr->second;
+        ptr --; 
+        return start;
+    }
+    
+    int freeMemory(int mID) {
+        // free all memory of id mId
+        int sum = 0;
+        for (auto it : id_to_blocks[mID]) {
+            if (ptr->second >= it->first) 
+                ptr = prev(it);
+            sum += it->second - it->first;
+            blocks.erase(it);
+        }
+        id_to_blocks[mID].clear(); // clear the storage
+        return sum;
+    }
+};
+
+/**
+ * Your Allocator object will be instantiated and called as such:
+ * Allocator* obj = new Allocator(n);
+ * int param_1 = obj->allocate(size,mID);
+ * int param_2 = obj->freeMemory(mID);
+ */
