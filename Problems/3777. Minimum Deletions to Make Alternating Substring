@@ -1,0 +1,107 @@
+public class Solution {
+    private List<int[]> range;
+    private int FindIdx(int idx)
+    {
+        int len = range.Count, low = 0, high = len-1;
+        while(low <= high)
+        {
+            int mid = low + (high-low)/2;
+            int start = range[mid][0], end = range[mid][1];
+            if(idx >= start && idx <= end)
+                return mid;
+            else if(idx < start)
+                high = mid-1;
+            else
+                low = mid+1;
+        }
+
+        return low;
+    }
+    public int[] MinDeletions(string s, int[][] queries) {
+ 			int len = s.Length, start = 0, end = 0;
+			int[] sample = new int[len];
+			range = new List<int[]>();
+			for (int i = 0; i < len; i++)
+			{
+				if (s[i] == 'B')
+					sample[i] = 1;
+
+				if (i == len - 1 || sample[i] != sample[start])
+				{
+					end = (sample[i] != sample[start] ? i - 1 : i);
+					range.Add([start, end]);
+					if (i == len - 1 && sample[i] != sample[start])
+						range.Add([len - 1, len - 1]);
+
+					start = i;
+				}
+			}
+
+			List<int> res = new();
+			foreach (int[] q in queries)
+			{
+				int opt = q[0];
+				if (opt == 1) // case 1 : flip 
+				{
+					int idx = FindIdx(q[1]), flipId = q[1];
+					start = range[idx][0];
+					end = range[idx][1];
+					if (flipId > start && flipId < end) // split current range in to 3 parts:
+					{
+						range.Insert(idx + 1, [flipId + 1, end]);
+						range.Insert(idx + 1, [flipId, flipId]);
+						range[idx][1] = flipId - 1;
+					}
+					else if (flipId == start)
+					{
+						if (idx > 0)
+						{
+							range[idx - 1][1]++;
+							range[idx][0]++;
+							if (range[idx][0] > range[idx][1])
+							{
+								range.RemoveAt(idx);
+								if (range.Count >= idx + 1)
+								{
+									range[idx - 1][1] = range[idx][1];
+									range.RemoveAt(idx);
+								}
+							}
+						}
+						else 
+						{
+							if (start == end && idx < range.Count - 1) // case : single item range, and can merge to next range
+							{
+								range.RemoveAt(idx);
+								range[idx][0]--;
+							}
+							else if (start != end) // if not single item, split it
+							{
+								range[idx][0]++;
+								range.Insert(idx, [flipId, flipId]);
+							}
+						}
+					}
+					else if (flipId == end)
+					{
+						range[idx][1]--; // remove frome current end
+						if (idx < range.Count - 1)
+							range[idx + 1][0]--;
+						else
+							range.Insert(idx + 1, [end, end]);
+					}
+				}
+				else
+				{
+					start = q[1];
+					end = q[2];
+					int id1 = FindIdx(start), id2 = FindIdx(end);
+					int rem = end - start - (id2 - id1);
+					res.Add(rem);
+				}
+			}
+
+
+			return res.ToArray();
+    }
+}
