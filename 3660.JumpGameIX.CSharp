@@ -1,4 +1,4 @@
-          public class Solution {
+           public class Solution {
     public int[] MaxValue(int[] nums) {
         int[] ans = new int[nums.Length];
         int greatest = 0;
